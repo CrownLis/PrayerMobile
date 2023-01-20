@@ -1,5 +1,7 @@
 import React, {FC, PropsWithChildren, useState} from 'react';
 import {Text, TouchableOpacity} from 'react-native';
+import Loader from '../../components/Loader';
+import {mergeStyles} from '../../utils/mergeStyles';
 import styles from './StyledButton.module.scss';
 
 type ButtonProps = PropsWithChildren<{
@@ -9,11 +11,6 @@ type ButtonProps = PropsWithChildren<{
   isExit?: boolean;
 }>;
 
-type MergeStylesArg = {
-  style: Record<string, any>;
-  active: boolean;
-}[];
-
 const StyledButton: FC<ButtonProps> = ({
   children,
   type,
@@ -22,18 +19,6 @@ const StyledButton: FC<ButtonProps> = ({
   isExit,
 }) => {
   const [pressIn, setPressIn] = useState(false);
-
-  const mergeStyles = (...style: MergeStylesArg) => {
-    return style.reduce((acc, styleItem) => {
-      if (!styleItem.active) {
-        return acc;
-      }
-      return {
-        ...acc,
-        ...styleItem.style,
-      };
-    }, {} as Record<string, any>);
-  };
 
   return (
     <TouchableOpacity
@@ -47,7 +32,7 @@ const StyledButton: FC<ButtonProps> = ({
           style: styles[`button_wrapper_${type}_disabled`],
           active: isDisabled ? true : false,
         },
-        {style: styles.button_wrapper_press, active: pressIn},
+        {style: styles[`button_wrapper_${type}_press`], active: pressIn},
       )}>
       <Text
         style={mergeStyles(
@@ -56,8 +41,8 @@ const StyledButton: FC<ButtonProps> = ({
           {style: styles.button_text_exit, active: isExit},
           {style: styles[`button_text_${type}_disabled`], active: isDisabled},
           {style: styles[`button_text_${type}_press`], active: pressIn},
-          )}>
-        {isLoading ? 'Loading' : children}
+        )}>
+        {isLoading ? <Loader/> : children}
       </Text>
     </TouchableOpacity>
   );

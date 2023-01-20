@@ -1,0 +1,18 @@
+@import './../../assets/styles/variables.scss';
+
+.button_wrapper {
+    display:flex;
+    align-items: center;
+    background-color: $Error;
+    border:0;
+    border-radius: 0 24px 24px 0;
+    max-width: 76px;
+}
+
+.button_wrapper_medium {
+    padding:16px 28px 40px;
+}
+
+.button_wrapper_large {
+    padding:16px 37.5px 40px;
+}

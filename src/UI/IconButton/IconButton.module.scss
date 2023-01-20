@@ -1,0 +1,76 @@
+@import './../../assets/styles/variables.scss';
+
+.button_wrapper_add {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    width:65px;
+    height:65px;
+    border:0;
+    border-radius: 95px;
+    background-color: $color800;
+    box-shadow: $Shadow2;
+}
+
+.button_wrapper_send {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    width:48px;
+    height:48px;
+    border:0;
+    border-radius: 12px;
+    background-color: $color800;
+}
+
+.button_wrapper_pray {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    width:46px;
+    height:46px;
+    border:0;
+    border-radius: 32px;
+    background-color: $color300;
+}
+
+.button_wrapper_back, .button_wrapper_exit {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    width:42px;
+    height:42px;
+    border:0;
+    border-radius: 30px;
+    background-color: $color100;
+    box-shadow: $Shadow1;
+}
+
+.button_wrapper_cancel {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    width:34px;
+    height:34px;
+    border:0;
+    border-radius: 32px;
+    background-color: $color400;
+}
+
+.button_wrapper_add_disabled, 
+.button_wrapper_send_disabled {
+    background-color: $color500;
+}
+
+.button_wrapper_pray_disabled, .button_wrapper_back_disabled, .button_wrapper_exit_disabled, .button_wrapper_cancel_disabled  {
+    background-color: $color300;
+}
+
+.button_wrapper_add_pressed, 
+.button_wrapper_send_pressed {
+    background-color: $color700;
+}
+
+.button_wrapper_pray_pressed, .button_wrapper_back_pressed, .button_wrapper_exit_pressed, .button_wrapper_cancel_pressed  {
+    background-color: $color500;
+}
