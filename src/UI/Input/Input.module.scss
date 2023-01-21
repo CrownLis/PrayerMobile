@@ -1,0 +1,45 @@
+@import './../../assets/styles/variables.scss';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+}
+
+.label {
+    font-style: $main;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    color: $color700;
+}
+
+.customInput {
+    font-style: $main;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    color: $color800;
+    padding: 12px 0;
+}
+
+.customInput::placeholder {
+    font-style: $main;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    color: $color700;
+}
+
+.customInput_disabled::placeholder {
+    color:$color500;
+}
+
+.customInput_correct {
+    color:$Success;
+}
+
+.customInput_error {
+    color:$Error;
+}
