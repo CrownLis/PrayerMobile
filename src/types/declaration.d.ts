@@ -1,5 +1,11 @@
 declare module '*.module.scss' {
-  const content: {[className: string]: string};
+  const content: {
+    button_wrapper_press: Record<string, any>;
+    navigation: StyleProp<ViewStyle>;
+    button_wrapper: StyleProp<ViewStyle>;
+    button_text: StyleProp<TextStyle>;
+    [className: any]: any;
+  };
   export = content;
 }
 
