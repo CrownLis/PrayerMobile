@@ -35,6 +35,7 @@ const HomePage = () => {
       <DeleteButton size="large" />
       <FormProvider {...methods}>
         <Input
+          isDirty
           name="email"
           label="Email"
           placeholder="email-address"
