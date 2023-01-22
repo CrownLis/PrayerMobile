@@ -35,11 +35,10 @@ const HomePage = () => {
       <DeleteButton size="large" />
       <FormProvider {...methods}>
         <Input
-          isDirty
           name="email"
           label="Email"
           placeholder="email-address"
-          rules={{required: 'Email is req!'}}
+          rules={{required: 'Email is req!', minLength: 10}}
         />
         <Input
           name="password"

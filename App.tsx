@@ -1,13 +1,12 @@
-import {NavigationContainer} from '@react-navigation/native';
-import React from 'react';
-import TabNavigator from './src/navigation/TabNavigator/TabNavigator';
+import { NavigationContainer } from '@react-navigation/native';
+import React, { PropsWithChildren } from 'react';
 
-const App = () => {
-  return (
-    <NavigationContainer>
-      <TabNavigator />
-    </NavigationContainer>
-  );
+import withAuthNavigation from '~hoc/withAuthNavigation';
+
+type Props = PropsWithChildren<void>;
+
+const App = ({ children }: Props) => {
+  return <NavigationContainer>{children}</NavigationContainer>;
 };
 
-export default App;
+export default withAuthNavigation(App);
