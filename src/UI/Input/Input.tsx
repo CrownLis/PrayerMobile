@@ -1,95 +1,127 @@
-import React, {FC, forwardRef, ForwardRefRenderFunction} from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
-  useController,
-  UseControllerProps,
-  useForm,
-  useFormContext,
-} from 'react-hook-form';
-import {Text, TextInput, TextInputProps, View} from 'react-native';
-import Svg, {Path} from 'react-native-svg';
-import {mergeStyles} from '../../utils/mergeStyles';
+  NativeSyntheticEvent,
+  TextInput,
+  TextInputFocusEventData,
+  TextInputProps,
+  View,
+} from 'react-native';
+import { mergeStyles } from '../../utils/mergeStyles';
+import CheckIcon from '~assets/icons/check.svg';
+import EyeIcon from '~assets/icons/eye-open.svg';
+import EyeClosedIcon from '~assets/icons/eye-closed.svg';
+
 import styles from './Input.module.scss';
 
 type InputProps = {
-  placeholder: string;
-  label: string;
-  defaultValue?: string;
   isDisabled?: boolean;
-} & TextInputProps &
-  UseControllerProps;
+  isDirty?: boolean;
+  isError?: boolean;
+} & TextInputProps;
 
-const ControlledInput: FC<InputProps> = ({
-  name,
-  label,
+const Input: FC<InputProps> = ({
   placeholder,
-  rules,
-  defaultValue,
+  isDirty,
   isDisabled,
+  isError,
+  secureTextEntry,
+  onFocus,
+  onBlur,
   ...props
 }) => {
-  const {getFieldState} = useForm();
-  const formContext = useFormContext();
-  const {formState} = formContext;
-  const {error, isDirty} = getFieldState(name, formState);
-  const {field} = useController({name, rules, defaultValue});
+  const [isFocus, setIsFocus] = useState(false);
+  const [showPassword, setShowPassword] = useState(secureTextEntry ? true : false);
+  useEffect(() => {
+    setIcon();
+  }, [isDirty, isError, showPassword]);
+
+  const setIcon = () => {
+    if (isDirty && !isError) {
+      return <CheckIcon fill="#39C622" />;
+    }
+    if (secureTextEntry) {
+      if (isDisabled) {
+        <EyeIcon fill="#CFCFCF" />;
+      } else if (showPassword && !isFocus) {
+        return (
+          <EyeClosedIcon fill="#CFCFCF" onPress={() => setShowPassword(!showPassword)} />
+        );
+      } else if (!showPassword && !isFocus) {
+        return <EyeIcon fill="#CFCFCF" onPress={() => setShowPassword(!showPassword)} />;
+      } else if (showPassword && isDirty && isError) {
+        return (
+          <EyeClosedIcon fill="#C2534C" onPress={() => setShowPassword(!showPassword)} />
+        );
+      } else if (!showPassword && isDirty && isError) {
+        return <EyeIcon fill="#C2534C" onPress={() => setShowPassword(!showPassword)} />;
+      } else if (showPassword) {
+        return <EyeIcon onPress={() => setShowPassword(!showPassword)} fill="#2A2A2A" />;
+      } else if (!showPassword) {
+        return (
+          <EyeClosedIcon onPress={() => setShowPassword(!showPassword)} fill="#2A2A2A" />
+        );
+      }
+    }
+  };
+
+  const handleOnFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    setIsFocus(true);
+    onFocus?.(e);
+  };
+
+  const handleOnBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    setIsFocus(false);
+    onBlur?.(e);
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
-      <View style={styles.input_container}>
+      <View
+        style={mergeStyles(
+          { style: styles.inputContainer, active: true },
+          {
+            style: styles.inputContainer_disabled,
+            active: !!isDisabled,
+          },
+          {
+            style: styles.inputContainer_correct,
+            active: Boolean(isDirty),
+          },
+          {
+            style: styles.inputContainer_error,
+            active: !!isError,
+          },
+        )}
+      >
         <TextInput
-          {...props}
-          ref={field.ref}
           style={mergeStyles(
-            {style: styles.customInput, active: true},
+            { style: styles.customInput, active: true },
             {
               style: styles.customInput_disabled,
-              active: isDisabled ? true : false,
+              active: !!isDisabled,
             },
             {
               style: styles.customInput_correct,
-              active: isDirty ? true : false,
+              active: Boolean(isDirty),
             },
             {
               style: styles.customInput_error,
-              active: error ? true : false,
+              active: !!isError,
             },
           )}
-          value={field.value}
+          placeholderTextColor={styles.placeholder.color}
           placeholder={placeholder}
-          onChangeText={field.onChange}
+          onFocus={handleOnFocus}
+          onBlur={handleOnBlur}
           editable={isDisabled ? false : true}
           selectTextOnFocus={isDisabled ? false : true}
+          secureTextEntry={showPassword}
+          {...props}
         />
-        {isDirty ? (
-          <Svg width={20} height={20}>
-            <Path
-              fill="#39C622"
-              d="M16.704 2.653a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143z"
-            />
-          </Svg>
-        ) : null}
+        {setIcon()}
       </View>
-      {error ? <Text>This field must be filled!</Text> : null}
     </View>
   );
 };
 
-const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = ({
-  name,
-  ...props
-}) => {
-  const formContext = useFormContext();
-
-  if (!formContext || !name) {
-    const msg = !formContext
-      ? 'TextInput must be wrapper by the FormProvider'
-      : 'Name must be defined';
-    console.error(msg);
-    return null;
-  }
-
-  return <ControlledInput name={name} {...props} />;
-};
-
-export default forwardRef<HTMLInputElement, InputProps>(Input);
+export default Input;
