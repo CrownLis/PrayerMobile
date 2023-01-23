@@ -1,20 +1,21 @@
-import React, {FC} from 'react';
-import {TouchableOpacity} from 'react-native';
-import Svg, {Path} from 'react-native-svg';
-import {mergeStyles} from '../../utils/mergeStyles';
+import React, { FC } from 'react';
+import { TouchableOpacity } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
+import { mergeStyles } from '../../utils/mergeStyles';
 import styles from './DeleteButton.module.scss';
 
 type ButtonProps = {
   size: 'large' | 'medium';
 };
 
-const DeleteButton: FC<ButtonProps> = ({size}) => {
+const DeleteButton: FC<ButtonProps> = ({ size }) => {
   return (
     <TouchableOpacity
       style={mergeStyles(
-        {style: styles.button_wrapper, active: true},
-        {style: styles[`button_wrapper_${size}`]},
-      )}>
+        { style: styles.button_wrapper, active: true },
+        { style: styles[`button_wrapper_${size}`], active: true },
+      )}
+    >
       <Svg style={styles.button_icon} width={20} height={20}>
         <Path
           fill="#fff"

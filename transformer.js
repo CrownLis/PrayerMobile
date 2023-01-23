@@ -14,8 +14,9 @@ var upstreamTransformer = require('metro-react-native-babel-transformer');
 // var upstreamTransformer = require("metro-bundler/build/transformer");
 
 var sassTransformer = require('react-native-sass-transformer');
+var svgTransformer = require('react-native-svg-transformer');
 
-module.exports.transform = function ({src, filename, options}) {
+module.exports.transform = function ({ src, filename, options }) {
   if (filename.endsWith('.scss') || filename.endsWith('.sass')) {
     var opts = Object.assign(options, {
       sassOptions: {
@@ -28,8 +29,10 @@ module.exports.transform = function ({src, filename, options}) {
         },
       },
     });
-    return sassTransformer.transform({src, filename, options: opts});
+    return sassTransformer.transform({ src, filename, options: opts });
+  } else if (filename.endsWith('.svg')) {
+    return svgTransformer.transform({ src, filename, options });
   } else {
-    return upstreamTransformer.transform({src, filename, options});
+    return upstreamTransformer.transform({ src, filename, options });
   }
 };
