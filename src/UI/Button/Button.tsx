@@ -1,5 +1,10 @@
-import React, { ButtonHTMLAttributes, FC, PropsWithChildren, useState } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import React, { FC, PropsWithChildren, useState } from 'react';
+import {
+  ActivityIndicator,
+  Text,
+  TouchableOpacity,
+  TouchableOpacityProps,
+} from 'react-native';
 import { mergeStyles } from '../../utils/mergeStyles';
 import styles from './Button.module.scss';
 
@@ -7,17 +12,16 @@ type ButtonProps = PropsWithChildren<
   {
     variant: 'primary' | 'secondary' | 'text';
     isLoading?: boolean;
-    isDisabled?: boolean;
     isExit?: boolean;
     onPress: () => {};
-  } & ButtonHTMLAttributes<HTMLButtonElement>
+  } & TouchableOpacityProps
 >;
 
 const Button: FC<ButtonProps> = ({
   children,
   variant,
   isLoading,
-  isDisabled,
+  disabled,
   isExit,
   onPress,
 }) => {
@@ -25,7 +29,7 @@ const Button: FC<ButtonProps> = ({
 
   return (
     <TouchableOpacity
-      disabled={isDisabled}
+      disabled={disabled}
       onPress={onPress}
       onPressIn={() => setPressIn(true)}
       onPressOut={() => setPressIn(false)}
@@ -34,7 +38,7 @@ const Button: FC<ButtonProps> = ({
         { style: styles[`button_wrapper_${variant}`], active: true },
         {
           style: styles[`button_wrapper_${variant}_disabled`],
-          active: isDisabled ? true : false,
+          active: disabled ? true : false,
         },
         { style: styles[`button_wrapper_${variant}_press`], active: pressIn },
       )}
@@ -44,11 +48,11 @@ const Button: FC<ButtonProps> = ({
           { style: styles.button_text, active: true },
           { style: styles[`button_text_${variant}`], active: true },
           { style: styles.button_text_exit, active: !!isExit },
-          { style: styles[`button_text_${variant}_disabled`], active: !!isDisabled },
+          { style: styles[`button_text_${variant}_disabled`], active: !!disabled },
           { style: styles[`button_text_${variant}_press`], active: pressIn },
         )}
       >
-        {isLoading ? <Text>loading</Text> : children}
+        {isLoading ? <ActivityIndicator /> : children}
       </Text>
     </TouchableOpacity>
   );
