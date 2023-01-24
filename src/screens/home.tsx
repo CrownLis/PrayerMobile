@@ -5,7 +5,7 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 import Button from '../UI/Button';
 import DeleteButton from '../UI/DeleteButton';
 import IconButton from '../UI/IconButton/IconButton';
@@ -17,10 +17,10 @@ const HomePage = () => {
     password: string;
   };
 
-  const {...methods} = useForm();
+  const { ...methods } = useForm();
 
   const onSubmit: SubmitHandler<FormValues> = data => {
-    console.log({data});
+    console.log({ data });
   };
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
@@ -38,19 +38,17 @@ const HomePage = () => {
           name="email"
           label="Email"
           placeholder="email-address"
-          rules={{required: 'Email is req!', minLength: 10}}
+          rules={{ required: 'Email is req!', minLength: 10 }}
         />
         <Input
           name="password"
           label="Password"
           placeholder="Password"
-          rules={{required: 'pass is req!'}}
+          rules={{ required: 'pass is req!' }}
           secureTextEntry
         />
       </FormProvider>
-      <Button
-        variant="primary"
-        onPress={methods.handleSubmit(onSubmit, onError)}>
+      <Button variant="primary" onPress={methods.handleSubmit(onSubmit, onError)}>
         Text
       </Button>
     </View>

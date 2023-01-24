@@ -10,6 +10,7 @@ import { Text, View } from 'react-native';
 import FormField from '~components/FormField';
 import Button from '~UI/Button';
 import Input from '~UI/Input';
+import PasswordInput from '~UI/PasswordInput';
 
 import styles from './SignIn.module.scss';
 
@@ -75,7 +76,7 @@ const SignIn = () => {
             field: { onChange, onBlur, value },
             fieldState: { error, isDirty },
           }) => (
-            <Input
+            <PasswordInput
               isDirty={isDirty}
               secureTextEntry
               onBlur={onBlur}

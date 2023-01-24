@@ -6,10 +6,11 @@ import {
   TextInputProps,
   View,
 } from 'react-native';
-import { Check } from '~assets/svgs';
 import { mergeStyles } from '../../utils/mergeStyles';
 
-import styles from './Input.module.scss';
+import { EyeOpen, EyeClosed } from '~assets/svgs';
+
+import styles from './PasswordInput.module.scss';
 import { colors } from '~assets/styles/color';
 
 type InputProps = {
@@ -18,16 +19,18 @@ type InputProps = {
   isError?: boolean;
 } & TextInputProps;
 
-const Input: FC<InputProps> = ({
+const PasswordInput: FC<InputProps> = ({
   placeholder,
   isDirty,
   isDisabled,
   isError,
+  secureTextEntry,
   onFocus,
   onBlur,
   ...props
 }) => {
   const [isFocus, setIsFocus] = useState(false);
+  const [secureText, setSecureText] = useState(secureTextEntry);
 
   const handleOnFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
     setIsFocus(true);
@@ -80,12 +83,17 @@ const Input: FC<InputProps> = ({
           onBlur={handleOnBlur}
           editable={isDisabled ? false : true}
           selectTextOnFocus={isDisabled ? false : true}
+          secureTextEntry={secureText}
           {...props}
         />
-        {isDirty && !isError ? <Check fill={colors.$Success} /> : null}
+        {secureText ? (
+          <EyeOpen onPress={() => setSecureText(!secureText)} fill={colors.$color600} />
+        ) : (
+          <EyeClosed onPress={() => setSecureText(!secureText)} />
+        )}
       </View>
     </View>
   );
 };
 
-export default Input;
+export default PasswordInput;

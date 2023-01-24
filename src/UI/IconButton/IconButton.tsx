@@ -1,15 +1,15 @@
-import React, { FC, useState } from 'react';
-import { Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
-import { getIcon } from '../../utils/getIcon';
+import React, { FC, PropsWithChildren, useState } from 'react';
+import { ActivityIndicator, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { mergeStyles } from '../../utils/mergeStyles';
 import styles from './IconButton.module.scss';
 
-type ButtonProps = {
-  variant: 'add' | 'send' | 'pray' | 'back' | 'exit' | 'cancel';
+type ButtonProps = PropsWithChildren<{
+  variant: 'circle' | 'square' | 'smallCircle1' | 'smallCircle2' | 'smallCircle3';
   isLoading?: boolean;
-} & TouchableOpacityProps;
+}> &
+  TouchableOpacityProps;
 
-const IconButton: FC<ButtonProps> = ({ variant, isLoading, disabled }) => {
+const IconButton: FC<ButtonProps> = ({ variant, isLoading, disabled, children }) => {
   const [pressIn, setPressIn] = useState(false);
 
   return (
@@ -26,7 +26,7 @@ const IconButton: FC<ButtonProps> = ({ variant, isLoading, disabled }) => {
         { style: styles[`button_wrapper_${variant}_pressed`], active: pressIn },
       )}
     >
-      {isLoading ? <Text>'loading '</Text> : getIcon(variant, disabled)}
+      {isLoading ? <ActivityIndicator /> : children}
     </TouchableOpacity>
   );
 };

@@ -1,6 +1,6 @@
 @import './../../assets/styles/variables.scss';
 
-.button_wrapper_add {
+.button_wrapper_circle {
     display:flex;
     justify-content:center;
     align-items: center;
@@ -12,7 +12,7 @@
     box-shadow: $Shadow2;
 }
 
-.button_wrapper_send {
+.button_wrapper_square {
     display:flex;
     justify-content:center;
     align-items: center;
@@ -23,7 +23,7 @@
     background-color: $color800;
 }
 
-.button_wrapper_pray {
+.button_wrapper_smallCircle2 {
     display:flex;
     justify-content:center;
     align-items: center;
@@ -34,7 +34,7 @@
     background-color: $color300;
 }
 
-.button_wrapper_back, .button_wrapper_exit {
+.button_wrapper_smallCircle1 {
     display:flex;
     justify-content:center;
     align-items: center;
@@ -57,20 +57,20 @@
     background-color: $color400;
 }
 
-.button_wrapper_add_disabled, 
-.button_wrapper_send_disabled {
+.button_wrapper_square_disabled, 
+.button_wrapper_circle_disabled {
     background-color: $color500;
 }
 
-.button_wrapper_pray_disabled, .button_wrapper_back_disabled, .button_wrapper_exit_disabled, .button_wrapper_cancel_disabled  {
+.button_wrapper_smallCircle1_disabled, .button_wrapper_smallCircle2_disabled, .button_wrapper_smallCircle3_disabled {
     background-color: $color300;
 }
 
-.button_wrapper_add_pressed, 
-.button_wrapper_send_pressed {
+.button_wrapper_square_pressed, 
+.button_wrapper_circle_pressed {
     background-color: $color700;
 }
 
-.button_wrapper_pray_pressed, .button_wrapper_back_pressed, .button_wrapper_exit_pressed, .button_wrapper_cancel_pressed  {
+.button_wrapper_smallCircle1_pressed, .button_wrapper_smallCircle2_pressed, .button_wrapper_smallCircle3_pressed {
     background-color: $color500;
 }
