@@ -9,8 +9,8 @@ module.exports = (async () => {
       babelTransformerPath: require.resolve('./transformer.js'),
     },
     resolver: {
-      assetExts: assetExts.filter(ext => ext !== 'svg'),
-      sourceExts: [...sourceExts, 'scss', 'sass', 'svg'],
+      assetExts,
+      sourceExts: [...sourceExts, 'scss', 'sass'],
     },
   };
 })();
