@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import PrayerCards from '~components/PrayerCards/PrayerCards';
+import PrayerCards from '@components/PrayerCards/PrayerCards';
 
 const Followed = () => {
   return (

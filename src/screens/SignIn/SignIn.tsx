@@ -1,16 +1,14 @@
 import React from 'react';
-import {
-  FormProvider,
-  SubmitErrorHandler,
-  SubmitHandler,
-  useForm,
-} from 'react-hook-form';
-import { Text, View } from 'react-native';
+import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
+import { ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native';
 
-import FormField from '~components/FormField';
-import Button from '~UI/Button';
-import Input from '~UI/Input';
-import PasswordInput from '~UI/PasswordInput';
+import FormField from '@components/FormField';
+import Button from '@UI/Button';
+import Input from '@UI/Input';
+import PasswordInput from '@UI/PasswordInput';
+import { validateEmail } from '@utils/validation';
+
+import backgroundImg from '@assets/images/background-1.png';
 
 import styles from './SignIn.module.scss';
 
@@ -24,74 +22,70 @@ const SignIn = () => {
     mode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<FormValues> = data => {
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log({ data });
   };
 
-  const onError: SubmitErrorHandler<FormValues> = errors => {
+  const onError: SubmitErrorHandler<FormValues> = (errors) => {
     return console.log(errors);
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Log in</Text>
-      <FormProvider control={control} handleSubmit={handleSubmit} {...formProps}>
-        <FormField
-          label="Email"
-          name="email"
-          rules={{
-            required: 'Email is required',
-            pattern: {
-              value: /\S+@\S+\.\S+/,
-              message: 'Enter correct e-mail',
-            },
-          }}
-          control={control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error, isDirty },
-          }) => (
-            <Input
-              isDirty={isDirty}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              isError={!!error}
-              placeholder="Enter your e-mail"
-            />
-          )}
-        />
-        <FormField
-          label="Password"
-          name="password"
-          rules={{
-            required: 'Password is required',
-            minLength: {
-              value: 5,
-              message: 'Password field must be at leat 5 characters',
-            },
-          }}
-          control={control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error, isDirty },
-          }) => (
-            <PasswordInput
-              isDirty={isDirty}
-              secureTextEntry
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              isError={!!error}
-              placeholder="Enter your password"
-            />
-          )}
-        />
-      </FormProvider>
-      <Button variant="primary" onPress={handleSubmit(onSubmit, onError)}>
-        Confirm
-      </Button>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ImageBackground source={backgroundImg} resizeMode="cover" style={styles.background}>
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          <View style={styles.formContainer}>
+            <Text style={styles.title}>Log in</Text>
+            <FormProvider control={control} handleSubmit={handleSubmit} {...formProps}>
+              <FormField
+                label="Email"
+                name="email"
+                rules={{
+                  required: 'Email is required',
+                  validate: validateEmail,
+                }}
+                control={control}
+                render={({ field: { onChange, onBlur, value }, fieldState: { error, isDirty } }) => (
+                  <Input
+                    value={value}
+                    isDirty={isDirty}
+                    isError={!!error}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    placeholder="Enter your e-mail"
+                  />
+                )}
+              />
+              <FormField
+                label="Password"
+                name="password"
+                rules={{
+                  required: 'Password is required',
+                  minLength: {
+                    value: 5,
+                    message: 'Password field must be at leat 5 characters',
+                  },
+                }}
+                control={control}
+                render={({ field: { onChange, onBlur, value }, fieldState: { error, isDirty } }) => (
+                  <PasswordInput
+                    value={value}
+                    isDirty={isDirty}
+                    isError={!!error}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    placeholder="Enter your password"
+                  />
+                )}
+              />
+            </FormProvider>
+            <Button variant="primary" onPress={handleSubmit(onSubmit, onError)}>
+              Confirm
+            </Button>
+          </View>
+        </ScrollView>
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 

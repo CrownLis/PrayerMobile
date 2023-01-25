@@ -2,9 +2,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { FC } from 'react';
 import { Text, View } from 'react-native';
 import Svg, { G, Path } from 'react-native-svg';
-import { colors } from '~assets/styles/color';
+import { colors } from '@assets/styles/color';
 import HomePage from '../../screens/home';
-import SecondPage from '../../screens/second';
 
 import styles from './TabNavigator.module.scss';
 const TabNavigator: FC = () => {

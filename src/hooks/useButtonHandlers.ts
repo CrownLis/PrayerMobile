@@ -1,10 +1,10 @@
 import { GestureResponderEvent } from 'react-native';
 import { useCallback, useState } from 'react';
 
-export const useButtonHandlers = (
-  onPressIn: (event: GestureResponderEvent) => void,
-  onPressOut: (event: GestureResponderEvent) => void,
-  onPress: (event: GestureResponderEvent) => void,
+const useButtonHandlers = (
+  onPressIn?: (event: GestureResponderEvent) => void,
+  onPressOut?: (event: GestureResponderEvent) => void,
+  onPress?: (event: GestureResponderEvent) => void,
   isLoading?: boolean,
 ) => {
   const [isPressed, setIsPressed] = useState(false);
@@ -38,3 +38,5 @@ export const useButtonHandlers = (
 
   return { pressHandler, pressInHandler, pressOutHandler, isPressed };
 };
+
+export default useButtonHandlers;

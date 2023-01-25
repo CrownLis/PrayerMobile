@@ -1,98 +1,55 @@
 import React, { FC, useState } from 'react';
-import {
-  NativeSyntheticEvent,
-  TextInput,
-  TextInputFocusEventData,
-  TextInputProps,
-  View,
-} from 'react-native';
-import { mergeStyles } from '../../utils/mergeStyles';
+import { TouchableOpacity } from 'react-native';
 
-import { EyeOpen, EyeClosed } from '~assets/svgs';
+import Input, { InputProps } from '@UI/Input/Input';
+import useInputHandlers from '@hooks/useInputHandlers';
+import EyeClosedIcon from '@assets/svgs/EyeClosed';
+import EyeOpenIcon from '@assets/svgs/EyeOpen';
+import { colors } from '@assets/styles/color';
 
 import styles from './PasswordInput.module.scss';
-import { colors } from '~assets/styles/color';
 
-type InputProps = {
-  isDisabled?: boolean;
-  isDirty?: boolean;
-  isError?: boolean;
-} & TextInputProps;
+type PasswordInputProps = Omit<InputProps, 'secureTextEntry' | 'onPressRightIcon'>;
 
-const PasswordInput: FC<InputProps> = ({
-  placeholder,
-  isDirty,
-  isDisabled,
-  isError,
-  secureTextEntry,
-  onFocus,
-  onBlur,
-  ...props
-}) => {
-  const [isFocus, setIsFocus] = useState(false);
-  const [secureText, setSecureText] = useState(secureTextEntry);
+const PasswordInput: FC<PasswordInputProps> = ({ style, isDirty, isDisabled, isError, onFocus, onBlur, ...props }) => {
+  const { focusHandler, blurHandler, isFocus } = useInputHandlers(onFocus, onBlur);
 
-  const handleOnFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setIsFocus(true);
-    onFocus?.(e);
-  };
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleOnBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setIsFocus(false);
-    onBlur?.(e);
+  const getIconColor = () => {
+    if (isDisabled) {
+      return colors.$color500;
+    } else if (isError) {
+      return colors.$Error;
+    } else if (isDirty) {
+      return colors.$Success;
+    } else if (isFocus) {
+      return colors.$color800;
+    } else {
+      return colors.$color600;
+    }
   };
 
   return (
-    <View style={styles.container}>
-      <View
-        style={mergeStyles(
-          { style: styles.inputContainer, active: true },
-          {
-            style: styles.inputContainer_disabled,
-            active: !!isDisabled,
-          },
-          {
-            style: styles.inputContainer_correct,
-            active: Boolean(isDirty),
-          },
-          {
-            style: styles.inputContainer_error,
-            active: !!isError,
-          },
-        )}
-      >
-        <TextInput
-          style={mergeStyles(
-            { style: styles.customInput, active: true },
-            {
-              style: styles.customInput_disabled,
-              active: !!isDisabled,
-            },
-            {
-              style: styles.customInput_correct,
-              active: Boolean(isDirty),
-            },
-            {
-              style: styles.customInput_error,
-              active: !!isError,
-            },
+    <Input
+      isDirty={isDirty}
+      isDisabled={isDisabled}
+      isError={isError}
+      secureTextEntry={!showPassword}
+      style={[styles.passwordInput, style]}
+      onFocus={focusHandler}
+      onBlur={blurHandler}
+      postfix={
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          {showPassword ? (
+            <EyeOpenIcon width={20} height={20} fill={getIconColor()} />
+          ) : (
+            <EyeClosedIcon width={20} height={20} fill={getIconColor()} />
           )}
-          placeholderTextColor={styles.placeholder.color}
-          placeholder={placeholder}
-          onFocus={handleOnFocus}
-          onBlur={handleOnBlur}
-          editable={isDisabled ? false : true}
-          selectTextOnFocus={isDisabled ? false : true}
-          secureTextEntry={secureText}
-          {...props}
-        />
-        {secureText ? (
-          <EyeOpen onPress={() => setSecureText(!secureText)} fill={colors.$color600} />
-        ) : (
-          <EyeClosed onPress={() => setSecureText(!secureText)} />
-        )}
-      </View>
-    </View>
+        </TouchableOpacity>
+      }
+      {...props}
+    />
   );
 };
 

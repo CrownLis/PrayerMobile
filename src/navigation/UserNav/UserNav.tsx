@@ -2,15 +2,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { FC } from 'react';
 import { Text, View } from 'react-native';
 
-import SignIn from '~screens/SignIn';
-import SignUp from '~screens/SignUp';
-import Followed from '~screens/Followed';
+import SignIn from '@screens/SignIn';
+import SignUp from '@screens/SignUp';
+import Followed from '@screens/Followed';
 
-import { UsersDesks, Subscribers, MyDesk } from '~assets/svgs';
+import { colors } from '@assets/styles/color';
+import { UsersDesks, Subscribers, MyDesk } from '@assets/svgs';
 
-import '~assets/styles/color';
 import styles from './UserNav.module.scss';
-import { colors } from '~assets/styles/color';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,11 +38,7 @@ const UserNav: FC = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.navigation}>
-              <MyDesk
-                width={24}
-                height={24}
-                fill={focused ? colors.$color800 : colors.$color600}
-              />
+              <MyDesk width={24} height={24} fill={focused ? colors.$color800 : colors.$color600} />
               <Text>My Desk</Text>
             </View>
           ),
