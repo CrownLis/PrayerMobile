@@ -1,10 +1,10 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { ActivityIndicator, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
-import { mergeStyles } from '@utils/mergeStyles';
+import { mergeStyles } from '@/utils/mergeStyles';
+import useButtonHandlers from '@/hooks/useButtonHandlers';
 
 import styles from './IconButton.module.scss';
-import useButtonHandlers from '@hooks/useButtonHandlers';
 
 type ButtonProps = PropsWithChildren<{
   variant: 'circle' | 'square' | 'smallCircle1' | 'smallCircle2' | 'smallCircle3';

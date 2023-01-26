@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
-import Input, { InputProps } from '@UI/Input/Input';
-import { mergeStyles } from '@utils/mergeStyles';
+import Input, { InputProps } from '@/UI/Input/Input';
+import { mergeStyles } from '@/utils/mergeStyles';
 
 import styles from './CommentInput.module.scss';
 

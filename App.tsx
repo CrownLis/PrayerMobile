@@ -1,17 +1,16 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { colors } from '@assets/styles/color';
+import Navigator from '@/navigation/Navigator';
+import { colors } from '@/assets/styles/color';
 
-import withAuthNavigation from '@hoc/withAuthNavigation';
-
-type Props = PropsWithChildren<void>;
-
-const App = ({ children }: Props) => {
+const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <NavigationContainer>{children}</NavigationContainer>
+      <NavigationContainer>
+        <Navigator />
+      </NavigationContainer>
     </SafeAreaView>
   );
 };
@@ -23,4 +22,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withAuthNavigation(App);
+export default App;

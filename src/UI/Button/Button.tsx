@@ -1,8 +1,8 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
-import useButtonHandlers from '@hooks/useButtonHandlers';
-import { mergeStyles } from '@utils/mergeStyles';
+import useButtonHandlers from '@/hooks/useButtonHandlers';
+import { mergeStyles } from '@/utils/mergeStyles';
 
 import styles from './Button.module.scss';
 

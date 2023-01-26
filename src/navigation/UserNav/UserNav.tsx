@@ -1,13 +1,13 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { FC } from 'react';
 import { Text, View } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import SignIn from '@screens/SignIn';
-import SignUp from '@screens/SignUp';
-import Followed from '@screens/Followed';
+import SignIn from '@/screens/SignIn';
+import SignUp from '@/screens/SignUp';
+import Followed from '@/screens/Followed';
 
-import { colors } from '@assets/styles/color';
-import { UsersDesks, Subscribers, MyDesk } from '@assets/svgs';
+import { colors } from '@/assets/styles/color';
+import { UsersDesks, Subscribers, MyDesk } from '@/assets/svgs';
 
 import styles from './UserNav.module.scss';
 

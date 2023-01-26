@@ -1,11 +1,11 @@
 import React, { FC, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 
-import Input, { InputProps } from '@UI/Input/Input';
-import useInputHandlers from '@hooks/useInputHandlers';
-import EyeClosedIcon from '@assets/svgs/EyeClosed';
-import EyeOpenIcon from '@assets/svgs/EyeOpen';
-import { colors } from '@assets/styles/color';
+import Input, { InputProps } from '@/UI/Input/Input';
+import useInputHandlers from '@/hooks/useInputHandlers';
+import EyeClosedIcon from '@/assets/svgs/EyeClosed';
+import EyeOpenIcon from '@/assets/svgs/EyeOpen';
+import { colors } from '@/assets/styles/color';
 
 import styles from './PasswordInput.module.scss';
 

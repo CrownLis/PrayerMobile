@@ -2,13 +2,13 @@ import React from 'react';
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import { ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native';
 
-import FormField from '@components/FormField';
-import Button from '@UI/Button';
-import Input from '@UI/Input';
-import PasswordInput from '@UI/PasswordInput';
-import { validateEmail } from '@utils/validation';
+import FormField from '@/components/FormField';
+import Button from '@/UI/Button';
+import Input from '@/UI/Input';
+import PasswordInput from '@/UI/PasswordInput';
+import { validateEmail } from '@/utils/validation';
 
-import backgroundImg from '@assets/images/background-1.png';
+import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './SignIn.module.scss';
 

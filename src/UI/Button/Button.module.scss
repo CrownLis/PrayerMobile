@@ -46,7 +46,7 @@
 }
 
 .button_text {
-    @include typography($main,16,500);
+    @include typography($main,16px,500);
 }
 
 .button_text_primary {

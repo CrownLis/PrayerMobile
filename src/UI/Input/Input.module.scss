@@ -9,7 +9,7 @@
 }
 
 .customInput {
-    @include typography($main,16,400);
+    @include typography($main,16px,400);
     width: 100%;
     color: $color600;
     padding: 0 0 12px 0;

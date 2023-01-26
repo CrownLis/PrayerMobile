@@ -1,4 +1,4 @@
-@mixin typography($family,$size,$weight,$style:normal) {
+@mixin typography($family, $size, $weight, $style: normal) {
     font-family: $family;
     font-weight: $weight;
     font-style: $style;

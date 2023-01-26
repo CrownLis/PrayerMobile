@@ -24,7 +24,7 @@
 }
 
 .title {
-    @include typography($main,28,700);
+    @include typography($main,28px,700);
     color: $color800;
     margin-bottom: 28px;
 }
