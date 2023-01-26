@@ -1,4 +1,5 @@
 @import './../../assets/styles/variables.scss';
+@import './../../assets/styles/mixins.scss';
 
 .container {
     display: flex;
@@ -8,12 +9,9 @@
 }
 
 .label {
-    font-style: $main;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 22px;
+    @include typography($main,16px,600);
     color: $color700;
-    margin-bottom: 12px;;
+    margin-bottom: 4px;
 }
 
 .error {

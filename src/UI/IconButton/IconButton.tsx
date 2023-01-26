@@ -1,32 +1,40 @@
-import React, {ButtonHTMLAttributes, FC, useState} from 'react';
-import {Text, TouchableOpacity} from 'react-native';
-import {getIcon} from '../../utils/getIcon';
-import {mergeStyles} from '../../utils/mergeStyles';
+import React, { FC, PropsWithChildren } from 'react';
+import { ActivityIndicator, TouchableOpacity, TouchableOpacityProps } from 'react-native';
+
+import { mergeStyles } from '@/utils/mergeStyles';
+import useButtonHandlers from '@/hooks/useButtonHandlers';
+
 import styles from './IconButton.module.scss';
 
-type ButtonProps = {
-  variant: 'add' | 'send' | 'pray' | 'back' | 'exit' | 'cancel';
+type ButtonProps = PropsWithChildren<{
+  variant: 'circle' | 'square' | 'smallCircle1' | 'smallCircle2' | 'smallCircle3';
   isLoading?: boolean;
-  isDisabled?: boolean;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
+}> &
+  TouchableOpacityProps;
 
-const IconButton: FC<ButtonProps> = ({variant, isLoading, isDisabled}) => {
-  const [pressIn, setPressIn] = useState(false);
-
+const IconButton: FC<ButtonProps> = ({ variant, isLoading, disabled, children, onPress, onPressIn, onPressOut }) => {
+  const { isPressed, pressHandler, pressInHandler, pressOutHandler } = useButtonHandlers(
+    onPressIn,
+    onPressOut,
+    onPress,
+    isLoading,
+  );
   return (
     <TouchableOpacity
-      disabled={isDisabled}
-      onPressIn={() => setPressIn(true)}
-      onPressOut={() => setPressIn(false)}
+      disabled={disabled}
+      onPress={pressHandler}
+      onPressIn={pressInHandler}
+      onPressOut={pressOutHandler}
       style={mergeStyles(
         {
           style: styles[`button_wrapper_${variant}`],
           active: true,
         },
-        {style: styles[`button_wrapper_${variant}_disabled`], active: isDisabled},
-        {style: styles[`button_wrapper_${variant}_pressed`], active: pressIn},
-      )}>
-      {isLoading ? <Text>'loading '</Text> : getIcon(variant, isDisabled)}
+        { style: styles[`button_wrapper_${variant}_disabled`], active: disabled ?? true },
+        { style: styles[`button_wrapper_${variant}_pressed`], active: isPressed },
+      )}
+    >
+      {isLoading ? <ActivityIndicator /> : children}
     </TouchableOpacity>
   );
 };

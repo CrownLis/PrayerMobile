@@ -1,54 +1,65 @@
-import React, { ButtonHTMLAttributes, FC, PropsWithChildren, useState } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
-import { mergeStyles } from '../../utils/mergeStyles';
+import React, { FC, PropsWithChildren } from 'react';
+import { ActivityIndicator, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
+
+import useButtonHandlers from '@/hooks/useButtonHandlers';
+import { mergeStyles } from '@/utils/mergeStyles';
+
 import styles from './Button.module.scss';
 
 type ButtonProps = PropsWithChildren<
   {
     variant: 'primary' | 'secondary' | 'text';
     isLoading?: boolean;
-    isDisabled?: boolean;
-    isExit?: boolean;
-    onPress: () => {};
-  } & ButtonHTMLAttributes<HTMLButtonElement>
+  } & TouchableOpacityProps
 >;
 
 const Button: FC<ButtonProps> = ({
   children,
   variant,
+  disabled,
   isLoading,
-  isDisabled,
-  isExit,
   onPress,
+  onPressIn,
+  onPressOut,
+  style,
+  ...props
 }) => {
-  const [pressIn, setPressIn] = useState(false);
+  const { isPressed, pressHandler, pressInHandler, pressOutHandler } = useButtonHandlers(
+    onPressIn,
+    onPressOut,
+    onPress,
+    isLoading,
+  );
 
   return (
     <TouchableOpacity
-      disabled={isDisabled}
-      onPress={onPress}
-      onPressIn={() => setPressIn(true)}
-      onPressOut={() => setPressIn(false)}
-      style={mergeStyles(
-        { style: styles.button_wrapper, active: true },
-        { style: styles[`button_wrapper_${variant}`], active: true },
-        {
-          style: styles[`button_wrapper_${variant}_disabled`],
-          active: isDisabled ? true : false,
-        },
-        { style: styles[`button_wrapper_${variant}_press`], active: pressIn },
-      )}
+      disabled={disabled}
+      onPress={pressHandler}
+      onPressIn={pressInHandler}
+      onPressOut={pressOutHandler}
+      style={[
+        mergeStyles(
+          { style: styles.button_wrapper, active: true },
+          { style: styles[`button_wrapper_${variant}`], active: true },
+          {
+            style: styles[`button_wrapper_${variant}_disabled`],
+            active: disabled ? true : false,
+          },
+          { style: styles[`button_wrapper_${variant}_press`], active: isPressed },
+        ),
+        style,
+      ]}
+      {...props}
     >
       <Text
         style={mergeStyles(
           { style: styles.button_text, active: true },
           { style: styles[`button_text_${variant}`], active: true },
-          { style: styles.button_text_exit, active: !!isExit },
-          { style: styles[`button_text_${variant}_disabled`], active: !!isDisabled },
-          { style: styles[`button_text_${variant}_press`], active: pressIn },
+          { style: styles[`button_text_${variant}_disabled`], active: !!disabled },
+          { style: styles[`button_text_${variant}_press`], active: isPressed },
         )}
       >
-        {isLoading ? <Text>loading</Text> : children}
+        {isLoading ? <ActivityIndicator /> : children}
       </Text>
     </TouchableOpacity>
   );

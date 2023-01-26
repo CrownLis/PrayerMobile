@@ -8,15 +8,7 @@ type FormFieldProps<FormValues extends FieldValues = any> = {
   label: string;
 } & ControllerProps<FormValues>;
 
-const FormField: FC<FormFieldProps> = ({
-  name,
-  label,
-  rules,
-  defaultValue,
-  control,
-  shouldUnregister,
-  render,
-}) => {
+const FormField: FC<FormFieldProps> = ({ name, label, rules, defaultValue, control, shouldUnregister, render }) => {
   const { fieldState } = useController({
     control,
     shouldUnregister,

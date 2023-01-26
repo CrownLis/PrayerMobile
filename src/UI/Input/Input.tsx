@@ -1,22 +1,18 @@
-import React, { FC, useEffect, useState } from 'react';
-import {
-  NativeSyntheticEvent,
-  TextInput,
-  TextInputFocusEventData,
-  TextInputProps,
-  View,
-} from 'react-native';
-import { mergeStyles } from '../../utils/mergeStyles';
-import CheckIcon from '~assets/icons/check.svg';
-import EyeIcon from '~assets/icons/eye-open.svg';
-import EyeClosedIcon from '~assets/icons/eye-closed.svg';
+import React, { FC, useMemo } from 'react';
+import { TextInput, TextInputProps, View } from 'react-native';
+
+import { mergeStyles } from '@/utils/mergeStyles';
+import useInputHandlers from '@/hooks/useInputHandlers';
+import CheckIcon from '@/assets/svgs/Check';
+import { colors } from '@/assets/styles/color';
 
 import styles from './Input.module.scss';
 
-type InputProps = {
+export type InputProps = {
   isDisabled?: boolean;
   isDirty?: boolean;
   isError?: boolean;
+  postfix?: React.ReactNode;
 } & TextInputProps;
 
 const Input: FC<InputProps> = ({
@@ -27,99 +23,54 @@ const Input: FC<InputProps> = ({
   secureTextEntry,
   onFocus,
   onBlur,
+  style,
+  postfix,
   ...props
 }) => {
-  const [isFocus, setIsFocus] = useState(false);
-  const [showPassword, setShowPassword] = useState(secureTextEntry ? true : false);
-  useEffect(() => {
-    setIcon();
-  }, [isDirty, isError, showPassword]);
+  const { focusHandler, blurHandler, isFocus } = useInputHandlers(onFocus, onBlur);
 
-  const setIcon = () => {
+  const resolvedPostfix = useMemo(() => {
     if (isDirty && !isError) {
-      return <CheckIcon fill="#39C622" />;
+      return <CheckIcon width={20} height={20} fill={colors.$Success} />;
     }
-    if (secureTextEntry) {
-      if (isDisabled) {
-        <EyeIcon fill="#CFCFCF" />;
-      } else if (showPassword && !isFocus) {
-        return (
-          <EyeClosedIcon fill="#CFCFCF" onPress={() => setShowPassword(!showPassword)} />
-        );
-      } else if (!showPassword && !isFocus) {
-        return <EyeIcon fill="#CFCFCF" onPress={() => setShowPassword(!showPassword)} />;
-      } else if (showPassword && isDirty && isError) {
-        return (
-          <EyeClosedIcon fill="#C2534C" onPress={() => setShowPassword(!showPassword)} />
-        );
-      } else if (!showPassword && isDirty && isError) {
-        return <EyeIcon fill="#C2534C" onPress={() => setShowPassword(!showPassword)} />;
-      } else if (showPassword) {
-        return <EyeIcon onPress={() => setShowPassword(!showPassword)} fill="#2A2A2A" />;
-      } else if (!showPassword) {
-        return (
-          <EyeClosedIcon onPress={() => setShowPassword(!showPassword)} fill="#2A2A2A" />
-        );
-      }
-    }
-  };
-
-  const handleOnFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setIsFocus(true);
-    onFocus?.(e);
-  };
-
-  const handleOnBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setIsFocus(false);
-    onBlur?.(e);
-  };
+    return postfix;
+  }, [isDirty, isError, postfix]);
 
   return (
-    <View style={styles.container}>
-      <View
-        style={mergeStyles(
-          { style: styles.inputContainer, active: true },
-          {
-            style: styles.inputContainer_disabled,
-            active: !!isDisabled,
-          },
-          {
-            style: styles.inputContainer_correct,
-            active: Boolean(isDirty),
-          },
-          {
-            style: styles.inputContainer_error,
-            active: !!isError,
-          },
-        )}
-      >
-        <TextInput
-          style={mergeStyles(
+    <View style={mergeStyles({ style: styles.inputContainer, active: true })}>
+      <TextInput
+        style={[
+          mergeStyles(
             { style: styles.customInput, active: true },
+            {
+              style: styles.customInput_active,
+              active: !!isFocus,
+            },
             {
               style: styles.customInput_disabled,
               active: !!isDisabled,
             },
             {
               style: styles.customInput_correct,
-              active: Boolean(isDirty),
+              active: !!isDirty,
             },
             {
               style: styles.customInput_error,
               active: !!isError,
             },
-          )}
-          placeholderTextColor={styles.placeholder.color}
-          placeholder={placeholder}
-          onFocus={handleOnFocus}
-          onBlur={handleOnBlur}
-          editable={isDisabled ? false : true}
-          selectTextOnFocus={isDisabled ? false : true}
-          secureTextEntry={showPassword}
-          {...props}
-        />
-        {setIcon()}
-      </View>
+          ),
+          style,
+        ]}
+        placeholderTextColor={colors.$color600}
+        placeholder={placeholder}
+        onFocus={focusHandler}
+        onBlur={blurHandler}
+        editable={!isDisabled}
+        selectTextOnFocus={!isDisabled}
+        secureTextEntry={secureTextEntry}
+        {...props}
+      />
+      {resolvedPostfix ? <View style={styles.postfix}>{resolvedPostfix}</View> : null}
     </View>
   );
 };

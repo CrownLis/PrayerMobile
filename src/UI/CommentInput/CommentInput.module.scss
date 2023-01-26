@@ -1,0 +1,14 @@
+@import './../../assets/styles/variables.scss';
+
+.commentInput {
+    min-height: 56px;
+    padding: 17px 22px;
+    background-color: $color300;
+    border-bottom-width: 0px;
+    border-radius: 16px;
+}
+
+.commentInput_disabled {
+    color: $color400;
+    background-color: $color200;
+}

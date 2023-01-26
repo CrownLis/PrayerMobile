@@ -1,43 +1,23 @@
 @import './../../assets/styles/variables.scss';
+@import './../../assets/styles/mixins.scss';
 
-.container {
+.inputContainer {
+    position: relative;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 100%;
 }
 
-.inputContainer {
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-     border-bottom-color: $color600;
-    border-bottom-width: 1px;
-}
-
-.inputContainer_disabled {
-    border-bottom-color: $color500;
-}
-
-.inputContainer_correct {
-    border-bottom-color: $Success;
-}
-
-.inputContainer_error {
-    border-bottom-color: $Error;
-}
-
 .customInput {
-    font-style: $main;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 22px;
+    @include typography($main,16px,400);
+    width: 100%;
     color: $color600;
-    max-width:100%;
-    border-style: solid;
     padding: 0 0 12px 0;
     margin: 0;
     text-decoration: none;
+    border-style: solid;
+    border-bottom-color: $color600;
+    border-bottom-width: 1px;
 }
 
 .customInput_active {
@@ -47,16 +27,21 @@
 
 .customInput_disabled {
     color: $color500;
+    border-bottom-color: $color500;
 }
 
 .customInput_correct {
     color: $Success;
+    border-bottom-color: $Success;
 }
 
 .customInput_error {
     color: $Error;
+    border-bottom-color: $Error;
 }
 
-.placeholder {
-    color: $color600;
+.postfix {
+    position: absolute;
+    right: 0;
+    top: 8px;
 }

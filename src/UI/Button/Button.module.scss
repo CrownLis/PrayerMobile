@@ -1,11 +1,12 @@
 @import './../../assets/styles/variables.scss';
+@import './../../assets/styles/mixins.scss';
 
 .button_wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 16px 20px;
-    border:0;
+    border: 0;
     border-radius: 18px;
 }
 
@@ -18,7 +19,7 @@
 }
 
 .button_wrapper_text_disabled {
-    color:$color600
+    color: $color600
 }
 
 .button_wrapper_primary_press {
@@ -36,18 +37,16 @@
 
 .button_wrapper_secondary {
     background-color: $color300;
-    padding:12px;
+    padding: 12px;
 }
 
 .button_wrapper_text {
-    padding:20px;
+    padding: 20px;
     background-color: transparent;
 }
 
 .button_text {
-    font-size: 22px;
-    font-family: $main;
-    font-weight: 500;
+    @include typography($main,16px,500);
 }
 
 .button_text_primary {
@@ -59,17 +58,13 @@
 }
 
 .button_text_text {
-    color:$OrangeIndicator;
+    color: $OrangeIndicator;
 }
 
 .button_text_text_press {
-    color:$Error;
+    color: $Error;
 }
 
 .button_text_text_disabled {
-    color:$color600;
-}
-
-.button_text_exit {
-    color: $Error;
+    color: $color600;
 }
