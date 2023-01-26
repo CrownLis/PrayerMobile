@@ -1,0 +1,22 @@
+@import './../../assets/styles/variables.scss';
+@import './../../assets/styles/mixins.scss';
+
+.container {
+    padding:24px;
+    box-shadow: $Shadow1;
+    border:0;
+    border-radius: 24px;
+    background-color: $color100;
+    .title {
+    @include typography($main,28px,600);
+    color:$color800;
+    }
+    .title_disabled {
+    color: $color400;
+}
+}
+
+.container_pressed {
+    background-color: $color300;
+}
+
