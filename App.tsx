@@ -1,17 +1,23 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { Provider } from 'react-redux';
 
 import Navigator from '@/navigation/Navigator';
 import { colors } from '@/assets/styles/color';
+import configureStore from '@/store/configureStore';
 
 const App = () => {
+  const { store, persistor } = configureStore();
+
   return (
-    <SafeAreaView style={styles.container}>
-      <NavigationContainer>
-        <Navigator />
-      </NavigationContainer>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={styles.container}>
+        <NavigationContainer>
+          <Navigator />
+        </NavigationContainer>
+      </SafeAreaView>
+    </Provider>
   );
 };
 
