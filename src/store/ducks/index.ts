@@ -1,9 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers } from 'redux';
-import { authReducer } from './auth/reducer';
 import { all } from 'redux-saga/effects';
 import { persistReducer } from 'redux-persist';
-import * as authSaga from './auth/saga';
+
+import {
+  reducer as authReducer,
+  saga as authSaga,
+  actions as authActions,
+  selectors as authSelector,
+  routines as authRoutines,
+} from './auth';
 
 const authPersistConfig = {
   key: 'auth',
@@ -17,5 +23,17 @@ export const rootReducer = combineReducers({
 });
 
 export function* rootSaga() {
-  yield all([authSaga]);
+  yield all([authSaga()]);
 }
+
+export const rootActions = {
+  auth: authActions,
+};
+
+export const rootSelectors = {
+  auth: authSelector,
+};
+
+export const rootRoutines = {
+  auth: authRoutines,
+};

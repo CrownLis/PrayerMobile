@@ -11,6 +11,10 @@ import { validateEmail } from '@/utils/validation';
 import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './SignUp.module.scss';
+import { useAppDispatch } from '@/store/hooks';
+import { rootRoutines } from '@/store/ducks';
+import { GuestStackParamList } from '@/navigation/GuestNav/GuestNav';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type FormValues = {
   name: string;
@@ -19,11 +23,15 @@ type FormValues = {
   confirmPassword: string;
 };
 
-const SignUp = () => {
+type Props = NativeStackScreenProps<GuestStackParamList, 'Sign Up'>;
+
+const SignUp = ({ navigation }: Props) => {
+  const dispatch = useAppDispatch();
   const { control, watch, handleSubmit, ...formProps } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log({ data });
+    dispatch(rootRoutines.auth.signUp({ email: data.email, name: data.name, password: data.password }));
+    navigation.navigate('Sign Up', undefined);
   };
 
   const onError: SubmitErrorHandler<FormValues> = (errors) => {
@@ -123,6 +131,12 @@ const SignUp = () => {
             <Button variant="primary" onPress={handleSubmit(onSubmit, onError)}>
               Confirm
             </Button>
+            <Text style={styles.signIn}>
+              Already have an account?{' '}
+              <Text style={styles.signIn_link} onPress={() => navigation.navigate('Sign In', undefined)}>
+                Log in
+              </Text>
+            </Text>
           </View>
         </ScrollView>
       </ImageBackground>

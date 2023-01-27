@@ -4,7 +4,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignUp from '@/screens/SignUp';
 import SignIn from '@/screens/SignIn';
 
-const Stack = createNativeStackNavigator();
+export type GuestStackParamList = {
+  'Sign In': undefined;
+  'Sign Up': undefined;
+};
+
+const Stack = createNativeStackNavigator<GuestStackParamList>();
 
 const GuestNav = () => {
   return (

@@ -11,19 +11,27 @@ import { validateEmail } from '@/utils/validation';
 import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './SignIn.module.scss';
+import { useAppDispatch } from '@/store/hooks';
+import { rootRoutines } from '@/store/ducks';
+import { GuestStackParamList } from '@/navigation/GuestNav/GuestNav';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type FormValues = {
   email: string;
   password: string;
 };
 
-const SignIn = () => {
+type Props = NativeStackScreenProps<GuestStackParamList, 'Sign In'>;
+
+const SignIn = ({ navigation }: Props) => {
+  const dispatch = useAppDispatch();
+
   const { control, handleSubmit, ...formProps } = useForm<FormValues>({
     mode: 'onChange',
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log({ data });
+    dispatch(rootRoutines.auth.signIn(data));
   };
 
   const onError: SubmitErrorHandler<FormValues> = (errors) => {
@@ -82,6 +90,12 @@ const SignIn = () => {
             <Button variant="primary" onPress={handleSubmit(onSubmit, onError)}>
               Confirm
             </Button>
+            <Text style={styles.signUp}>
+              Don`t have an account?{' '}
+              <Text style={styles.signUp_link} onPress={() => navigation.navigate('Sign Up', undefined)}>
+                Sign up
+              </Text>
+            </Text>
           </View>
         </ScrollView>
       </ImageBackground>

@@ -2,6 +2,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import { persistStore } from 'redux-persist';
+
 import { rootReducer, rootSaga } from './ducks';
 
 const configureStore = () => {
@@ -20,3 +21,4 @@ export default configureStore;
 
 export type AppDispatch = ReturnType<typeof configureStore>['store']['dispatch'];
 export type AppStore = ReturnType<typeof configureStore>['store'];
+export type AppState = ReturnType<AppStore['getState']>;

@@ -1,30 +1,31 @@
 import { UnifiedRoutine } from 'redux-saga-routines';
 import { Action } from 'redux';
 
-type RoutineType = UnifiedRoutine<(payload?: any) => Action<any>>;
-type StateType = Record<string, any>;
+import { BaseState } from './createReducer';
 
-export const handleTrigger = (routine: RoutineType) => {
+type RoutineType = UnifiedRoutine<(payload?: any) => Action<any>>;
+
+export const handleTrigger = <State extends BaseState>(routine: RoutineType) => {
   return {
-    [routine.TRIGGER]: (state: StateType) => ({
+    [routine.TRIGGER]: (state: State) => ({
       ...state,
       error: null,
     }),
   };
 };
 
-export const handleRequest = (routine: RoutineType) => {
+export const handleRequest = <State extends BaseState>(routine: RoutineType) => {
   return {
-    [routine.REQUEST]: (state: StateType) => ({
+    [routine.REQUEST]: (state: State) => ({
       ...state,
       loading: true,
     }),
   };
 };
 
-export const handleSuccess = (routine: RoutineType) => {
+export const handleSuccess = <State extends BaseState, Payload extends { payload: any }>(routine: RoutineType) => {
   return {
-    [routine.SUCCESS]: (state: StateType, { payload }) => ({
+    [routine.SUCCESS]: (state: State, { payload }: Payload) => ({
       ...state,
       data: payload,
       error: null,
@@ -32,18 +33,18 @@ export const handleSuccess = (routine: RoutineType) => {
   };
 };
 
-export const handleFailure = (routine: RoutineType) => {
+export const handleFailure = <State extends BaseState, Payload extends { payload: any }>(routine: RoutineType) => {
   return {
-    [routine.FAILURE]: (state: StateType, { payload }) => ({
+    [routine.FAILURE]: (state: State, { payload }: Payload) => ({
       ...state,
       error: payload,
     }),
   };
 };
 
-export const handleFulfill = (routine: RoutineType) => {
+export const handleFulfill = <State extends BaseState>(routine: RoutineType) => {
   return {
-    [routine.FULFILL]: (state: StateType) => ({
+    [routine.FULFILL]: (state: State) => ({
       ...state,
       loading: false,
     }),

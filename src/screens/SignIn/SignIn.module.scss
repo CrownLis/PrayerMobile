@@ -27,4 +27,16 @@
     @include typography($main,28px,700);
     color: $color800;
     margin-bottom: 28px;
+    line-height: 39px;
+}
+
+.signUp {
+    margin: 0px auto;
+    @include typography($main,16px,400);
+    line-height: 39px;
+    color:$color700;
+    .signUp_link {
+        @include typography($main,16px,500);
+        color:$OrangeIndicator;
+    }
 }

@@ -1,9 +1,11 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { SignInPayload, SignUpPayload } from '@/types/payload';
+import { SignInResponse, SignUpResponse } from '@/types/response';
 
 const prayerApi = axios.create({
-  baseURL: 'https://localhost:3000',
+  baseURL: 'https://c792-217-25-222-241.eu.ngrok.io',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -24,11 +26,11 @@ prayerApi.interceptors.request.use(
 );
 
 export const signUpRequest = async (values: SignUpPayload) => {
-  const response = await prayerApi.post('/auth/sign-ip', values);
+  const response = await prayerApi.post<SignUpResponse>('/auth/sign-up', values);
   return response;
 };
 
 export const signInRequest = async (values: SignInPayload) => {
-  const response = await prayerApi.post('/auth/sign-in', values);
+  const response = await prayerApi.post<SignInResponse>('/auth/sign-in', values);
   return response;
 };

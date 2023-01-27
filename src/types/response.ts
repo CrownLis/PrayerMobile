@@ -1,13 +1,13 @@
-import { ColumnData } from './data';
+import { ColumnDataType } from './data';
 
 export type SignInResponse = {
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string;
   id: number;
   email: string;
   name: string;
   token: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
 };
 
 export type SignUpResponse = {
@@ -15,7 +15,7 @@ export type SignUpResponse = {
   name: string;
   password: string;
   token: string;
-  columns: ColumnData[];
+  columns: ColumnDataType[];
   deletedAt: null | string;
   createdAt: string;
   updatedAt: string;
