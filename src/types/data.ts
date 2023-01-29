@@ -9,3 +9,10 @@ export type ColumnDataType = {
 };
 
 export type UserType = Record<string, any>;
+
+export type DeskType = {
+  createdAt: string;
+  updatedAt: string;
+  id: number;
+  name: string;
+};

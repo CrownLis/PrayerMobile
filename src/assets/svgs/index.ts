@@ -1,3 +1,4 @@
+export { default as Greet } from './Greet';
 export { default as Arrow } from './Arrow';
 export { default as Back } from './Back';
 export { default as CheckSubscribe } from './CheckSubscribe';

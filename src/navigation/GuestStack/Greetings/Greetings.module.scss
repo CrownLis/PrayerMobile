@@ -1,0 +1,13 @@
+.container {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height:100%;
+    position: relative;
+    margin:0 24px;
+.button {
+    position: absolute;
+    margin:12px; 
+    bottom:0px;
+}
+}

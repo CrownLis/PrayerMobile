@@ -1,4 +1,4 @@
-import { ColumnDataType } from './data';
+import { ColumnDataType, DeskType } from './data';
 
 export type SignInResponse = {
   id: number;
@@ -19,4 +19,12 @@ export type SignUpResponse = {
   deletedAt: null | string;
   createdAt: string;
   updatedAt: string;
+};
+
+export type GetDesksResponse = {
+  data: DeskType[];
+  cursor: {
+    afterCursor: string;
+    beforeCursor: string;
+  };
 };
