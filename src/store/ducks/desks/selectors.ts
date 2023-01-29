@@ -1,5 +1,3 @@
 import type { AppState } from '@/store/configureStore';
 
-export const getAuthState = (state: AppState) => state.auth;
-
-export const getIsAuth = (state: AppState) => Boolean(state.auth.data);
+export const getDesksList = (state: AppState) => state.desks.data;

@@ -1,15 +1,16 @@
-import { UserType } from '@/types/data';
-import { SignInPayload, SignUpPayload } from '@/types/payload';
+import { DeskType } from '@/types/data';
+import { GetDesksPayload } from '@/types/payload';
+import { GetDesksResponse } from '@/types/response';
 import { createRoutine } from 'redux-saga-routines';
 import * as authActions from './actions';
 
 export const getDesks = createRoutine(authActions.GET_DESKS, {
-  trigger: (payload: SignInPayload) => payload,
-  success: (payload: UserType) => payload,
-  failure: (payload: string) => console.log(payload),
+  trigger: (payload: GetDesksPayload) => payload,
+  success: (payload: GetDesksResponse) => payload,
+  failure: (payload: string) => payload,
 });
 export const getOwnDesk = createRoutine(authActions.GET_OWN_DESK, {
-  trigger: (payload: SignUpPayload) => payload,
-  success: (payload: UserType) => payload,
+  trigger: (payload: void) => payload,
+  success: (payload: DeskType) => payload,
   failure: (payload: string) => payload,
 });

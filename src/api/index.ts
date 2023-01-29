@@ -1,11 +1,12 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { SignInPayload, SignUpPayload } from '@/types/payload';
-import { SignInResponse, SignUpResponse } from '@/types/response';
+import { GetDesksPayload, SignInPayload, SignUpPayload } from '@/types/payload';
+import { GetDesksResponse, SignInResponse, SignUpResponse } from '@/types/response';
+import { DeskType } from '@/types/data';
 
 const prayerApi = axios.create({
-  baseURL: 'https://fd5d-185-13-179-156.eu.ngrok.io',
+  baseURL: 'https://d299-185-13-179-156.eu.ngrok.io',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -32,5 +33,17 @@ export const signUpRequest = async (values: SignUpPayload) => {
 
 export const signInRequest = async (values: SignInPayload) => {
   const response = await prayerApi.post<SignInResponse>('/auth/sign-in', values);
+  return response;
+};
+
+export const getDesksRequest = async (values: GetDesksPayload) => {
+  const response = await prayerApi.get<GetDesksResponse>(
+    `/desks/?limit=${values.limit}&afterCursor=${values.afterCursor}`,
+  );
+  return response;
+};
+
+export const getOwnDeskRequest = async () => {
+  const response = await prayerApi.get<DeskType>('/desks/my');
   return response;
 };

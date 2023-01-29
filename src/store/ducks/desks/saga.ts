@@ -1,71 +1,53 @@
-import { signInRequest, signUpRequest } from '@/api';
+import { getDesksRequest, getOwnDeskRequest } from '@/api';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
-import { logOut, signIn, signUp } from './routines';
-import { SignInResponse, SignUpResponse } from '@/types/response';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getDesks, getOwnDesk } from './routines';
+import { GetDesksResponse } from '@/types/response';
+import { DeskType } from '@/types/data';
 
-function* signInWatcherSaga() {
-  yield takeEvery(signIn.TRIGGER, signInFlow);
+function* getDesksWatcherSaga() {
+  yield takeEvery(getDesks.TRIGGER, getDesksFlow);
 }
 
-function* signUpWatcherSaga() {
-  yield takeEvery(signUp.TRIGGER, signUpFlow);
+function* getOwnDeskWatcherSaga() {
+  yield takeEvery(getOwnDesk.TRIGGER, getOwnDeskFlow);
 }
 
-function* logOutWatcherSaga() {
-  yield takeEvery(logOut.TRIGGER, logOutFlow);
-}
-
-function* signInFlow({ payload }: ReturnType<typeof signIn>) {
+function* getDesksFlow({ payload }: ReturnType<typeof getDesks>) {
   try {
     if (!payload) {
-      throw new Error('Sign Up: No payload');
+      throw new Error('Desks: No payload');
     }
-    yield put(signIn.request());
-    const response: SignInResponse = yield call(signInRequest, payload);
+    yield put(getDesks.request());
+    const response: GetDesksResponse = yield call(getDesksRequest, payload);
     if (!response) {
-      throw new Error('Sign In: Something went wrong');
+      throw new Error('Desks: Something went wrong');
     }
-    AsyncStorage.setItem('token', response.token, (error) => console.log(error));
-    yield put(signIn.success(response));
+    yield put(getDesks.success(response));
   } catch (error: any) {
-    yield put(signIn.failure(error.message));
+    yield put(getDesks.failure(error.message));
   } finally {
-    yield put(signIn.fulfill());
+    yield put(getDesks.fulfill());
   }
 }
 
-function* signUpFlow({ payload }: ReturnType<typeof signUp>) {
+function* getOwnDeskFlow({ payload }: ReturnType<typeof getDesks>) {
   try {
     if (!payload) {
-      throw new Error('Sign Up: No payload');
+      throw new Error('Desks: No payload');
     }
-    yield put(signUp.request());
-    const response: SignUpResponse = yield call(signUpRequest, payload);
+    yield put(getOwnDesk.request());
+    const response: DeskType = yield call(getOwnDeskRequest);
     if (!response) {
-      throw new Error('Sign In: Something went wrong');
+      throw new Error('Desks: Something went wrong');
     }
-    AsyncStorage.setItem('token', response.token, () => console.log('error'));
-    yield put(signUp.success(response));
+    yield put(getOwnDesk.success(response));
   } catch (error: any) {
-    yield put(signUp.failure(error.message));
+    yield put(getOwnDesk.failure(error.message));
   } finally {
-    yield put(signUp.fulfill());
+    yield put(getOwnDesk.fulfill());
   }
 }
 
-function* logOutFlow() {
-  try {
-    yield put(logOut.request());
-    AsyncStorage.removeItem('token');
-    yield put(logOut.success());
-  } catch (error: any) {
-    yield put(logOut.failure(error.message));
-  } finally {
-    yield put(logOut.fulfill());
-  }
-}
-
-export default function* authWatcherSaga() {
-  yield all([signInWatcherSaga(), signUpWatcherSaga(), logOutWatcherSaga()]);
+export default function* desksWatcherSaga() {
+  yield all([getDesksWatcherSaga(), getOwnDeskWatcherSaga()]);
 }

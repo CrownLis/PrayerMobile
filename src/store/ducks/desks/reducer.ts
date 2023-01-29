@@ -1,47 +1,37 @@
 import { handleFailure, handleFulfill, handleRequest, handleSuccess, handleTrigger } from '@/store/handle';
 import { BaseState, createReducer } from '@/store/createReducer';
 
-import { UserType } from '@/types/data';
+import { DeskType } from '@/types/data';
 
-import { logOut, signIn, signUp } from './routines';
+import { getDesks, getOwnDesk } from './routines';
 
-type AuthStateType = BaseState<UserType>;
+type DesksStateType = BaseState<DeskType>;
 
-const initialState: AuthStateType = {
+const initialState: DesksStateType = {
   data: null,
   loading: false,
   error: null,
 };
 
-const handleSignIn = {
-  ...handleTrigger<AuthStateType>(signIn),
-  ...handleRequest<AuthStateType>(signIn),
-  ...handleSuccess<AuthStateType, { payload: UserType }>(signIn),
-  ...handleFailure<AuthStateType, { payload: string }>(signIn),
-  ...handleFulfill<AuthStateType>(signIn),
+const handleGetDesks = {
+  ...handleTrigger<DesksStateType>(getDesks),
+  ...handleRequest<DesksStateType>(getDesks),
+  ...handleSuccess<DesksStateType, { payload: DeskType }>(getDesks),
+  ...handleFailure<DesksStateType, { payload: string }>(getDesks),
+  ...handleFulfill<DesksStateType>(getDesks),
 };
 
-const handleSignUp = {
-  ...handleTrigger<AuthStateType>(signUp),
-  ...handleRequest<AuthStateType>(signUp),
-  ...handleSuccess<AuthStateType, { payload: UserType }>(signUp),
-  ...handleFailure<AuthStateType, { payload: string }>(signUp),
-  ...handleFulfill<AuthStateType>(signUp),
+const handleGetOwnDesk = {
+  ...handleTrigger<DesksStateType>(getOwnDesk),
+  ...handleRequest<DesksStateType>(getOwnDesk),
+  ...handleSuccess<DesksStateType, { payload: DeskType }>(getOwnDesk),
+  ...handleFailure<DesksStateType, { payload: string }>(getOwnDesk),
+  ...handleFulfill<DesksStateType>(getOwnDesk),
 };
 
-const handleLogOut = {
-  [logOut.SUCCESS]: (state: AuthStateType) => ({
-    ...state,
-    data: null,
-    loading: false,
-    error: null,
-  }),
-};
-
-const authReducer = createReducer(initialState)({
-  ...handleSignIn,
-  ...handleSignUp,
-  ...handleLogOut,
+const desksReducer = createReducer(initialState)({
+  ...handleGetDesks,
+  ...handleGetOwnDesk,
 });
 
-export default authReducer;
+export default desksReducer;

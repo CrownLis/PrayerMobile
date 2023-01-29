@@ -11,6 +11,14 @@ import {
   routines as authRoutines,
 } from './auth';
 
+import {
+  reducer as desksReducer,
+  saga as desksSaga,
+  actions as desksActions,
+  selectors as desksSelector,
+  routines as desksRoutines,
+} from './desks';
+
 const authPersistConfig = {
   key: 'auth',
   keyPrefix: '',
@@ -18,22 +26,33 @@ const authPersistConfig = {
   whitelist: ['data'],
 };
 
+const desksPersistConfig = {
+  key: 'desks',
+  keyPrefix: '',
+  storage: AsyncStorage,
+  whitelist: ['data'],
+};
+
 export const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
+  desks: persistReducer(desksPersistConfig, desksReducer),
 });
 
 export function* rootSaga() {
-  yield all([authSaga()]);
+  yield all([authSaga(), desksSaga()]);
 }
 
 export const rootActions = {
   auth: authActions,
+  desks: desksActions,
 };
 
 export const rootSelectors = {
   auth: authSelector,
+  desks: desksSelector,
 };
 
 export const rootRoutines = {
   auth: authRoutines,
+  desks: desksRoutines,
 };
