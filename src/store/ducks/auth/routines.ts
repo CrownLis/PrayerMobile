@@ -6,7 +6,7 @@ import * as authActions from './actions';
 export const signIn = createRoutine(authActions.SIGN_IN, {
   trigger: (payload: SignInPayload) => payload,
   success: (payload: UserType) => payload,
-  failure: (payload: string) => payload,
+  failure: (payload: string) => console.log(payload),
 });
 export const signUp = createRoutine(authActions.SIGN_UP, {
   trigger: (payload: SignUpPayload) => payload,

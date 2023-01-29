@@ -5,7 +5,7 @@ import { SignInPayload, SignUpPayload } from '@/types/payload';
 import { SignInResponse, SignUpResponse } from '@/types/response';
 
 const prayerApi = axios.create({
-  baseURL: 'https://c792-217-25-222-241.eu.ngrok.io',
+  baseURL: 'https://fd5d-185-13-179-156.eu.ngrok.io',
   headers: {
     'Content-Type': 'application/json',
   },

@@ -1,6 +1,6 @@
 import { signInRequest, signUpRequest } from '@/api';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
-import { signIn, signUp } from './routines';
+import { logOut, signIn, signUp } from './routines';
 import { SignInResponse, SignUpResponse } from '@/types/response';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -12,6 +12,10 @@ function* signUpWatcherSaga() {
   yield takeEvery(signUp.TRIGGER, signUpFlow);
 }
 
+function* logOutWatcherSaga() {
+  yield takeEvery(logOut.TRIGGER, logOutFlow);
+}
+
 function* signInFlow({ payload }: ReturnType<typeof signIn>) {
   try {
     if (!payload) {
@@ -19,10 +23,10 @@ function* signInFlow({ payload }: ReturnType<typeof signIn>) {
     }
     yield put(signIn.request());
     const response: SignInResponse = yield call(signInRequest, payload);
-    if (typeof response.token === 'undefined') {
+    if (!response) {
       throw new Error('Sign In: Something went wrong');
     }
-    AsyncStorage.setItem('token', response.token);
+    AsyncStorage.setItem('token', response.token, (error) => console.log(error));
     yield put(signIn.success(response));
   } catch (error: any) {
     yield put(signIn.failure(error.message));
@@ -38,10 +42,10 @@ function* signUpFlow({ payload }: ReturnType<typeof signUp>) {
     }
     yield put(signUp.request());
     const response: SignUpResponse = yield call(signUpRequest, payload);
-    if (response.token) {
+    if (!response) {
       throw new Error('Sign In: Something went wrong');
     }
-    AsyncStorage.setItem('token', response.token);
+    AsyncStorage.setItem('token', response.token, () => console.log('error'));
     yield put(signUp.success(response));
   } catch (error: any) {
     yield put(signUp.failure(error.message));
@@ -50,6 +54,18 @@ function* signUpFlow({ payload }: ReturnType<typeof signUp>) {
   }
 }
 
+function* logOutFlow() {
+  try {
+    yield put(logOut.request());
+    AsyncStorage.removeItem('token');
+    yield put(logOut.success());
+  } catch (error: any) {
+    yield put(logOut.failure(error.message));
+  } finally {
+    yield put(logOut.fulfill());
+  }
+}
+
 export default function* authWatcherSaga() {
-  yield all([signInWatcherSaga(), signUpWatcherSaga()]);
+  yield all([signInWatcherSaga(), signUpWatcherSaga(), logOutWatcherSaga()]);
 }
