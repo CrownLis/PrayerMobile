@@ -2,14 +2,20 @@ import React, { FC } from 'react';
 import { Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import SignIn from '@/screens/SignIn';
-import SignUp from '@/screens/SignUp';
-import Followed from '@/screens/Followed';
+import SignIn from '@/navigation/GuestStack/SignIn';
+import SignUp from '@/navigation/GuestStack/SignUp';
+import Followed from '@/navigation/AuthStack/Followed';
 
 import { colors } from '@/assets/styles/color';
 import { UsersDesks, Subscribers, MyDesk } from '@/assets/svgs';
 
 import styles from './UserNav.module.scss';
+
+export type AuthStackParamList = {
+  'My desk': undefined;
+  'Users desk': undefined;
+  'Followed': undefined;
+};
 
 const Tab = createBottomTabNavigator();
 

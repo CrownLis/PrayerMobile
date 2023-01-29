@@ -10,28 +10,26 @@ import { validateEmail } from '@/utils/validation';
 
 import backgroundImg from '@/assets/images/background-1.png';
 
-import styles from './SignUp.module.scss';
+import styles from './SignIn.module.scss';
 import { useAppDispatch } from '@/store/hooks';
 import { rootRoutines } from '@/store/ducks';
 import { GuestStackParamList } from '@/navigation/GuestNav/GuestNav';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type FormValues = {
-  name: string;
   email: string;
   password: string;
-  confirmPassword: string;
 };
 
-type Props = NativeStackScreenProps<GuestStackParamList, 'Sign Up'>;
+type Props = NativeStackScreenProps<GuestStackParamList, 'Sign In'>;
 
-const SignUp = ({ navigation }: Props) => {
+const SignIn = ({ navigation }: Props) => {
   const dispatch = useAppDispatch();
-  const { control, watch, handleSubmit, ...formProps } = useForm<FormValues>();
+
+  const { control, handleSubmit, ...formProps } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    dispatch(rootRoutines.auth.signUp({ email: data.email, name: data.name, password: data.password }));
-    navigation.navigate('Sign Up', undefined);
+    dispatch(rootRoutines.auth.signIn(data));
   };
 
   const onError: SubmitErrorHandler<FormValues> = (errors) => {
@@ -43,30 +41,8 @@ const SignUp = ({ navigation }: Props) => {
       <ImageBackground source={backgroundImg} resizeMode="cover" style={styles.background}>
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
           <View style={styles.formContainer}>
-            <Text style={styles.title}>Registration</Text>
-            <FormProvider watch={watch} control={control} handleSubmit={handleSubmit} {...formProps}>
-              <FormField
-                label="Name"
-                name="name"
-                rules={{
-                  required: 'Name is required',
-                  minLength: {
-                    value: 2,
-                    message: 'Name field must be at leat 2 characters',
-                  },
-                }}
-                control={control}
-                render={({ field: { onChange, onBlur, value }, fieldState: { error, isDirty } }) => (
-                  <Input
-                    value={value}
-                    isDirty={isDirty}
-                    isError={!!error}
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    placeholder="Enter your first name"
-                  />
-                )}
-              />
+            <Text style={styles.title}>Log in</Text>
+            <FormProvider control={control} handleSubmit={handleSubmit} {...formProps}>
               <FormField
                 label="Email"
                 name="email"
@@ -108,33 +84,14 @@ const SignUp = ({ navigation }: Props) => {
                   />
                 )}
               />
-              <FormField
-                label="Confirm password"
-                name="confirmPassword"
-                rules={{
-                  required: 'Confirm password is required',
-                  validate: (value) => value === watch('password') || "Passwords don't match",
-                }}
-                control={control}
-                render={({ field: { onChange, onBlur, value }, fieldState: { error, isDirty } }) => (
-                  <PasswordInput
-                    value={value}
-                    isDirty={isDirty}
-                    isError={!!error}
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    placeholder="Enter your password again"
-                  />
-                )}
-              />
             </FormProvider>
             <Button variant="primary" onPress={handleSubmit(onSubmit, onError)}>
               Confirm
             </Button>
-            <Text style={styles.signIn}>
-              Already have an account?{' '}
-              <Text style={styles.signIn_link} onPress={() => navigation.navigate('Sign In', undefined)}>
-                Log in
+            <Text style={styles.signUp}>
+              Don`t have an account?{' '}
+              <Text style={styles.signUp_link} onPress={() => navigation.navigate('Sign Up', undefined)}>
+                Sign up
               </Text>
             </Text>
           </View>
@@ -144,4 +101,4 @@ const SignUp = ({ navigation }: Props) => {
   );
 };
 
-export default SignUp;
+export default SignIn;

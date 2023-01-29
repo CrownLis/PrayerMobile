@@ -1,19 +1,16 @@
-@import './../../assets/styles/variables.scss';
-@import './../../assets/styles/mixins.scss';
+@import './../../../assets/styles/variables.scss';
+@import './../../../assets/styles/mixins.scss';
 
 .container {
     flex: 1;
     background-color: $color100;
 }
 
-.scrollViewContent {
-    flex: 1;
-    justify-content: flex-end;
-}
-
 .background {
+    display:flex;
+    justify-content: flex-end;
     flex: 1;
-    justify-content: center;
+    position: relative;
 }
 
 .formContainer {
