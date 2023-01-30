@@ -9,7 +9,7 @@ type FollowedProps = NativeStackScreenProps<UserStackParamList, 'Root'>;
 const Followed = (props: FollowedProps) => {
   return (
     <SafeAreaView>
-      <ScrollView></ScrollView>
+      <ScrollView />
     </SafeAreaView>
   );
 };

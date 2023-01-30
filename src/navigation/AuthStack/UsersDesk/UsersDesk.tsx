@@ -34,6 +34,7 @@ const UsersDesk = ({ navigation }: UsersDeskProps) => {
             renderItem={({ item }) => {
               return (
                 <DeskCard
+                  columnId={item.id}
                   key={item.id}
                   style={styles.item}
                   onPress={() =>

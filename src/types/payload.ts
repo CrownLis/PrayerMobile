@@ -43,3 +43,5 @@ export type CreateCommentPayload = {
   body: string;
   prayerId: PrayerType['id'];
 };
+
+export type DeleteColumnPayload = ColumnType['id'];

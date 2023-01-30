@@ -2,6 +2,7 @@ module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
   plugins: [
     'react-native-classname-to-style',
+    'react-native-reanimated/plugin',
     [
       'react-native-platform-specific-extensions',
       {
@@ -18,16 +19,7 @@ module.exports = {
            */
           '^@/(.+)': './src/\\1',
         },
-        extensions: [
-          '.ios.js',
-          '.android.js',
-          '.js',
-          '.jsx',
-          '.json',
-          '.tsx',
-          '.ts',
-          '.native.js',
-        ],
+        extensions: ['.ios.js', '.android.js', '.js', '.jsx', '.json', '.tsx', '.ts', '.native.js'],
       },
     ],
   ],

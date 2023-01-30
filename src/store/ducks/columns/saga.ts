@@ -2,7 +2,7 @@ import { all, call, put, takeEvery } from 'redux-saga/effects';
 
 import { createColumnRequest, getColumnsRequest, getOwnDeskRequest } from '@/api';
 import { CreateColumnResponse, GetColumnsResponse, GetOwnDeskResponse } from '@/types/response';
-import { getOwnColumns, getColumns, createColumn } from './routines';
+import { getOwnColumns, getColumns, createColumn, deleteColumn } from './routines';
 
 function* getColumnsWatcherSaga() {
   yield takeEvery(getColumns.TRIGGER, getColumnsFlow);
@@ -14,6 +14,10 @@ function* getOwnColumnsWatcherSaga() {
 
 function* createColumnWatcherSaga() {
   yield takeEvery(createColumn.TRIGGER, createColumnFlow);
+}
+
+function* deleteColumnWatcherSaga() {
+  yield takeEvery(deleteColumn.TRIGGER, removeColumnFlow);
 }
 
 function* getColumnsFlow({ payload }: ReturnType<typeof getColumns>) {
@@ -74,6 +78,23 @@ function* getOwnColumnsFlow({ payload }: ReturnType<typeof getOwnColumns>) {
   }
 }
 
+function* removeColumnFlow() {
+  try {
+    yield put(deleteColumn.request());
+    console.log(1);
+    yield put(deleteColumn.success());
+  } catch (error: any) {
+    yield put(deleteColumn.failure(error.message));
+  } finally {
+    yield put(deleteColumn.fulfill());
+  }
+}
+
 export default function* columnsWatcherSaga() {
-  yield all([getColumnsWatcherSaga(), getOwnColumnsWatcherSaga(), createColumnWatcherSaga()]);
+  yield all([
+    getColumnsWatcherSaga(),
+    getOwnColumnsWatcherSaga(),
+    createColumnWatcherSaga(),
+    deleteColumnWatcherSaga(),
+  ]);
 }

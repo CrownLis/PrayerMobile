@@ -6,17 +6,20 @@ import { Provider } from 'react-redux';
 import Navigator from '@/navigation/Navigator';
 import { colors } from '@/assets/styles/color';
 import configureStore from '@/store/configureStore';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = () => {
   const { store, persistor } = configureStore();
 
   return (
     <Provider store={store}>
+      <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container}>
         <NavigationContainer>
           <Navigator />
         </NavigationContainer>
       </SafeAreaView>
+      </GestureHandlerRootView>
     </Provider>
   );
 };

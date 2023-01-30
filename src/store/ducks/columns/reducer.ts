@@ -3,7 +3,7 @@ import { BaseState, createReducer } from '@/store/createReducer';
 
 import { ColumnType } from '@/types/data';
 
-import { createColumn, getColumns, getOwnColumns } from './routines';
+import { createColumn, deleteColumn, getColumns, getOwnColumns } from './routines';
 
 type ColumnsStateType = BaseState<ColumnType[]>;
 
@@ -39,10 +39,19 @@ const handleCreateColumn = {
   ...handleFulfill<ColumnsStateType>(createColumn),
 };
 
+const handleDeleteColumn = {
+  ...handleTrigger<ColumnsStateType>(deleteColumn),
+  ...handleRequest<ColumnsStateType>(deleteColumn),
+  ...handleSuccess<ColumnsStateType, { payload: ColumnType['id'] }>(deleteColumn),
+  ...handleFailure<ColumnsStateType, { payload: string }>(deleteColumn),
+  ...handleFulfill<ColumnsStateType>(deleteColumn),
+};
+
 const desksReducer = createReducer(initialState)({
   ...handleGetColumns,
   ...handleGetOwnColumns,
   ...handleCreateColumn,
+  ...handleDeleteColumn,
 });
 
 export default desksReducer;

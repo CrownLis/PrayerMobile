@@ -31,7 +31,7 @@ const ColumnOverlay: FC<ColumnOverlayProps> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const { control, handleSubmit, ...formProps } = useForm<FormValues>();
+  const { reset, control, handleSubmit, ...formProps } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     dispatch(
@@ -40,6 +40,7 @@ const ColumnOverlay: FC<ColumnOverlayProps> = ({
         description: 'New column',
       }),
     );
+    reset();
     onClose();
   };
 

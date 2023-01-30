@@ -1,18 +1,26 @@
 import axios from 'axios';
 
-import { CreateColumnPayload, GetColumnsPayload, GetDesksPayload, SignInPayload, SignUpPayload } from '@/types/payload';
+import {
+  CreateColumnPayload,
+  DeleteColumnPayload,
+  GetColumnsPayload,
+  GetDesksPayload,
+  SignInPayload,
+  SignUpPayload,
+} from '@/types/payload';
 import {
   CreateColumnResponse,
   GetColumnsResponse,
   GetDesksResponse,
   GetOwnDeskResponse,
+  RemoveColumnResponse,
   SignInResponse,
   SignUpResponse,
 } from '@/types/response';
 import Storage from '@/utils/Storage';
 
 const prayerApi = axios.create({
-  baseURL: 'https://458c-2-60-225-244.eu.ngrok.io/',
+  baseURL: 'https://42d2-217-25-213-87.eu.ngrok.io',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -66,5 +74,10 @@ export const getColumnsRequest = async ({ deskId, limit, afterCursor }: GetColum
 
 export const createColumnRequest = async (values: CreateColumnPayload) => {
   const { data } = await prayerApi.post<CreateColumnResponse>('/columns', values);
+  return data;
+};
+
+export const removeColumnRequest = async (columnId: DeleteColumnPayload) => {
+  const { data } = await prayerApi.delete<RemoveColumnResponse>(`/columns/${columnId}`);
   return data;
 };

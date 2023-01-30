@@ -41,3 +41,8 @@ export type GetPrayersResponse = {
 export type GetOwnDeskResponse = DeskType;
 
 export type CreateColumnResponse = ColumnType;
+
+export type RemoveColumnResponse = {
+  raw: ColumnType[];
+  affected: ColumnType['id'];
+};
