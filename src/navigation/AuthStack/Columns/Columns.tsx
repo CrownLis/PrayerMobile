@@ -9,27 +9,27 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 import backgroundImg from '@/assets/images/background-1.png';
 
-import styles from './UsersDesk.module.scss';
+import styles from './Columns.module.scss';
 
-type UsersDeskProps = NativeStackScreenProps<UserStackParamList, 'Root'>;
+type ColumnsProps = NativeStackScreenProps<UserStackParamList, 'Columns'>;
 
-const UsersDesk = ({ navigation }: UsersDeskProps) => {
+const Columns = ({ navigation, route }: ColumnsProps) => {
   const dispatch = useAppDispatch();
 
-  const desks = useAppSelector(rootSelectors.desks.getDesksData);
+  const columns = useAppSelector(rootSelectors.columns.getColumnsData);
 
   useEffect(() => {
-    dispatch(rootRoutines.desks.getDesks({ limit: 100 }));
-  }, [dispatch]);
+    dispatch(rootRoutines.columns.getColumns({ limit: 100, deskId: route.params.deskId }));
+  }, [dispatch, route.params.deskId]);
 
-  const showDesks = !!desks && !!desks.length;
+  const showColumns = !!columns && !!columns.length;
 
   return (
     <SafeAreaView style={styles.container}>
-      {showDesks && (
+      {showColumns && (
         <ImageBackground source={backgroundImg} resizeMode="cover" style={styles.background} imageStyle={styles.image}>
           <FlatList
-            data={desks}
+            data={columns}
             style={styles.list}
             renderItem={({ item }) => {
               return (
@@ -37,12 +37,12 @@ const UsersDesk = ({ navigation }: UsersDeskProps) => {
                   key={item.id}
                   style={styles.item}
                   onPress={() =>
-                    navigation.push('Columns', {
-                      deskId: item.id,
+                    navigation.push('Column', {
+                      id: item.id,
                     })
                   }
                 >
-                  {item.name}
+                  {item.title}
                 </DeskCard>
               );
             }}
@@ -53,4 +53,4 @@ const UsersDesk = ({ navigation }: UsersDeskProps) => {
   );
 };
 
-export default UsersDesk;
+export default Columns;

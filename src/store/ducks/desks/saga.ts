@@ -1,15 +1,11 @@
-import { getDesksRequest, getOwnDeskRequest } from '@/api';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
-import { getDesks, getOwnDesk } from './routines';
+
+import { getDesksRequest } from '@/api';
 import { GetDesksResponse } from '@/types/response';
-import { DeskType } from '@/types/data';
+import { getDesks } from './routines';
 
 function* getDesksWatcherSaga() {
   yield takeEvery(getDesks.TRIGGER, getDesksFlow);
-}
-
-function* getOwnDeskWatcherSaga() {
-  yield takeEvery(getOwnDesk.TRIGGER, getOwnDeskFlow);
 }
 
 function* getDesksFlow({ payload }: ReturnType<typeof getDesks>) {
@@ -22,7 +18,7 @@ function* getDesksFlow({ payload }: ReturnType<typeof getDesks>) {
     if (!response) {
       throw new Error('Desks: Something went wrong');
     }
-    yield put(getDesks.success(response));
+    yield put(getDesks.success(response.data));
   } catch (error: any) {
     yield put(getDesks.failure(error.message));
   } finally {
@@ -30,24 +26,6 @@ function* getDesksFlow({ payload }: ReturnType<typeof getDesks>) {
   }
 }
 
-function* getOwnDeskFlow({ payload }: ReturnType<typeof getDesks>) {
-  try {
-    if (!payload) {
-      throw new Error('Desks: No payload');
-    }
-    yield put(getOwnDesk.request());
-    const response: DeskType = yield call(getOwnDeskRequest);
-    if (!response) {
-      throw new Error('Desks: Something went wrong');
-    }
-    yield put(getOwnDesk.success(response));
-  } catch (error: any) {
-    yield put(getOwnDesk.failure(error.message));
-  } finally {
-    yield put(getOwnDesk.fulfill());
-  }
-}
-
 export default function* desksWatcherSaga() {
-  yield all([getDesksWatcherSaga(), getOwnDeskWatcherSaga()]);
+  yield all([getDesksWatcherSaga()]);
 }

@@ -9,22 +9,23 @@ import { SignUpPayload } from '@/types/payload';
 export type GuestStackParamList = {
   'Sign In': undefined;
   'Sign Up': undefined;
-  Greetings: { email: SignUpPayload['email']; name: SignUpPayload['name']; password: SignUpPayload['password'] };
+  Greetings: SignUpPayload;
 };
 
 const Stack = createNativeStackNavigator<GuestStackParamList>();
 
 const GuestNav = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Sign In" component={SignIn} options={{ headerShown: false }} />
-      <Stack.Screen name="Sign Up" component={SignUp} options={{ headerShown: false }} />
-      <Stack.Screen
-        name="Greetings"
-        component={Greetings}
-        initialParams={{ email: undefined, name: undefined, password: undefined }}
-        options={{ headerShown: false }}
-      />
+    <Stack.Navigator
+      screenOptions={(options) => ({
+        ...options,
+        animation: 'none',
+        headerShown: false,
+      })}
+    >
+      <Stack.Screen name="Sign In" component={SignIn} />
+      <Stack.Screen name="Sign Up" component={SignUp} />
+      <Stack.Screen name="Greetings" component={Greetings} />
     </Stack.Navigator>
   );
 };

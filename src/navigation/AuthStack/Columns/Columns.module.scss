@@ -1,0 +1,25 @@
+@import './../../../assets/styles/variables.scss';
+@import './../../../assets/styles/mixins.scss';
+
+.container {
+    position: relative;
+    flex: 1;
+    background-color: $color200;
+    padding: 16px;
+}
+
+.background {
+    justify-content: center;
+}
+
+.image {
+    border-radius: 24px;
+}
+
+.list {
+    padding: 24px 16px;
+}
+
+.item {
+    margin-bottom: 12px;
+}

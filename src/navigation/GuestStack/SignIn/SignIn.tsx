@@ -1,20 +1,20 @@
 import React from 'react';
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import { ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import FormField from '@/components/FormField';
 import Button from '@/UI/Button';
 import Input from '@/UI/Input';
 import PasswordInput from '@/UI/PasswordInput';
 import { validateEmail } from '@/utils/validation';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { rootRoutines, rootSelectors } from '@/store/ducks';
+import { GuestStackParamList } from '@/navigation/GuestNav/GuestNav';
 
 import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './SignIn.module.scss';
-import { useAppDispatch } from '@/store/hooks';
-import { rootRoutines } from '@/store/ducks';
-import { GuestStackParamList } from '@/navigation/GuestNav/GuestNav';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type FormValues = {
   email: string;
@@ -26,6 +26,8 @@ type Props = NativeStackScreenProps<GuestStackParamList, 'Sign In'>;
 const SignIn = ({ navigation }: Props) => {
   const dispatch = useAppDispatch();
 
+  const { loading } = useAppSelector(rootSelectors.auth.getAuthState);
+
   const { control, handleSubmit, ...formProps } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
@@ -34,6 +36,10 @@ const SignIn = ({ navigation }: Props) => {
 
   const onError: SubmitErrorHandler<FormValues> = (errors) => {
     return console.log(errors);
+  };
+
+  const goToSignUp = () => {
+    navigation.navigate('Sign Up');
   };
 
   return (
@@ -85,12 +91,12 @@ const SignIn = ({ navigation }: Props) => {
                 )}
               />
             </FormProvider>
-            <Button variant="primary" onPress={handleSubmit(onSubmit, onError)}>
+            <Button variant="primary" onPress={handleSubmit(onSubmit, onError)} isLoading={loading}>
               Confirm
             </Button>
             <Text style={styles.signUp}>
               Don`t have an account?{' '}
-              <Text style={styles.signUp_link} onPress={() => navigation.navigate('Sign Up', undefined)}>
+              <Text style={styles.signUp_link} onPress={goToSignUp}>
                 Sign up
               </Text>
             </Text>

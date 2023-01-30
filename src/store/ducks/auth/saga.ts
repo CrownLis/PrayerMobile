@@ -1,8 +1,9 @@
-import { signInRequest, signUpRequest } from '@/api';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
-import { logOut, signIn, signUp } from './routines';
+
+import { signInRequest, signUpRequest } from '@/api';
 import { SignInResponse, SignUpResponse } from '@/types/response';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Storage from '@/utils/Storage';
+import { logOut, signIn, signUp } from './routines';
 
 function* signInWatcherSaga() {
   yield takeEvery(signIn.TRIGGER, signInFlow);
@@ -19,14 +20,14 @@ function* logOutWatcherSaga() {
 function* signInFlow({ payload }: ReturnType<typeof signIn>) {
   try {
     if (!payload) {
-      throw new Error('Sign Up: No payload');
+      throw new Error('Sign In: No payload');
     }
     yield put(signIn.request());
     const response: SignInResponse = yield call(signInRequest, payload);
     if (!response) {
       throw new Error('Sign In: Something went wrong');
     }
-    AsyncStorage.setItem('token', response.token, (error) => console.log(error));
+    yield call(Storage.setItem, 'token', response.token);
     yield put(signIn.success(response));
   } catch (error: any) {
     yield put(signIn.failure(error.message));
@@ -43,9 +44,9 @@ function* signUpFlow({ payload }: ReturnType<typeof signUp>) {
     yield put(signUp.request());
     const response: SignUpResponse = yield call(signUpRequest, payload);
     if (!response) {
-      throw new Error('Sign In: Something went wrong');
+      throw new Error('Sign Up: Something went wrong');
     }
-    AsyncStorage.setItem('token', response.token, () => console.log('error'));
+    yield call(Storage.setItem, 'token', response.token);
     yield put(signUp.success(response));
   } catch (error: any) {
     yield put(signUp.failure(error.message));
@@ -57,7 +58,7 @@ function* signUpFlow({ payload }: ReturnType<typeof signUp>) {
 function* logOutFlow() {
   try {
     yield put(logOut.request());
-    AsyncStorage.removeItem('token');
+    yield call(Storage.removeItem, 'token');
     yield put(logOut.success());
   } catch (error: any) {
     yield put(logOut.failure(error.message));

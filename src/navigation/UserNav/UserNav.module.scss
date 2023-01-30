@@ -1,5 +1,44 @@
+@import './../../assets/styles/variables.scss';
+@import './../../assets/styles/mixins.scss';
+
+.container {
+    background-color: $color200;
+}
+
 .navigation {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.tabBar {
+    display: flex;
+    height: 105px;
+    padding-bottom: 36px;
+    padding-top: 12px;
+    gap: 6px;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    background-color: $color100;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: $color200;
+    padding: 5px 16px;
+}
+
+.headerText {
+    @include typography($main, 20px, 600);
+    line-height: 39px;
+    color: $color800;
+}
+
+.headerBack {
+    position: absolute;
+    left: 16px;
 }

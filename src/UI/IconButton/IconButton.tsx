@@ -7,12 +7,24 @@ import useButtonHandlers from '@/hooks/useButtonHandlers';
 import styles from './IconButton.module.scss';
 
 type ButtonProps = PropsWithChildren<{
-  variant: 'circle' | 'square' | 'smallCircle1' | 'smallCircle2' | 'smallCircle3';
+  size: 'big' | 'middle' | 'small';
+  variant: 'dark' | 'light' | 'lightest';
   isLoading?: boolean;
 }> &
   TouchableOpacityProps;
 
-const IconButton: FC<ButtonProps> = ({ variant, isLoading, disabled, children, onPress, onPressIn, onPressOut }) => {
+const IconButton: FC<ButtonProps> = ({
+  variant,
+  size,
+  isLoading,
+  disabled,
+  children,
+  onPress,
+  onPressIn,
+  onPressOut,
+  style,
+  ...props
+}) => {
   const { isPressed, pressHandler, pressInHandler, pressOutHandler } = useButtonHandlers(
     onPressIn,
     onPressOut,
@@ -25,14 +37,26 @@ const IconButton: FC<ButtonProps> = ({ variant, isLoading, disabled, children, o
       onPress={pressHandler}
       onPressIn={pressInHandler}
       onPressOut={pressOutHandler}
-      style={mergeStyles(
-        {
-          style: styles[`button_wrapper_${variant}`],
-          active: true,
-        },
-        { style: styles[`button_wrapper_${variant}_disabled`], active: disabled ?? true },
-        { style: styles[`button_wrapper_${variant}_pressed`], active: isPressed },
-      )}
+      style={[
+        mergeStyles(
+          {
+            style: styles.button,
+            active: true,
+          },
+          {
+            style: styles[`button_${size}`],
+            active: true,
+          },
+          {
+            style: styles[`button_${variant}`],
+            active: true,
+          },
+          { style: styles[`button_${variant}_disabled`], active: !!disabled },
+          { style: styles[`button_${variant}_pressed`], active: isPressed },
+        ),
+        style,
+      ]}
+      {...props}
     >
       {isLoading ? <ActivityIndicator /> : children}
     </TouchableOpacity>

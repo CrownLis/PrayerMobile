@@ -5,7 +5,7 @@ import { Text, View } from 'react-native';
 import styles from './FormField.module.scss';
 
 type FormFieldProps<FormValues extends FieldValues = any> = {
-  label: string;
+  label?: string;
 } & ControllerProps<FormValues>;
 
 const FormField: FC<FormFieldProps> = ({ name, label, rules, defaultValue, control, shouldUnregister, render }) => {
@@ -21,7 +21,7 @@ const FormField: FC<FormFieldProps> = ({ name, label, rules, defaultValue, contr
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      {!!label && <Text style={styles.label}>{label}</Text>}
       <Controller
         name={name}
         control={control}

@@ -1,0 +1,32 @@
+@import './../../assets/styles/variables.scss';
+@import './../../assets/styles/mixins.scss';
+
+.overlay {
+    background-color: $color100;
+    padding: 32px 24px 40px 24px;
+    border-radius: 28px;
+}
+
+.backdrop {
+    background-color: $color800;
+    opacity: 0.8;
+    padding: 16px;
+}
+
+.overlayHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.overlayHeaderTitle {
+    @include typography($main, 28px, 600);
+    line-height: 39px;
+    color: $color800;
+}
+
+.overlayContent {
+    display: flex;
+    flex-direction: column;
+}

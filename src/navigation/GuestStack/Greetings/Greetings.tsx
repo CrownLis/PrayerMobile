@@ -1,27 +1,31 @@
 import React from 'react';
-import { Greet } from '@/assets/svgs';
-import { Text, View } from 'react-native';
-import styles from './Greetings.module.scss';
-import Button from '@/UI/Button';
-import { GuestStackParamList } from '@/navigation/GuestNav/GuestNav';
-import { rootRoutines } from '@/store/ducks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useAppDispatch } from '@/store/hooks';
+import { Text, View } from 'react-native';
+
+import Button from '@/UI/Button';
+import { rootRoutines, rootSelectors } from '@/store/ducks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { GuestStackParamList } from '@/navigation/GuestNav/GuestNav';
+import { Greet } from '@/assets/svgs';
+
+import styles from './Greetings.module.scss';
 
 type Props = NativeStackScreenProps<GuestStackParamList, 'Greetings'>;
 
 const Greetings = ({ route }: Props) => {
   const dispatch = useAppDispatch();
-  const { email, name, password } = route.params;
+
+  const { loading } = useAppSelector(rootSelectors.auth.getAuthState);
+
+  const authUser = () => {
+    dispatch(rootRoutines.auth.signUp(route.params));
+  };
+
   return (
     <View style={styles.container}>
       <Greet />
-      <Text>You have been registered</Text>
-      <Button
-        variant="primary"
-        style={styles.button}
-        onPress={() => dispatch(rootRoutines.auth.signUp({ email: email, name: name, password: password }))}
-      >
+      <Text style={styles.text}>You have been registered!</Text>
+      <Button variant="primary" style={styles.button} onPress={authUser} isLoading={loading}>
         Get started
       </Button>
     </View>

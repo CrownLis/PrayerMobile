@@ -1,76 +1,62 @@
 @import './../../assets/styles/variables.scss';
 
-.button_wrapper_circle {
-    display:flex;
-    justify-content:center;
+.button {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    width:65px;
-    height:65px;
-    border:0;
+    border: 0;
     border-radius: 95px;
+}
+
+.button_small {
+    width: 34px;
+    height: 34px;
+}
+
+.button_middle {
+    width: 42px;
+    height: 42px;
+}
+
+.button_big {
+    width: 65px;
+    height: 65px;
+}
+
+.button_dark {
     background-color: $color800;
-    box-shadow: $Shadow2;
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
 }
 
-.button_wrapper_square {
-    display:flex;
-    justify-content:center;
-    align-items: center;
-    width:48px;
-    height:48px;
-    border:0;
-    border-radius: 12px;
-    background-color: $color800;
-}
-
-.button_wrapper_smallCircle2 {
-    display:flex;
-    justify-content:center;
-    align-items: center;
-    width:46px;
-    height:46px;
-    border:0;
-    border-radius: 32px;
-    background-color: $color300;
-}
-
-.button_wrapper_smallCircle1 {
-    display:flex;
-    justify-content:center;
-    align-items: center;
-    width:42px;
-    height:42px;
-    border:0;
-    border-radius: 30px;
-    background-color: $color100;
-    box-shadow: $Shadow1;
-}
-
-.button_wrapper_cancel {
-    display:flex;
-    justify-content:center;
-    align-items: center;
-    width:34px;
-    height:34px;
-    border:0;
-    border-radius: 32px;
-    background-color: $color400;
-}
-
-.button_wrapper_square_disabled, 
-.button_wrapper_circle_disabled {
-    background-color: $color500;
-}
-
-.button_wrapper_smallCircle1_disabled, .button_wrapper_smallCircle2_disabled, .button_wrapper_smallCircle3_disabled {
-    background-color: $color300;
-}
-
-.button_wrapper_square_pressed, 
-.button_wrapper_circle_pressed {
+.button_dark_pressed {
     background-color: $color700;
 }
 
-.button_wrapper_smallCircle1_pressed, .button_wrapper_smallCircle2_pressed, .button_wrapper_smallCircle3_pressed {
+.button_dark_disabled {
     background-color: $color500;
+}
+
+.button_light {
+    background-color: $color300;
+}
+
+.button_light_pressed {
+    background-color: $color500;
+}
+
+.button_light_disabled {
+    background-color: $color300;
+}
+
+.button_lightest {
+    background-color: $color100;
+    box-shadow: 0px 0px 60px rgba(0, 0, 0, 0.04);
+}
+
+.button_lightest_pressed {
+    background-color: $color500;
+}
+
+.button_lightest_disabled {
+    background-color: $color300;
 }

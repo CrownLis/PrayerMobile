@@ -27,11 +27,15 @@ const SignUp = ({ navigation }: Props) => {
   const { control, watch, handleSubmit, ...formProps } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    navigation.navigate('Greetings', { email: data.email, name: data.name, password: data.password });
+    navigation.navigate('Greetings', data);
   };
 
   const onError: SubmitErrorHandler<FormValues> = (errors) => {
     return console.log(errors);
+  };
+
+  const goToSignIn = () => {
+    navigation.navigate('Sign In');
   };
 
   return (
@@ -129,7 +133,7 @@ const SignUp = ({ navigation }: Props) => {
             </Button>
             <Text style={styles.signIn}>
               Already have an account?{' '}
-              <Text style={styles.signIn_link} onPress={() => navigation.navigate('Sign In', undefined)}>
+              <Text style={styles.signIn_link} onPress={goToSignIn}>
                 Log in
               </Text>
             </Text>

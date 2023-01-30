@@ -1,12 +1,18 @@
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { GetDesksPayload, SignInPayload, SignUpPayload } from '@/types/payload';
-import { GetDesksResponse, SignInResponse, SignUpResponse } from '@/types/response';
-import { DeskType } from '@/types/data';
+import { CreateColumnPayload, GetColumnsPayload, GetDesksPayload, SignInPayload, SignUpPayload } from '@/types/payload';
+import {
+  CreateColumnResponse,
+  GetColumnsResponse,
+  GetDesksResponse,
+  GetOwnDeskResponse,
+  SignInResponse,
+  SignUpResponse,
+} from '@/types/response';
+import Storage from '@/utils/Storage';
 
 const prayerApi = axios.create({
-  baseURL: 'https://d299-185-13-179-156.eu.ngrok.io',
+  baseURL: 'https://458c-2-60-225-244.eu.ngrok.io/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -14,12 +20,9 @@ const prayerApi = axios.create({
 
 prayerApi.interceptors.request.use(
   async (config) => {
-    const authData = await AsyncStorage.getItem('auth');
-    if (authData) {
-      const data = JSON.parse(authData);
-      if (data && data.token) {
-        config.headers.Authorization = `Bearer ${data.token}`;
-      }
+    const token = await Storage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -27,23 +30,41 @@ prayerApi.interceptors.request.use(
 );
 
 export const signUpRequest = async (values: SignUpPayload) => {
-  const response = await prayerApi.post<SignUpResponse>('/auth/sign-up', values);
-  return response;
+  const { data } = await prayerApi.post<SignUpResponse>('/auth/sign-up', values);
+  return data;
 };
 
 export const signInRequest = async (values: SignInPayload) => {
-  const response = await prayerApi.post<SignInResponse>('/auth/sign-in', values);
-  return response;
+  const { data } = await prayerApi.post<SignInResponse>('/auth/sign-in', values);
+  return data;
 };
 
-export const getDesksRequest = async (values: GetDesksPayload) => {
-  const response = await prayerApi.get<GetDesksResponse>(
-    `/desks/?limit=${values.limit}&afterCursor=${values.afterCursor}`,
-  );
-  return response;
+export const getDesksRequest = async ({ limit, afterCursor }: GetDesksPayload) => {
+  const { data } = await prayerApi.get<GetDesksResponse>('/desks', {
+    params: {
+      limit,
+      afterCursor,
+    },
+  });
+  return data;
 };
 
 export const getOwnDeskRequest = async () => {
-  const response = await prayerApi.get<DeskType>('/desks/my');
-  return response;
+  const { data } = await prayerApi.get<GetOwnDeskResponse>('/desks/my');
+  return data;
+};
+
+export const getColumnsRequest = async ({ deskId, limit, afterCursor }: GetColumnsPayload) => {
+  const { data } = await prayerApi.get<GetColumnsResponse>(`/desks/${deskId}/columns`, {
+    params: {
+      limit,
+      afterCursor,
+    },
+  });
+  return data;
+};
+
+export const createColumnRequest = async (values: CreateColumnPayload) => {
+  const { data } = await prayerApi.post<CreateColumnResponse>('/columns', values);
+  return data;
 };

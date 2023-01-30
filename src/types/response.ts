@@ -1,4 +1,4 @@
-import { ColumnDataType, DeskType } from './data';
+import { ColumnType, DeskType, PrayerType, UserType } from './data';
 
 export type SignInResponse = {
   id: number;
@@ -10,15 +10,8 @@ export type SignInResponse = {
   deletedAt: string;
 };
 
-export type SignUpResponse = {
-  email: string;
-  name: string;
-  password: string;
+export type SignUpResponse = UserType & {
   token: string;
-  columns: ColumnDataType[];
-  deletedAt: null | string;
-  createdAt: string;
-  updatedAt: string;
 };
 
 export type GetDesksResponse = {
@@ -28,3 +21,23 @@ export type GetDesksResponse = {
     beforeCursor: string;
   };
 };
+
+export type GetColumnsResponse = {
+  data: ColumnType[];
+  cursor: {
+    afterCursor: string;
+    beforeCursor: string;
+  };
+};
+
+export type GetPrayersResponse = {
+  data: PrayerType[];
+  cursor: {
+    afterCursor: string;
+    beforeCursor: string;
+  };
+};
+
+export type GetOwnDeskResponse = DeskType;
+
+export type CreateColumnResponse = ColumnType;

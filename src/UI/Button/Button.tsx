@@ -43,7 +43,7 @@ const Button: FC<ButtonProps> = ({
           { style: styles[`button_wrapper_${variant}`], active: true },
           {
             style: styles[`button_wrapper_${variant}_disabled`],
-            active: disabled ? true : false,
+            active: !!disabled,
           },
           { style: styles[`button_wrapper_${variant}_press`], active: isPressed },
         ),
