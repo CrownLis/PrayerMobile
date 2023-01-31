@@ -12,7 +12,7 @@ export type InputProps = {
   isDisabled?: boolean;
   isDirty?: boolean;
   isError?: boolean;
-  postfix?: React.ReactNode;
+  icon?: React.ReactNode;
 } & TextInputProps;
 
 const Input: FC<InputProps> = ({
@@ -24,17 +24,17 @@ const Input: FC<InputProps> = ({
   onFocus,
   onBlur,
   style,
-  postfix,
+  icon,
   ...props
 }) => {
   const { focusHandler, blurHandler, isFocus } = useInputHandlers(onFocus, onBlur);
 
-  const resolvedPostfix = useMemo(() => {
+  const resolvedIcon = useMemo(() => {
     if (isDirty && !isError) {
       return <CheckIcon width={20} height={20} fill={colors.$Success} />;
     }
-    return postfix;
-  }, [isDirty, isError, postfix]);
+    return icon;
+  }, [isDirty, isError, icon]);
 
   return (
     <View style={mergeStyles({ style: styles.inputContainer, active: true })}>
@@ -70,7 +70,7 @@ const Input: FC<InputProps> = ({
         secureTextEntry={secureTextEntry}
         {...props}
       />
-      {resolvedPostfix ? <View style={styles.postfix}>{resolvedPostfix}</View> : null}
+      {resolvedIcon ? <View style={styles.icon}>{resolvedIcon}</View> : null}
     </View>
   );
 };
