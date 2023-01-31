@@ -1,48 +1,71 @@
 import React, { FC } from 'react';
-import { Dimensions, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
-
-import useButtonHandlers from '@/hooks/useButtonHandlers';
-import { mergeStyles } from '@/utils/mergeStyles';
-
-import styles from './DeskCard.module.scss';
+import { Dimensions, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import Animated, {
+  runOnJS,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import { PanGestureHandler, PanGestureHandlerGestureEvent, PanGestureHandlerProps } from 'react-native-gesture-handler';
+
+import useButtonHandlers from '@/hooks/useButtonHandlers';
+import { mergeStyles } from '@/utils/mergeStyles';
 import DeleteButton from '@/UI/DeleteButton';
-import { ColumnType } from '@/types/data';
-import { useAppDispatch } from '@/store/hooks';
-import { rootRoutines } from '@/store/ducks';
+
+import styles from './DeskCard.module.scss';
 
 type DeskCardProps = {
-  columnId: ColumnType['id'];
-} & TouchableOpacityProps;
+  onDismiss?: () => void;
+} & TouchableOpacityProps &
+  Pick<PanGestureHandlerProps, 'simultaneousHandlers'>;
 
-const screenWidth = Dimensions.get('window');
-const TRANSLATE_X_THRESHOLD = -screenWidth.width * 0.17;
+const SCREEN_WIDTH = Dimensions.get('window');
+const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH.width * 0.17;
+const LIST_ITEM_HEIGHT = 76;
 
-const DeskCard: FC<DeskCardProps> = ({ columnId, onPress, onPressIn, onPressOut, disabled, children, ...props }) => {
-  const dispatch = useAppDispatch();
+const DeskCard: FC<DeskCardProps> = ({
+  onDismiss,
+  onPress,
+  onPressIn,
+  onPressOut,
+  disabled,
+  children,
+  style,
+  simultaneousHandlers,
+  ...props
+}) => {
   const { isPressed, pressInHandler, pressOutHandler, pressHandler } = useButtonHandlers(
     onPressIn,
     onPressOut,
     onPress,
   );
 
+  const isAnimation = !!onDismiss;
+
   // ANIMATION //
   const translateX = useSharedValue(0);
+  const itemHeight = useSharedValue(LIST_ITEM_HEIGHT);
+  const marginVertical = useSharedValue(10);
+  const opacity = useSharedValue(1);
+
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
     onActive: (event) => {
-      translateX.value = event.translationX;
+      if (event.translationX <= 0) {
+        translateX.value = event.translationX;
+      }
     },
     onEnd: () => {
       const shouldBeDismissed = translateX.value < TRANSLATE_X_THRESHOLD;
       if (shouldBeDismissed) {
-        translateX.value = withTiming(-screenWidth);
-        dispatch(rootRoutines.columns.deleteColumn(columnId));
+        translateX.value = withTiming(-SCREEN_WIDTH);
+        itemHeight.value = withTiming(0);
+        marginVertical.value = withTiming(0);
+        opacity.value = withTiming(0, undefined, (isFinished) => {
+          if (isFinished && onDismiss) {
+            runOnJS(onDismiss)();
+          }
+        });
       } else {
         translateX.value = withTiming(0);
       }
@@ -52,30 +75,41 @@ const DeskCard: FC<DeskCardProps> = ({ columnId, onPress, onPressIn, onPressOut,
   const rStyle = useAnimatedStyle(() => ({
     transform: [
       {
-        translateX: translateX.value < -57 ? -57 : translateX.value,
+        translateX: translateX.value,
       },
     ],
   }));
 
-  // ANIMATION //
+  const rTaskContainerStyle = useAnimatedStyle(() => {
+    return {
+      height: itemHeight.value,
+      marginVertical: marginVertical.value,
+      opacity: opacity.value,
+    };
+  });
 
   return (
-    <View style={styles.container}>
-      <DeleteButton />
-      <PanGestureHandler onGestureEvent={panGesture}>
-        <Animated.View style={rStyle}>
+    <Animated.View style={[styles.container, rTaskContainerStyle]}>
+      <Animated.View style={[styles.iconContainer]}>
+        <DeleteButton />
+      </Animated.View>
+      <PanGestureHandler
+        onGestureEvent={isAnimation ? panGesture : undefined}
+        simultaneousHandlers={simultaneousHandlers}
+      >
+        <Animated.View
+          style={[
+            mergeStyles({ style: styles.card, active: true }, { style: styles.card_pressed, active: isPressed }),
+            rStyle,
+          ]}
+        >
           <TouchableOpacity
             onPress={pressHandler}
             onPressIn={pressInHandler}
             onPressOut={pressOutHandler}
             disabled={disabled}
+            style={[styles.touchable, style]}
             {...props}
-            style={[
-              mergeStyles(
-                { style: styles.touchable_container, active: true },
-                { style: styles.container_pressed, active: isPressed },
-              ),
-            ]}
           >
             <Text
               style={mergeStyles(
@@ -88,7 +122,7 @@ const DeskCard: FC<DeskCardProps> = ({ columnId, onPress, onPressIn, onPressOut,
           </TouchableOpacity>
         </Animated.View>
       </PanGestureHandler>
-    </View>
+    </Animated.View>
   );
 };
 

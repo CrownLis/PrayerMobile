@@ -22,6 +22,16 @@
     background-color: $color100;
 }
 
+.tabBarIconText {
+    @include typography($main, 12px, 400);
+    line-height: 17px;
+    color: $color600;
+}
+
+.tabBarIconText_active {
+    color: $color800;
+}
+
 .header {
     display: flex;
     flex-direction: row;
@@ -41,4 +51,8 @@
 .headerBack {
     position: absolute;
     left: 16px;
+}
+
+.screenContent {
+    background-color: $color200;
 }

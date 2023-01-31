@@ -2,10 +2,14 @@ import { all, call, put, takeEvery } from 'redux-saga/effects';
 
 import { getDesksRequest } from '@/api';
 import { GetDesksResponse } from '@/types/response';
-import { getDesks } from './routines';
+import { cleanDesks, getDesks } from './routines';
 
 function* getDesksWatcherSaga() {
   yield takeEvery(getDesks.TRIGGER, getDesksFlow);
+}
+
+function* cleanDesksWatcherSaga() {
+  yield takeEvery(cleanDesks.TRIGGER, cleanDesksFlow);
 }
 
 function* getDesksFlow({ payload }: ReturnType<typeof getDesks>) {
@@ -26,6 +30,17 @@ function* getDesksFlow({ payload }: ReturnType<typeof getDesks>) {
   }
 }
 
+function* cleanDesksFlow() {
+  try {
+    yield put(cleanDesks.request());
+    yield put(cleanDesks.success());
+  } catch (error: any) {
+    yield put(cleanDesks.failure(error.message));
+  } finally {
+    yield put(cleanDesks.fulfill());
+  }
+}
+
 export default function* desksWatcherSaga() {
-  yield all([getDesksWatcherSaga()]);
+  yield all([getDesksWatcherSaga(), cleanDesksWatcherSaga()]);
 }

@@ -20,7 +20,7 @@ import {
 import Storage from '@/utils/Storage';
 
 const prayerApi = axios.create({
-  baseURL: 'https://42d2-217-25-213-87.eu.ngrok.io',
+  baseURL: 'https://8e65-2-60-225-244.eu.ngrok.io/',
   headers: {
     'Content-Type': 'application/json',
   },

@@ -1,5 +1,6 @@
 import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useRoute } from '@react-navigation/native';
 import { Text, View } from 'react-native';
 
 import Button from '@/UI/Button';
@@ -10,15 +11,17 @@ import { Greet } from '@/assets/svgs';
 
 import styles from './Greetings.module.scss';
 
-type Props = NativeStackScreenProps<GuestStackParamList, 'Greetings'>;
+type GreetingsScreenProps = NativeStackScreenProps<GuestStackParamList, 'Greetings'>;
 
-const Greetings = ({ route }: Props) => {
+const Greetings = () => {
   const dispatch = useAppDispatch();
+
+  const { params } = useRoute<GreetingsScreenProps['route']>();
 
   const { loading } = useAppSelector(rootSelectors.auth.getAuthState);
 
   const authUser = () => {
-    dispatch(rootRoutines.auth.signUp(route.params));
+    dispatch(rootRoutines.auth.signUp({ ...params }));
   };
 
   return (

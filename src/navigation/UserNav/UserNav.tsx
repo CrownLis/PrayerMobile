@@ -8,6 +8,7 @@ import UsersDesk from '@/navigation/AuthStack/UsersDesk';
 import Followed from '@/navigation/AuthStack/Followed';
 import Header from '@/components/Header';
 import IconButton from '@/UI/IconButton';
+import { mergeStyles } from '@/utils/mergeStyles';
 import Columns from '../AuthStack/Columns';
 import Column from '../AuthStack/Column';
 import Prayer from '../AuthStack/Prayer';
@@ -22,17 +23,21 @@ import {
 
 import styles from './UserNav.module.scss';
 
+type ScreenWithTitle<T = unknown> = {
+  title: string;
+} & T;
+
 export type UserStackParamList = {
   Root: undefined;
-  Columns: {
+  Columns: ScreenWithTitle<{
     deskId: number;
-  };
-  Column: {
+  }>;
+  Column: ScreenWithTitle<{
     id: number;
-  };
-  Prayer: {
+  }>;
+  Prayer: ScreenWithTitle<{
     id: number;
-  };
+  }>;
 };
 
 const Tab = createBottomTabNavigator();
@@ -56,7 +61,20 @@ const Root = () => {
           tabBarIcon: ({ focused }) => (
             <View style={styles.navigation}>
               <MyDeskIcon width={24} height={24} fill={focused ? colors.$color800 : colors.$color600} />
-              <Text>My Desk</Text>
+              <Text
+                style={mergeStyles(
+                  {
+                    style: styles.tabBarIconText,
+                    active: true,
+                  },
+                  {
+                    style: styles.tabBarIconText_active,
+                    active: focused,
+                  },
+                )}
+              >
+                My Desk
+              </Text>
             </View>
           ),
         }}
@@ -68,7 +86,20 @@ const Root = () => {
           tabBarIcon: ({ focused }) => (
             <View style={styles.navigation}>
               <UsersDesksIcon width={24} height={24} fill={focused ? colors.$color800 : colors.$color600} />
-              <Text>Users Desk</Text>
+              <Text
+                style={mergeStyles(
+                  {
+                    style: styles.tabBarIconText,
+                    active: true,
+                  },
+                  {
+                    style: styles.tabBarIconText_active,
+                    active: focused,
+                  },
+                )}
+              >
+                Users Desk
+              </Text>
             </View>
           ),
         }}
@@ -80,7 +111,20 @@ const Root = () => {
           tabBarIcon: ({ focused }) => (
             <View style={styles.navigation}>
               <SubscribersIcon width={24} height={24} fill={focused ? colors.$color800 : colors.$color600} />
-              <Text>Followed</Text>
+              <Text
+                style={mergeStyles(
+                  {
+                    style: styles.tabBarIconText,
+                    active: true,
+                  },
+                  {
+                    style: styles.tabBarIconText_active,
+                    active: focused,
+                  },
+                )}
+              >
+                Followed
+              </Text>
             </View>
           ),
         }}
@@ -94,7 +138,10 @@ const UserNav: FC = () => {
     <Stack.Navigator
       screenOptions={() => ({
         animation: 'none',
+        contentStyle: styles.screenContent,
         header: ({ navigation, route }) => {
+          const params = (route.params || {}) as ScreenWithTitle;
+          const title = params.title || route.name;
           return (
             <View style={styles.header}>
               <IconButton
@@ -105,7 +152,7 @@ const UserNav: FC = () => {
               >
                 <BackIcon fill={colors.$color800} />
               </IconButton>
-              <Text style={styles.headerText}>{route.name}</Text>
+              <Text style={styles.headerText}>{title}</Text>
             </View>
           );
         },

@@ -3,7 +3,7 @@ import { BaseState, createReducer } from '@/store/createReducer';
 
 import { DeskType } from '@/types/data';
 
-import { getDesks } from './routines';
+import { cleanDesks, getDesks } from './routines';
 
 type DesksStateType = BaseState<DeskType[]>;
 
@@ -21,8 +21,18 @@ const handleGetDesks = {
   ...handleFulfill<DesksStateType>(getDesks),
 };
 
+const handleCleanDesks = {
+  [cleanDesks.SUCCESS]: (state: DesksStateType) => ({
+    ...state,
+    data: null,
+    loading: false,
+    error: null,
+  }),
+};
+
 const desksReducer = createReducer(initialState)({
   ...handleGetDesks,
+  ...handleCleanDesks,
 });
 
 export default desksReducer;

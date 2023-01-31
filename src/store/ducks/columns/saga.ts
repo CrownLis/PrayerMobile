@@ -1,8 +1,8 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 
-import { createColumnRequest, getColumnsRequest, getOwnDeskRequest } from '@/api';
+import { createColumnRequest, getColumnsRequest, getOwnDeskRequest, removeColumnRequest } from '@/api';
 import { CreateColumnResponse, GetColumnsResponse, GetOwnDeskResponse } from '@/types/response';
-import { getOwnColumns, getColumns, createColumn, deleteColumn } from './routines';
+import { getOwnColumns, getColumns, createColumn, deleteColumn, cleanColumns } from './routines';
 
 function* getColumnsWatcherSaga() {
   yield takeEvery(getColumns.TRIGGER, getColumnsFlow);
@@ -17,7 +17,11 @@ function* createColumnWatcherSaga() {
 }
 
 function* deleteColumnWatcherSaga() {
-  yield takeEvery(deleteColumn.TRIGGER, removeColumnFlow);
+  yield takeEvery(deleteColumn.TRIGGER, deleteColumnFlow);
+}
+
+function* cleanColumnsWatcherSaga() {
+  yield takeEvery(cleanColumns.TRIGGER, cleanColumnsFlow);
 }
 
 function* getColumnsFlow({ payload }: ReturnType<typeof getColumns>) {
@@ -48,7 +52,7 @@ function* createColumnFlow({ payload }: ReturnType<typeof createColumn>) {
     if (!response) {
       throw new Error('Columns: Something went wrong');
     }
-    yield put(createColumn.success());
+    yield put(createColumn.success(response));
   } catch (error: any) {
     yield put(createColumn.failure(error.message));
   } finally {
@@ -78,15 +82,26 @@ function* getOwnColumnsFlow({ payload }: ReturnType<typeof getOwnColumns>) {
   }
 }
 
-function* removeColumnFlow() {
+function* deleteColumnFlow({ payload }: ReturnType<typeof deleteColumn>) {
   try {
     yield put(deleteColumn.request());
-    console.log(1);
-    yield put(deleteColumn.success());
+    yield call(removeColumnRequest, payload);
+    yield put(deleteColumn.success(payload));
   } catch (error: any) {
     yield put(deleteColumn.failure(error.message));
   } finally {
     yield put(deleteColumn.fulfill());
+  }
+}
+
+function* cleanColumnsFlow() {
+  try {
+    yield put(cleanColumns.request());
+    yield put(cleanColumns.success());
+  } catch (error: any) {
+    yield put(cleanColumns.failure(error.message));
+  } finally {
+    yield put(cleanColumns.fulfill());
   }
 }
 
@@ -96,5 +111,6 @@ export default function* columnsWatcherSaga() {
     getOwnColumnsWatcherSaga(),
     createColumnWatcherSaga(),
     deleteColumnWatcherSaga(),
+    cleanColumnsWatcherSaga(),
   ]);
 }

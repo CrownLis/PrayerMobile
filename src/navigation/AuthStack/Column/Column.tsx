@@ -1,18 +1,17 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useRoute } from '@react-navigation/native';
 
 import { UserStackParamList } from '@/navigation/UserNav/UserNav';
 
-type ColumnProps = NativeStackScreenProps<UserStackParamList, 'Column'>;
+import styles from './Column.module.scss';
 
-const Column = (props: ColumnProps) => {
-  console.log(props.route.params.id);
-  return (
-    <View>
-      <Text>Column</Text>
-    </View>
-  );
+type ColumnScreenProps = NativeStackScreenProps<UserStackParamList, 'Column'>;
+
+const Column = () => {
+  const { params } = useRoute<ColumnScreenProps['route']>();
+  return <SafeAreaView style={styles.container} />;
 };
 
 export default Column;

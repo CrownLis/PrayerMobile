@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
-import { FlatList, ImageBackground, SafeAreaView } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { ScrollView, ImageBackground, SafeAreaView, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 
 import { UserStackParamList } from '@/navigation/UserNav/UserNav';
+import Loader from '@/UI/Loader';
 import DeskCard from '@/components/DeskCard';
 import { rootSelectors, rootRoutines } from '@/store/ducks';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -11,44 +13,68 @@ import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './Columns.module.scss';
 
-type ColumnsProps = NativeStackScreenProps<UserStackParamList, 'Columns'>;
+type ColumnsScreenProps = NativeStackScreenProps<UserStackParamList, 'Columns'>;
 
-const Columns = ({ navigation, route }: ColumnsProps) => {
+const Columns = () => {
   const dispatch = useAppDispatch();
 
+  const scrollViewRef = useRef(null);
+
+  const { params } = useRoute<ColumnsScreenProps['route']>();
+  const { navigate } = useNavigation<ColumnsScreenProps['navigation']>();
+  const isFocused = useIsFocused();
+
   const columns = useAppSelector(rootSelectors.columns.getColumnsData);
+  const isLoading = useAppSelector(rootSelectors.columns.getColumnsLoading);
+
+  const isFetching = isLoading && !columns;
 
   useEffect(() => {
-    dispatch(rootRoutines.columns.getColumns({ limit: 100, deskId: route.params.deskId }));
-  }, [dispatch, route.params.deskId]);
+    if (isFocused) {
+      dispatch(rootRoutines.columns.getColumns({ limit: 100, deskId: params.deskId }));
+      return () => {
+        dispatch(rootRoutines.columns.cleanColumns());
+      };
+    }
+  }, [params.deskId, isFocused]);
 
   const showColumns = !!columns && !!columns.length;
 
+  if (isFetching) {
+    return <Loader size="large" />;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      {showColumns && (
-        <ImageBackground source={backgroundImg} resizeMode="cover" style={styles.background} imageStyle={styles.image}>
-          <FlatList
-            data={columns}
-            style={styles.list}
-            renderItem={({ item }) => {
-              return (
-                <DeskCard
-                  key={item.id}
-                  style={styles.item}
-                  onPress={() =>
-                    navigation.push('Column', {
-                      id: item.id,
-                    })
-                  }
-                >
-                  {item.title}
-                </DeskCard>
-              );
-            }}
-          />
-        </ImageBackground>
-      )}
+      <ScrollView ref={scrollViewRef} nestedScrollEnabled>
+        {showColumns && (
+          <ImageBackground
+            source={backgroundImg}
+            resizeMode="cover"
+            style={styles.background}
+            imageStyle={styles.image}
+          >
+            <View style={styles.list}>
+              {columns.map((item) => {
+                return (
+                  <DeskCard
+                    key={item.id}
+                    simultaneousHandlers={scrollViewRef}
+                    onPress={() =>
+                      navigate('Column', {
+                        id: item.id,
+                        title: item.title,
+                      })
+                    }
+                  >
+                    {item.title}
+                  </DeskCard>
+                );
+              })}
+            </View>
+          </ImageBackground>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };

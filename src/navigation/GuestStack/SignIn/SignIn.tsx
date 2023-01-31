@@ -2,6 +2,7 @@ import React from 'react';
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import { ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 import FormField from '@/components/FormField';
 import Button from '@/UI/Button';
@@ -21,10 +22,12 @@ type FormValues = {
   password: string;
 };
 
-type Props = NativeStackScreenProps<GuestStackParamList, 'Sign In'>;
+type SignInScreenProps = NativeStackScreenProps<GuestStackParamList, 'Sign In'>;
 
-const SignIn = ({ navigation }: Props) => {
+const SignIn = () => {
   const dispatch = useAppDispatch();
+
+  const { navigate } = useNavigation<SignInScreenProps['navigation']>();
 
   const { loading } = useAppSelector(rootSelectors.auth.getAuthState);
 
@@ -39,7 +42,7 @@ const SignIn = ({ navigation }: Props) => {
   };
 
   const goToSignUp = () => {
-    navigation.navigate('Sign Up');
+    navigate('Sign Up');
   };
 
   return (

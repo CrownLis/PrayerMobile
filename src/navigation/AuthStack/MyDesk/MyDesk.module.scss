@@ -26,16 +26,13 @@
     padding: 24px 16px;
 }
 
-.item {
-    margin-bottom: 12px;
-}
-
 .emptyColumn {
     margin: auto auto;
-    .arrow {
-        position: relative;
-        transform: rotate(10deg);
-        bottom:-40px;
-        left:120px;
-    }
+}
+
+.arrow {
+    position: relative;
+    transform: rotate(10deg);
+    bottom: -40px;
+    left: 120px;
 }

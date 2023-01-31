@@ -3,7 +3,7 @@ import { BaseState, createReducer } from '@/store/createReducer';
 
 import { ColumnType } from '@/types/data';
 
-import { createColumn, deleteColumn, getColumns, getOwnColumns } from './routines';
+import { cleanColumns, createColumn, deleteColumn, getColumns, getOwnColumns } from './routines';
 
 type ColumnsStateType = BaseState<ColumnType[]>;
 
@@ -32,8 +32,9 @@ const handleGetOwnColumns = {
 const handleCreateColumn = {
   ...handleTrigger<ColumnsStateType>(createColumn),
   ...handleRequest<ColumnsStateType>(createColumn),
-  [createColumn.SUCCESS]: (state: ColumnsStateType) => ({
+  [createColumn.SUCCESS]: (state: ColumnsStateType, action: ReturnType<typeof createColumn.success>) => ({
     ...state,
+    data: [action.payload, ...(state.data || [])],
   }),
   ...handleFailure<ColumnsStateType, { payload: string }>(createColumn),
   ...handleFulfill<ColumnsStateType>(createColumn),
@@ -42,9 +43,26 @@ const handleCreateColumn = {
 const handleDeleteColumn = {
   ...handleTrigger<ColumnsStateType>(deleteColumn),
   ...handleRequest<ColumnsStateType>(deleteColumn),
-  ...handleSuccess<ColumnsStateType, { payload: ColumnType['id'] }>(deleteColumn),
+  [deleteColumn.SUCCESS]: (state: ColumnsStateType, action: ReturnType<typeof deleteColumn.success>) => {
+    if (!state.data) {
+      return state;
+    }
+    return {
+      ...state,
+      data: state.data.filter((column) => column.id !== action.payload),
+    };
+  },
   ...handleFailure<ColumnsStateType, { payload: string }>(deleteColumn),
   ...handleFulfill<ColumnsStateType>(deleteColumn),
+};
+
+const handleCleanColumns = {
+  [cleanColumns.SUCCESS]: (state: ColumnsStateType) => ({
+    ...state,
+    data: null,
+    loading: false,
+    error: null,
+  }),
 };
 
 const desksReducer = createReducer(initialState)({
@@ -52,6 +70,7 @@ const desksReducer = createReducer(initialState)({
   ...handleGetOwnColumns,
   ...handleCreateColumn,
   ...handleDeleteColumn,
+  ...handleCleanColumns,
 });
 
 export default desksReducer;

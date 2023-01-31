@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
-import { FlatList, ImageBackground, SafeAreaView } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { ImageBackground, SafeAreaView, ScrollView, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 import { UserStackParamList } from '@/navigation/UserNav/UserNav';
+import Loader from '@/UI/Loader';
 import DeskCard from '@/components/DeskCard';
 import { rootSelectors, rootRoutines } from '@/store/ducks';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -11,45 +13,68 @@ import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './UsersDesk.module.scss';
 
-type UsersDeskProps = NativeStackScreenProps<UserStackParamList, 'Root'>;
+type UsersDeskScreenProps = NativeStackScreenProps<UserStackParamList, 'Root'>;
 
-const UsersDesk = ({ navigation }: UsersDeskProps) => {
+const UsersDesk = () => {
   const dispatch = useAppDispatch();
 
+  const scrollViewRef = useRef(null);
+
+  const { navigate } = useNavigation<UsersDeskScreenProps['navigation']>();
+  const isFocused = useIsFocused();
+
   const desks = useAppSelector(rootSelectors.desks.getDesksData);
+  const isLoading = useAppSelector(rootSelectors.desks.getDesksLoading);
+
+  const isFetching = isLoading && !desks;
 
   useEffect(() => {
-    dispatch(rootRoutines.desks.getDesks({ limit: 100 }));
-  }, [dispatch]);
+    if (isFocused) {
+      dispatch(rootRoutines.desks.getDesks({ limit: 100 }));
+      return () => {
+        dispatch(rootRoutines.desks.cleanDesks());
+      };
+    }
+  }, [isFocused]);
 
   const showDesks = !!desks && !!desks.length;
 
+  if (isFetching) {
+    return <Loader size="large" />;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      {showDesks && (
-        <ImageBackground source={backgroundImg} resizeMode="cover" style={styles.background} imageStyle={styles.image}>
-          <FlatList
-            data={desks}
-            style={styles.list}
-            renderItem={({ item }) => {
-              return (
-                <DeskCard
-                  columnId={item.id}
-                  key={item.id}
-                  style={styles.item}
-                  onPress={() =>
-                    navigation.push('Columns', {
-                      deskId: item.id,
-                    })
-                  }
-                >
-                  {item.name}
-                </DeskCard>
-              );
-            }}
-          />
-        </ImageBackground>
-      )}
+      <ScrollView ref={scrollViewRef} nestedScrollEnabled>
+        {showDesks && (
+          <ImageBackground
+            source={backgroundImg}
+            resizeMode="cover"
+            style={styles.background}
+            imageStyle={styles.image}
+          >
+            <View style={styles.list}>
+              {desks.map((item) => {
+                const title = `${item.name}’s desk`;
+                return (
+                  <DeskCard
+                    key={item.id}
+                    simultaneousHandlers={scrollViewRef}
+                    onPress={() =>
+                      navigate('Columns', {
+                        deskId: item.id,
+                        title,
+                      })
+                    }
+                  >
+                    {title}
+                  </DeskCard>
+                );
+              })}
+            </View>
+          </ImageBackground>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };

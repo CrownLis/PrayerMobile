@@ -1,7 +1,9 @@
-import { colors } from '@/assets/styles/color';
-import { Trash } from '@/assets/svgs';
 import React, { FC } from 'react';
 import { View } from 'react-native';
+
+import { colors } from '@/assets/styles/color';
+import { Trash } from '@/assets/svgs';
+
 import styles from './DeleteButton.module.scss';
 
 const DeleteButton: FC = () => {

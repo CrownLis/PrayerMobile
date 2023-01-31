@@ -1,7 +1,10 @@
 import React from 'react';
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import { ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
+import { GuestStackParamList } from '@/navigation/GuestNav/GuestNav';
 import FormField from '@/components/FormField';
 import Button from '@/UI/Button';
 import Input from '@/UI/Input';
@@ -11,8 +14,6 @@ import { validateEmail } from '@/utils/validation';
 import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './SignUp.module.scss';
-import { GuestStackParamList } from '@/navigation/GuestNav/GuestNav';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type FormValues = {
   name: string;
@@ -21,13 +22,15 @@ type FormValues = {
   confirmPassword: string;
 };
 
-type Props = NativeStackScreenProps<GuestStackParamList, 'Sign Up'>;
+type SignUpScreenProps = NativeStackScreenProps<GuestStackParamList, 'Sign Up'>;
 
-const SignUp = ({ navigation }: Props) => {
+const SignUp = () => {
   const { control, watch, handleSubmit, ...formProps } = useForm<FormValues>();
 
+  const { navigate } = useNavigation<SignUpScreenProps['navigation']>();
+
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    navigation.navigate('Greetings', data);
+    navigate('Greetings', { ...data });
   };
 
   const onError: SubmitErrorHandler<FormValues> = (errors) => {
@@ -35,7 +38,7 @@ const SignUp = ({ navigation }: Props) => {
   };
 
   const goToSignIn = () => {
-    navigation.navigate('Sign In');
+    navigate('Sign In');
   };
 
   return (

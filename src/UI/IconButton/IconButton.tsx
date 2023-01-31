@@ -1,19 +1,27 @@
 import React, { FC, PropsWithChildren } from 'react';
-import { ActivityIndicator, TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
 import { mergeStyles } from '@/utils/mergeStyles';
 import useButtonHandlers from '@/hooks/useButtonHandlers';
+import { colors } from '@/assets/styles/color';
+import Loader from '../Loader';
 
 import styles from './IconButton.module.scss';
 
-type ButtonProps = PropsWithChildren<{
+type IconButtonProps = PropsWithChildren<{
   size: 'big' | 'middle' | 'small';
   variant: 'dark' | 'light' | 'lightest';
   isLoading?: boolean;
 }> &
   TouchableOpacityProps;
 
-const IconButton: FC<ButtonProps> = ({
+const loaderColorsMap: Record<IconButtonProps['variant'], string> = {
+  dark: colors.$color100,
+  light: colors.$color800,
+  lightest: colors.$color800,
+};
+
+const IconButton: FC<IconButtonProps> = ({
   variant,
   size,
   isLoading,
@@ -58,7 +66,7 @@ const IconButton: FC<ButtonProps> = ({
       ]}
       {...props}
     >
-      {isLoading ? <ActivityIndicator /> : children}
+      {isLoading ? <Loader color={loaderColorsMap[variant]} /> : children}
     </TouchableOpacity>
   );
 };
