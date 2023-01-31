@@ -39,7 +39,7 @@ const PasswordInput: FC<PasswordInputProps> = ({ style, isDirty, isDisabled, isE
       style={[styles.passwordInput, style]}
       onFocus={focusHandler}
       onBlur={blurHandler}
-      postfix={
+      icon={
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
           {showPassword ? (
             <EyeOpenIcon width={20} height={20} fill={getIconColor()} />

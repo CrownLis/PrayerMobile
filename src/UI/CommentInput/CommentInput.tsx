@@ -28,7 +28,7 @@ const CommentInput: FC<CommentInputProps> = ({ isDisabled, onFocus, onBlur, styl
         ),
         style,
       ]}
-      postfix={null}
+      icon={null}
       {...props}
     />
   );
