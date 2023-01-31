@@ -1,18 +1,38 @@
 import React, { FC, PropsWithChildren } from 'react';
-import { ActivityIndicator, TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
 import { mergeStyles } from '@/utils/mergeStyles';
 import useButtonHandlers from '@/hooks/useButtonHandlers';
+import { colors } from '@/assets/styles/color';
+import Loader from '../Loader';
 
 import styles from './IconButton.module.scss';
 
-type ButtonProps = PropsWithChildren<{
-  variant: 'circle' | 'square' | 'smallCircle1' | 'smallCircle2' | 'smallCircle3';
+type IconButtonProps = PropsWithChildren<{
+  size: 'big' | 'middle' | 'small';
+  variant: 'dark' | 'light' | 'lightest';
   isLoading?: boolean;
 }> &
   TouchableOpacityProps;
 
-const IconButton: FC<ButtonProps> = ({ variant, isLoading, disabled, children, onPress, onPressIn, onPressOut }) => {
+const loaderColorsMap: Record<IconButtonProps['variant'], string> = {
+  dark: colors.$color100,
+  light: colors.$color800,
+  lightest: colors.$color800,
+};
+
+const IconButton: FC<IconButtonProps> = ({
+  variant,
+  size,
+  isLoading,
+  disabled,
+  children,
+  onPress,
+  onPressIn,
+  onPressOut,
+  style,
+  ...props
+}) => {
   const { isPressed, pressHandler, pressInHandler, pressOutHandler } = useButtonHandlers(
     onPressIn,
     onPressOut,
@@ -25,16 +45,28 @@ const IconButton: FC<ButtonProps> = ({ variant, isLoading, disabled, children, o
       onPress={pressHandler}
       onPressIn={pressInHandler}
       onPressOut={pressOutHandler}
-      style={mergeStyles(
-        {
-          style: styles[`button_wrapper_${variant}`],
-          active: true,
-        },
-        { style: styles[`button_wrapper_${variant}_disabled`], active: disabled ?? true },
-        { style: styles[`button_wrapper_${variant}_pressed`], active: isPressed },
-      )}
+      style={[
+        mergeStyles(
+          {
+            style: styles.button,
+            active: true,
+          },
+          {
+            style: styles[`button_${size}`],
+            active: true,
+          },
+          {
+            style: styles[`button_${variant}`],
+            active: true,
+          },
+          { style: styles[`button_${variant}_disabled`], active: !!disabled },
+          { style: styles[`button_${variant}_pressed`], active: isPressed },
+        ),
+        style,
+      ]}
+      {...props}
     >
-      {isLoading ? <ActivityIndicator /> : children}
+      {isLoading ? <Loader color={loaderColorsMap[variant]} /> : children}
     </TouchableOpacity>
   );
 };

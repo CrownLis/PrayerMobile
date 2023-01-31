@@ -2,9 +2,9 @@ import { GestureResponderEvent } from 'react-native';
 import { useCallback, useState } from 'react';
 
 const useButtonHandlers = (
-  onPressIn?: (event: GestureResponderEvent) => void,
-  onPressOut?: (event: GestureResponderEvent) => void,
-  onPress?: (event: GestureResponderEvent) => void,
+  onPressIn?: ((event: GestureResponderEvent) => void) | null,
+  onPressOut?: ((event: GestureResponderEvent) => void) | null,
+  onPress?: ((event: GestureResponderEvent) => void) | null,
   isLoading?: boolean,
 ) => {
   const [isPressed, setIsPressed] = useState(false);

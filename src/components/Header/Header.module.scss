@@ -1,0 +1,19 @@
+@import './../../assets/styles/variables.scss';
+@import './../../assets/styles/mixins.scss';
+
+.container {
+    padding: 12px 24px 24px 24px;
+    background-color: $color200;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.title {
+    @include typography($main, 28px, 600);
+    line-height: 39px;
+    color: $color800;
+}

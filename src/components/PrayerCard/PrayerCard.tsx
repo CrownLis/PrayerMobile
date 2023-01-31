@@ -9,11 +9,16 @@ import { mergeStyles } from '@/utils/mergeStyles';
 type PrayerCardProps = TouchableOpacityProps;
 
 const PrayerCard: FC<PrayerCardProps> = ({ onPress, onPressIn, onPressOut, ...props }) => {
-  const { isPressed, pressInHandler, pressOutHandler } = useButtonHandlers(onPressIn, onPressOut);
+  const { isPressed, pressInHandler, pressOutHandler, pressHandler } = useButtonHandlers(
+    onPressIn,
+    onPressOut,
+    onPress,
+  );
+
   return (
     <TouchableOpacity
       style={mergeStyles({ style: styles.wrapper, active: true }, { style: styles.wrapper_pressed, active: isPressed })}
-      onPress={onPress}
+      onPress={pressHandler}
       onPressIn={pressInHandler}
       onPressOut={pressOutHandler}
       {...props}
@@ -27,7 +32,7 @@ const PrayerCard: FC<PrayerCardProps> = ({ onPress, onPressIn, onPressOut, ...pr
             <Text style={styles.description}>Complete 'xxx'</Text>
           </View>
         </View>
-        <IconButton variant="smallCircle2">
+        <IconButton size="small" variant="light">
           <PrayArms fill="black" />
         </IconButton>
       </View>
