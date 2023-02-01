@@ -12,8 +12,9 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './UsersDesk.module.scss';
+import { AuthRoutes } from '@/navigation/routes';
 
-type UsersDeskScreenProps = NativeStackScreenProps<UserStackParamList, 'Root'>;
+type UsersDeskScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Root>;
 
 const UsersDesk = () => {
   const dispatch = useAppDispatch();
@@ -61,7 +62,7 @@ const UsersDesk = () => {
                     key={item.id}
                     simultaneousHandlers={scrollViewRef}
                     onPress={() =>
-                      navigate('Columns', {
+                      navigate(AuthRoutes.Columns, {
                         deskId: item.id,
                         title,
                       })

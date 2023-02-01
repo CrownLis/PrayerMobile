@@ -22,20 +22,21 @@ import {
 } from '@/assets/svgs';
 
 import styles from './UserNav.module.scss';
+import { AuthRoutes } from '../routes';
 
 type ScreenWithTitle<T = unknown> = {
   title: string;
 } & T;
 
 export type UserStackParamList = {
-  Root: undefined;
-  Columns: ScreenWithTitle<{
+  [AuthRoutes.Root]: undefined;
+  [AuthRoutes.Columns]: ScreenWithTitle<{
     deskId: number;
   }>;
-  Column: ScreenWithTitle<{
+  [AuthRoutes.Column]: ScreenWithTitle<{
     id: number;
   }>;
-  Prayer: ScreenWithTitle<{
+  [AuthRoutes.Prayer]: ScreenWithTitle<{
     id: number;
   }>;
 };
@@ -158,10 +159,10 @@ const UserNav: FC = () => {
         },
       })}
     >
-      <Stack.Screen name="Root" component={Root} options={{ headerShown: false }} />
-      <Stack.Screen name="Columns" component={Columns} />
-      <Stack.Screen name="Column" component={Column} />
-      <Stack.Screen name="Prayer" component={Prayer} />
+      <Stack.Screen name={AuthRoutes.Root} component={Root} options={{ headerShown: false }} />
+      <Stack.Screen name={AuthRoutes.Columns} component={Columns} />
+      <Stack.Screen name={AuthRoutes.Column} component={Column} />
+      <Stack.Screen name={AuthRoutes.Prayer} component={Prayer} />
     </Stack.Navigator>
   );
 };
