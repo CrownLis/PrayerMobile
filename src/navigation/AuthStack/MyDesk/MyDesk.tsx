@@ -90,12 +90,12 @@ const MyDesk = () => {
         <View style={styles.emptyColumn}>
           <EmptyColumn />
           <Text>You haven't created any column.</Text>
-          <Arrow fill={colors.$color800} style={styles.arrow} />
+          <Arrow fill={colors.color800} style={styles.arrow} />
         </View>
       )}
       <ColumnOverlay isVisible={overlayVisible} onClose={() => setOverlayVisible(false)} />
       <IconButton size="big" variant="dark" style={styles.floatButton} onPress={() => setOverlayVisible(true)}>
-        <PlusIcon fill={colors.$color100} />
+        <PlusIcon fill={colors.color100} />
       </IconButton>
     </SafeAreaView>
   );

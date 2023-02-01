@@ -7,7 +7,7 @@ import styles from './Loader.module.scss';
 
 type LoaderProps = ActivityIndicatorProps;
 
-const Loader: FC<LoaderProps> = ({ color = colors.$color800, ...props }) => {
+const Loader: FC<LoaderProps> = ({ color = colors.color800, ...props }) => {
   return (
     <View style={styles.container}>
       <ActivityIndicator color={color} {...props} />

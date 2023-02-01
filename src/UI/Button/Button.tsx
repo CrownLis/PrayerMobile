@@ -16,9 +16,9 @@ type ButtonProps = PropsWithChildren<
 >;
 
 const loaderColorsMap: Record<ButtonProps['variant'], string> = {
-  primary: colors.$color100,
-  secondary: colors.$color800,
-  text: colors.$color800,
+  primary: colors.color100,
+  secondary: colors.color800,
+  text: colors.color800,
 };
 
 const Button: FC<ButtonProps> = ({

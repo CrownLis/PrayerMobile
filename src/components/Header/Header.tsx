@@ -25,7 +25,7 @@ const Header: FC<HeaderProps> = ({ title }) => {
       <View style={styles.header}>
         <Text style={styles.title}>{title}</Text>
         <IconButton size="middle" variant="lightest" onPress={handleLogOut}>
-          <ExitIcon width={18} height={18} fill={colors.$color800} />
+          <ExitIcon width={18} height={18} fill={colors.color800} />
         </IconButton>
       </View>
     </SafeAreaView>
