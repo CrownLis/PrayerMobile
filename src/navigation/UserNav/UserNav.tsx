@@ -61,7 +61,7 @@ const Root = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.navigation}>
-              <MyDeskIcon width={24} height={24} fill={focused ? colors.$color800 : colors.$color600} />
+              <MyDeskIcon width={24} height={24} fill={focused ? colors.color800 : colors.color600} />
               <Text
                 style={mergeStyles(
                   {
@@ -86,7 +86,7 @@ const Root = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.navigation}>
-              <UsersDesksIcon width={24} height={24} fill={focused ? colors.$color800 : colors.$color600} />
+              <UsersDesksIcon width={24} height={24} fill={focused ? colors.color800 : colors.color600} />
               <Text
                 style={mergeStyles(
                   {
@@ -111,7 +111,7 @@ const Root = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.navigation}>
-              <SubscribersIcon width={24} height={24} fill={focused ? colors.$color800 : colors.$color600} />
+              <SubscribersIcon width={24} height={24} fill={focused ? colors.color800 : colors.color600} />
               <Text
                 style={mergeStyles(
                   {
@@ -151,7 +151,7 @@ const UserNav: FC = () => {
                 onPress={() => navigation.goBack()}
                 style={styles.headerBack}
               >
-                <BackIcon fill={colors.$color800} />
+                <BackIcon fill={colors.color800} />
               </IconButton>
               <Text style={styles.headerText}>{title}</Text>
             </View>

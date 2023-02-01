@@ -65,7 +65,7 @@ const ColumnOverlay: FC<ColumnOverlayProps> = ({
         <View style={styles.overlayHeader}>
           <Text style={styles.overlayHeaderTitle}>New column</Text>
           <IconButton size="small" variant="light" onPress={onBackdropPress}>
-            <CloseIcon fill={colors.$color800} />
+            <CloseIcon fill={colors.color800} />
           </IconButton>
         </View>
         <FormProvider control={control} handleSubmit={handleSubmit} {...formProps}>

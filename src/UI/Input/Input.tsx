@@ -31,7 +31,7 @@ const Input: FC<InputProps> = ({
 
   const resolvedIcon = useMemo(() => {
     if (isDirty && !isError) {
-      return <CheckIcon width={20} height={20} fill={colors.$Success} />;
+      return <CheckIcon width={20} height={20} fill={colors.Success} />;
     }
     return icon;
   }, [isDirty, isError, icon]);
@@ -61,7 +61,7 @@ const Input: FC<InputProps> = ({
           ),
           style,
         ]}
-        placeholderTextColor={colors.$color600}
+        placeholderTextColor={colors.color600}
         placeholder={placeholder}
         onFocus={focusHandler}
         onBlur={blurHandler}

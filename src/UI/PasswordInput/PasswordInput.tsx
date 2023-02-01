@@ -18,15 +18,15 @@ const PasswordInput: FC<PasswordInputProps> = ({ style, isDirty, isDisabled, isE
 
   const getIconColor = () => {
     if (isDisabled) {
-      return colors.$color500;
+      return colors.color500;
     } else if (isError) {
-      return colors.$Error;
+      return colors.Error;
     } else if (isDirty) {
-      return colors.$Success;
+      return colors.Success;
     } else if (isFocus) {
-      return colors.$color800;
+      return colors.color800;
     } else {
-      return colors.$color600;
+      return colors.color600;
     }
   };
 

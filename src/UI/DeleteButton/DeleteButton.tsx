@@ -9,7 +9,7 @@ import styles from './DeleteButton.module.scss';
 const DeleteButton: FC = () => {
   return (
     <View style={styles.button_wrapper}>
-      <Trash fill={colors.$color100} />
+      <Trash fill={colors.color100} />
     </View>
   );
 };

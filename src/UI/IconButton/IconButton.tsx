@@ -16,9 +16,9 @@ type IconButtonProps = PropsWithChildren<{
   TouchableOpacityProps;
 
 const loaderColorsMap: Record<IconButtonProps['variant'], string> = {
-  dark: colors.$color100,
-  light: colors.$color800,
-  lightest: colors.$color800,
+  dark: colors.color100,
+  light: colors.color800,
+  lightest: colors.color800,
 };
 
 const IconButton: FC<IconButtonProps> = ({
