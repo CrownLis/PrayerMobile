@@ -3,7 +3,7 @@ import { ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-nat
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 
-import { UserStackParamList } from '@/navigation/UserNav/UserNav';
+import { UserStackParamList } from '@/navigation/UserNavigation/UserNavigation';
 import IconButton from '@/UI/IconButton';
 import Loader from '@/UI/Loader';
 import DeskCard from '@/components/DeskCard';

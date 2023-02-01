@@ -4,7 +4,7 @@ import { ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-nat
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 
-import { GuestStackParamList } from '@/navigation/GuestNav/GuestNav';
+import { GuestStackParamList } from '@/navigation/GuestNavigation/GuestNavigation';
 import FormField from '@/components/FormField';
 import Button from '@/UI/Button';
 import Input from '@/UI/Input';

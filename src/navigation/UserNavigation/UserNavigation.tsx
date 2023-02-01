@@ -3,15 +3,15 @@ import { Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import MyDesk from '@/navigation/AuthStack/MyDesk';
-import UsersDesk from '@/navigation/AuthStack/UsersDesk';
-import Followed from '@/navigation/AuthStack/Followed';
+import MyDesk from '@/navigation/UserNavigation/BottomBarStack/MyDesk';
+import UsersDesk from '@/navigation/UserNavigation/BottomBarStack/UsersDesk';
+import Followed from '@/navigation/UserNavigation/BottomBarStack/Followed';
 import Header from '@/components/Header';
 import IconButton from '@/UI/IconButton';
 import { mergeStyles } from '@/utils/mergeStyles';
-import Columns from '../AuthStack/Columns';
-import Column from '../AuthStack/Column';
-import Prayer from '../AuthStack/Prayer';
+import Columns from '../UserNavigation/Columns';
+import Column from './Column';
+import Prayer from '../UserNavigation/Prayer';
 
 import { colors } from '@/assets/styles/color';
 import {
@@ -21,7 +21,7 @@ import {
   UsersDesks as UsersDesksIcon,
 } from '@/assets/svgs';
 
-import styles from './UserNav.module.scss';
+import styles from './UserNavigation.module.scss';
 import { AuthRoutes } from '../routes';
 
 type ScreenWithTitle<T = unknown> = {
@@ -134,7 +134,7 @@ const Root = () => {
   );
 };
 
-const UserNav: FC = () => {
+const UserNavigation: FC = () => {
   return (
     <Stack.Navigator
       screenOptions={() => ({
@@ -167,4 +167,4 @@ const UserNav: FC = () => {
   );
 };
 
-export default UserNav;
+export default UserNavigation;

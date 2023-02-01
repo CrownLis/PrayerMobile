@@ -11,7 +11,7 @@ import PasswordInput from '@/UI/PasswordInput';
 import { validateEmail } from '@/utils/validation';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { rootRoutines, rootSelectors } from '@/store/ducks';
-import { GuestStackParamList } from '@/navigation/GuestNav/GuestNav';
+import { GuestStackParamList } from '@/navigation/GuestNavigation/GuestNavigation';
 
 import backgroundImg from '@/assets/images/background-1.png';
 
