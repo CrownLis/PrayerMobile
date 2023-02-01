@@ -14,6 +14,7 @@ import { validateEmail } from '@/utils/validation';
 import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './SignUp.module.scss';
+import { UnAuthRoutes } from '@/navigation/routes';
 
 type FormValues = {
   name: string;
@@ -22,15 +23,14 @@ type FormValues = {
   confirmPassword: string;
 };
 
-type SignUpScreenProps = NativeStackScreenProps<GuestStackParamList, 'Sign Up'>;
+type SignUpScreenProps = NativeStackScreenProps<GuestStackParamList, UnAuthRoutes.SignUp>;
 
 const SignUp = () => {
   const { control, watch, handleSubmit, ...formProps } = useForm<FormValues>();
-
   const { navigate } = useNavigation<SignUpScreenProps['navigation']>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    navigate('Greetings', { ...data });
+    navigate(UnAuthRoutes.Greetings, { ...data });
   };
 
   const onError: SubmitErrorHandler<FormValues> = (errors) => {
@@ -38,7 +38,7 @@ const SignUp = () => {
   };
 
   const goToSignIn = () => {
-    navigate('Sign In');
+    navigate(UnAuthRoutes.SignIn);
   };
 
   return (

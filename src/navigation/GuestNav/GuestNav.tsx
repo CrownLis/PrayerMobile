@@ -5,11 +5,12 @@ import SignUp from '@/navigation/GuestStack/SignUp';
 import SignIn from '@/navigation/GuestStack/SignIn';
 import Greetings from '../GuestStack/Greetings/Greetings';
 import { SignUpPayload } from '@/types/payload';
+import { UnAuthRoutes } from '../routes';
 
 export type GuestStackParamList = {
-  'Sign In': undefined;
-  'Sign Up': undefined;
-  Greetings: SignUpPayload;
+  [UnAuthRoutes.SignIn]: undefined;
+  [UnAuthRoutes.SignUp]: undefined;
+  [UnAuthRoutes.Greetings]: SignUpPayload;
 };
 
 const Stack = createNativeStackNavigator<GuestStackParamList>();
@@ -23,9 +24,9 @@ const GuestNav = () => {
         headerShown: false,
       })}
     >
-      <Stack.Screen name="Sign In" component={SignIn} />
-      <Stack.Screen name="Sign Up" component={SignUp} />
-      <Stack.Screen name="Greetings" component={Greetings} />
+      <Stack.Screen name={UnAuthRoutes.SignIn} component={SignIn} />
+      <Stack.Screen name={UnAuthRoutes.SignUp} component={SignUp} />
+      <Stack.Screen name={UnAuthRoutes.Greetings} component={Greetings} />
     </Stack.Navigator>
   );
 };

@@ -12,8 +12,9 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './Columns.module.scss';
+import { AuthRoutes } from '@/navigation/routes';
 
-type ColumnsScreenProps = NativeStackScreenProps<UserStackParamList, 'Columns'>;
+type ColumnsScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Columns>;
 
 const Columns = () => {
   const dispatch = useAppDispatch();
@@ -61,7 +62,7 @@ const Columns = () => {
                     key={item.id}
                     simultaneousHandlers={scrollViewRef}
                     onPress={() =>
-                      navigate('Column', {
+                      navigate(AuthRoutes.Column, {
                         id: item.id,
                         title: item.title,
                       })

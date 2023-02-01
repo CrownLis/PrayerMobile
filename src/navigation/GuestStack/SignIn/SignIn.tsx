@@ -16,13 +16,14 @@ import { GuestStackParamList } from '@/navigation/GuestNav/GuestNav';
 import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './SignIn.module.scss';
+import { UnAuthRoutes } from '@/navigation/routes';
 
 type FormValues = {
   email: string;
   password: string;
 };
 
-type SignInScreenProps = NativeStackScreenProps<GuestStackParamList, 'Sign In'>;
+type SignInScreenProps = NativeStackScreenProps<GuestStackParamList, UnAuthRoutes.SignIn>;
 
 const SignIn = () => {
   const dispatch = useAppDispatch();
@@ -34,6 +35,7 @@ const SignIn = () => {
   const { control, handleSubmit, ...formProps } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
+    console.log('s');
     dispatch(rootRoutines.auth.signIn(data));
   };
 
@@ -42,7 +44,7 @@ const SignIn = () => {
   };
 
   const goToSignUp = () => {
-    navigate('Sign Up');
+    navigate(UnAuthRoutes.SignUp);
   };
 
   return (

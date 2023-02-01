@@ -17,8 +17,9 @@ import { colors } from '@/assets/styles/color';
 import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './MyDesk.module.scss';
+import { AuthRoutes } from '@/navigation/routes';
 
-type MyDeskScreenProps = NativeStackScreenProps<UserStackParamList, 'Root'>;
+type MyDeskScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Root>;
 
 const MyDesk = () => {
   const { navigate } = useNavigation<MyDeskScreenProps['navigation']>();
@@ -71,7 +72,7 @@ const MyDesk = () => {
                     key={item.id}
                     simultaneousHandlers={scrollViewRef}
                     onPress={() =>
-                      navigate('Column', {
+                      navigate(AuthRoutes.Column, {
                         id: item.id,
                         title: item.title,
                       })
