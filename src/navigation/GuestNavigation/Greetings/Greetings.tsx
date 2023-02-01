@@ -6,12 +6,13 @@ import { Text, View } from 'react-native';
 import Button from '@/UI/Button';
 import { rootRoutines, rootSelectors } from '@/store/ducks';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { GuestStackParamList } from '@/navigation/GuestNav/GuestNav';
+import { GuestStackParamList } from '@/navigation/GuestNavigation/GuestNavigation';
 import { Greet } from '@/assets/svgs';
 
 import styles from './Greetings.module.scss';
+import { UnAuthRoutes } from '@/navigation/routes';
 
-type GreetingsScreenProps = NativeStackScreenProps<GuestStackParamList, 'Greetings'>;
+type GreetingsScreenProps = NativeStackScreenProps<GuestStackParamList, UnAuthRoutes.Greetings>;
 
 const Greetings = () => {
   const dispatch = useAppDispatch();

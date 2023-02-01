@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { ImageBackground, SafeAreaView, ScrollView, View } from 'react-native';
+import { ScrollView, ImageBackground, SafeAreaView, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 
-import { UserStackParamList } from '@/navigation/UserNav/UserNav';
+import { UserStackParamList } from '@/navigation/UserNavigation/UserNavigation';
 import Loader from '@/UI/Loader';
 import DeskCard from '@/components/DeskCard';
 import { rootSelectors, rootRoutines } from '@/store/ducks';
@@ -11,34 +11,35 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 import backgroundImg from '@/assets/images/background-1.png';
 
-import styles from './UsersDesk.module.scss';
+import styles from './Columns.module.scss';
 import { AuthRoutes } from '@/navigation/routes';
 
-type UsersDeskScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Root>;
+type ColumnsScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Columns>;
 
-const UsersDesk = () => {
+const Columns = () => {
   const dispatch = useAppDispatch();
 
   const scrollViewRef = useRef(null);
 
-  const { navigate } = useNavigation<UsersDeskScreenProps['navigation']>();
+  const { params } = useRoute<ColumnsScreenProps['route']>();
+  const { navigate } = useNavigation<ColumnsScreenProps['navigation']>();
   const isFocused = useIsFocused();
 
-  const desks = useAppSelector(rootSelectors.desks.getDesksData);
-  const isLoading = useAppSelector(rootSelectors.desks.getDesksLoading);
+  const columns = useAppSelector(rootSelectors.columns.getColumnsData);
+  const isLoading = useAppSelector(rootSelectors.columns.getColumnsLoading);
 
-  const isFetching = isLoading && !desks;
+  const isFetching = isLoading && !columns;
 
   useEffect(() => {
     if (isFocused) {
-      dispatch(rootRoutines.desks.getDesks({ limit: 100 }));
+      dispatch(rootRoutines.columns.getColumns({ limit: 100, deskId: params.deskId }));
       return () => {
-        dispatch(rootRoutines.desks.cleanDesks());
+        dispatch(rootRoutines.columns.cleanColumns());
       };
     }
-  }, [isFocused]);
+  }, [params.deskId, isFocused]);
 
-  const showDesks = !!desks && !!desks.length;
+  const showColumns = !!columns && !!columns.length;
 
   if (isFetching) {
     return <Loader size="large" />;
@@ -47,7 +48,7 @@ const UsersDesk = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView ref={scrollViewRef} nestedScrollEnabled>
-        {showDesks && (
+        {showColumns && (
           <ImageBackground
             source={backgroundImg}
             resizeMode="cover"
@@ -55,20 +56,19 @@ const UsersDesk = () => {
             imageStyle={styles.image}
           >
             <View style={styles.list}>
-              {desks.map((item) => {
-                const title = `${item.name}’s desk`;
+              {columns.map((item) => {
                 return (
                   <DeskCard
                     key={item.id}
                     simultaneousHandlers={scrollViewRef}
                     onPress={() =>
-                      navigate(AuthRoutes.Columns, {
-                        deskId: item.id,
-                        title,
+                      navigate(AuthRoutes.Column, {
+                        id: item.id,
+                        title: item.title,
                       })
                     }
                   >
-                    {title}
+                    {item.title}
                   </DeskCard>
                 );
               })}
@@ -80,4 +80,4 @@ const UsersDesk = () => {
   );
 };
 
-export default UsersDesk;
+export default Columns;

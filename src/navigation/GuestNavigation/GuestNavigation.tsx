@@ -1,9 +1,9 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import SignUp from '@/navigation/GuestStack/SignUp';
-import SignIn from '@/navigation/GuestStack/SignIn';
-import Greetings from '../GuestStack/Greetings/Greetings';
+import SignUp from '@/navigation/GuestNavigation/SignUp';
+import SignIn from '@/navigation/GuestNavigation/SignIn';
+import Greetings from './Greetings/Greetings';
 import { SignUpPayload } from '@/types/payload';
 import { UnAuthRoutes } from '../routes';
 
@@ -15,7 +15,7 @@ export type GuestStackParamList = {
 
 const Stack = createNativeStackNavigator<GuestStackParamList>();
 
-const GuestNav = () => {
+const GuestNavigation = () => {
   return (
     <Stack.Navigator
       screenOptions={(options) => ({
@@ -31,4 +31,4 @@ const GuestNav = () => {
   );
 };
 
-export default GuestNav;
+export default GuestNavigation;
