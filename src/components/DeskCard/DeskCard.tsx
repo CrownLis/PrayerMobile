@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { PanGestureHandler, PanGestureHandlerGestureEvent, PanGestureHandlerProps } from 'react-native-gesture-handler';
 
-import useButtonHandlers from '@/hooks/useButtonHandlers';
+import { useButtonHandlers } from '@/hooks/useButtonHandlers';
 import { mergeStyles } from '@/utils/mergeStyles';
 import DeleteButton from '@/UI/DeleteButton';
 

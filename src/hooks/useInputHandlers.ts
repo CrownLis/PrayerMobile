@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
 
-const useInputHandlers = (
+export const useInputHandlers = (
   onFocus?: (event: NativeSyntheticEvent<TextInputFocusEventData>) => void,
   onBlur?: (event: NativeSyntheticEvent<TextInputFocusEventData>) => void,
 ) => {
@@ -27,5 +27,3 @@ const useInputHandlers = (
 
   return { focusHandler, blurHandler, isFocus };
 };
-
-export default useInputHandlers;

@@ -2,7 +2,7 @@ import React, { FC, PropsWithChildren } from 'react';
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
 import { mergeStyles } from '@/utils/mergeStyles';
-import useButtonHandlers from '@/hooks/useButtonHandlers';
+import { useButtonHandlers } from '@/hooks/useButtonHandlers';
 import { colors } from '@/assets/styles/color';
 import Loader from '../Loader';
 
