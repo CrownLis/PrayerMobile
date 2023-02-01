@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-nativ
 import { PrayArms } from '@/assets/svgs';
 import IconButton from '@/UI/IconButton';
 import styles from './PrayerCard.module.scss';
-import useButtonHandlers from '@/hooks/useButtonHandlers';
+import { useButtonHandlers } from '@/hooks/useButtonHandlers';
 import { mergeStyles } from '@/utils/mergeStyles';
 
 type PrayerCardProps = TouchableOpacityProps;

@@ -1,7 +1,7 @@
 import { GestureResponderEvent } from 'react-native';
 import { useCallback, useState } from 'react';
 
-const useButtonHandlers = (
+export const useButtonHandlers = (
   onPressIn?: ((event: GestureResponderEvent) => void) | null,
   onPressOut?: ((event: GestureResponderEvent) => void) | null,
   onPress?: ((event: GestureResponderEvent) => void) | null,
@@ -38,5 +38,3 @@ const useButtonHandlers = (
 
   return { pressHandler, pressInHandler, pressOutHandler, isPressed };
 };
-
-export default useButtonHandlers;
