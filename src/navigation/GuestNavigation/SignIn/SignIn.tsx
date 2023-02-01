@@ -17,6 +17,7 @@ import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './SignIn.module.scss';
 import { UnAuthRoutes } from '@/navigation/routes';
+import AuthLayout from '@/layouts/AuthLayout';
 
 type FormValues = {
   email: string;
@@ -48,67 +49,61 @@ const SignIn = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ImageBackground source={backgroundImg} resizeMode="cover" style={styles.background}>
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          <View style={styles.formContainer}>
-            <Text style={styles.title}>Log in</Text>
-            <FormProvider control={control} handleSubmit={handleSubmit} {...formProps}>
-              <FormField
-                label="Email"
-                name="email"
-                rules={{
-                  required: 'Email is required',
-                  validate: validateEmail,
-                }}
-                control={control}
-                render={({ field: { onChange, onBlur, value }, fieldState: { error, isDirty } }) => (
-                  <Input
-                    value={value}
-                    isDirty={isDirty}
-                    isError={!!error}
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    placeholder="Enter your e-mail"
-                  />
-                )}
-              />
-              <FormField
-                label="Password"
-                name="password"
-                rules={{
-                  required: 'Password is required',
-                  minLength: {
-                    value: 5,
-                    message: 'Password field must be at leat 5 characters',
-                  },
-                }}
-                control={control}
-                render={({ field: { onChange, onBlur, value }, fieldState: { error, isDirty } }) => (
-                  <PasswordInput
-                    value={value}
-                    isDirty={isDirty}
-                    isError={!!error}
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    placeholder="Enter your password"
-                  />
-                )}
-              />
-            </FormProvider>
-            <Button variant="primary" onPress={handleSubmit(onSubmit, onError)} isLoading={loading}>
-              Confirm
-            </Button>
-            <Text style={styles.signUp}>
-              Don`t have an account?{' '}
-              <Text style={styles.signUp_link} onPress={goToSignUp}>
-                Sign up
-              </Text>
-            </Text>
-          </View>
-        </ScrollView>
-      </ImageBackground>
-    </SafeAreaView>
+    <AuthLayout>
+      <Text style={styles.title}>Log in</Text>
+      <FormProvider control={control} handleSubmit={handleSubmit} {...formProps}>
+        <FormField
+          label="Email"
+          name="email"
+          rules={{
+            required: 'Email is required',
+            validate: validateEmail,
+          }}
+          control={control}
+          render={({ field: { onChange, onBlur, value }, fieldState: { error, isDirty } }) => (
+            <Input
+              value={value}
+              isDirty={isDirty}
+              isError={!!error}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              placeholder="Enter your e-mail"
+            />
+          )}
+        />
+        <FormField
+          label="Password"
+          name="password"
+          rules={{
+            required: 'Password is required',
+            minLength: {
+              value: 5,
+              message: 'Password field must be at leat 5 characters',
+            },
+          }}
+          control={control}
+          render={({ field: { onChange, onBlur, value }, fieldState: { error, isDirty } }) => (
+            <PasswordInput
+              value={value}
+              isDirty={isDirty}
+              isError={!!error}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              placeholder="Enter your password"
+            />
+          )}
+        />
+      </FormProvider>
+      <Button variant="primary" onPress={handleSubmit(onSubmit, onError)} isLoading={loading}>
+        Confirm
+      </Button>
+      <Text style={styles.signUp}>
+        Don`t have an account?{' '}
+        <Text style={styles.signUp_link} onPress={goToSignUp}>
+          Sign up
+        </Text>
+      </Text>
+    </AuthLayout>
   );
 };
 
