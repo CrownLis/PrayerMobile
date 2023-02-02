@@ -30,16 +30,12 @@ export type GetColumnsResponse = {
   };
 };
 
-export type GetPrayersResponse = {
-  data: PrayerType[];
-  cursor: {
-    afterCursor: string;
-    beforeCursor: string;
-  };
-};
+export type GetPrayersResponse = PrayerType[];
 
 export type GetOwnDeskResponse = DeskType;
 
 export type CreateColumnResponse = ColumnType;
 
 export type RemoveColumnResponse = never;
+
+export type CreatePrayerResponse = PrayerType;

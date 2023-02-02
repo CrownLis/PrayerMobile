@@ -2,17 +2,21 @@ import axios from 'axios';
 
 import {
   CreateColumnPayload,
+  CreatePrayerPayload,
   DeleteColumnPayload,
   GetColumnsPayload,
   GetDesksPayload,
+  GetPrayersPayload,
   SignInPayload,
   SignUpPayload,
 } from '@/types/payload';
 import {
   CreateColumnResponse,
+  CreatePrayerResponse,
   GetColumnsResponse,
   GetDesksResponse,
   GetOwnDeskResponse,
+  GetPrayersResponse,
   RemoveColumnResponse,
   SignInResponse,
   SignUpResponse,
@@ -20,7 +24,7 @@ import {
 import Storage from '@/utils/Storage';
 
 const prayerApi = axios.create({
-  baseURL: 'https://8e65-2-60-225-244.eu.ngrok.io/',
+  baseURL: 'https://ae3c-217-25-217-148.eu.ngrok.io/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -79,5 +83,19 @@ export const createColumnRequest = async (values: CreateColumnPayload) => {
 
 export const removeColumnRequest = async (columnId: DeleteColumnPayload) => {
   const { data } = await prayerApi.delete<RemoveColumnResponse>(`/columns/${columnId}`);
+  return data;
+};
+
+export const getPrayersRequest = async (columnId: GetPrayersPayload['columnId']) => {
+  const { data } = await prayerApi.get<GetPrayersResponse>(`/columns/${columnId}/prayers`);
+  return data;
+};
+
+export const createPrayerRequest = async (values: CreatePrayerPayload) => {
+  const { data } = await prayerApi.post<CreatePrayerResponse>(`/columns/${values.columnId}/prayers`, {
+    title: values.title,
+    description: values.description,
+  });
+  console.log(data);
   return data;
 };

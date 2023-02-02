@@ -28,6 +28,14 @@ import {
   routines as columnsRoutines,
 } from './columns';
 
+import {
+  reducer as prayersReducer,
+  saga as prayersSaga,
+  actions as prayersActions,
+  selectors as prayersSelector,
+  routines as prayersRoutines,
+} from './prayers';
+
 const authPersistConfig = {
   key: 'auth',
   keyPrefix: '',
@@ -39,26 +47,30 @@ export const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
   desks: desksReducer,
   columns: columnsReducer,
+  prayers: prayersReducer,
 });
 
 export function* rootSaga() {
-  yield all([authSaga(), desksSaga(), columnsSaga()]);
+  yield all([authSaga(), desksSaga(), columnsSaga(), prayersSaga()]);
 }
 
 export const rootActions = {
   auth: authActions,
   desks: desksActions,
   columns: columnsActions,
+  prayers: prayersActions,
 };
 
 export const rootSelectors = {
   auth: authSelector,
   desks: desksSelector,
   columns: columnsSelector,
+  prayers: prayersSelector,
 };
 
 export const rootRoutines = {
   auth: authRoutines,
   desks: desksRoutines,
   columns: columnsRoutines,
+  prayers: prayersRoutines,
 };
