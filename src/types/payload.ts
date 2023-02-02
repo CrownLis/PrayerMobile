@@ -23,8 +23,6 @@ export type GetColumnsPayload = {
 };
 
 export type GetPrayersPayload = {
-  limit: number;
-  afterCursor?: string;
   columnId: ColumnType['id'];
 };
 
@@ -36,7 +34,7 @@ export type CreateColumnPayload = {
 export type CreatePrayerPayload = {
   title: string;
   description: string;
-  columnId: ColumnType['id'];
+  columnId?: ColumnType['id'];
 };
 
 export type CreateCommentPayload = {

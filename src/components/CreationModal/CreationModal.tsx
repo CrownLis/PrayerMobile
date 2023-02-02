@@ -6,40 +6,35 @@ import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-
 import IconButton from '@/UI/IconButton';
 import Button from '@/UI/Button';
 import Input from '@/UI/Input';
-import { useAppDispatch } from '@/store/hooks';
 import { Close as CloseIcon } from '@/assets/svgs';
 import { colors } from '@/assets/styles/color';
 import FormField from '../FormField';
 
-import styles from './ColumnOverlay.module.scss';
-import { rootRoutines } from '@/store/ducks';
+import styles from './CreationModal.module.scss';
 
 type FormValues = {
   title: string;
 };
 
-type ColumnOverlayProps = Omit<OverlayProps, 'children'> & {
+type ModalOverlayProps = Omit<OverlayProps, 'children'> & {
+  title: string;
   onClose: () => void;
+  onSubmit: (values: FormValues) => void;
 };
 
-const ColumnOverlay: FC<ColumnOverlayProps> = ({
+const CreationModal: FC<ModalOverlayProps> = ({
+  title,
+  onSubmit,
   onClose,
   style,
   backdropStyle,
   onBackdropPress = onClose,
   ...props
 }) => {
-  const dispatch = useAppDispatch();
-
   const { reset, control, handleSubmit, ...formProps } = useForm<FormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    dispatch(
-      rootRoutines.columns.createColumn({
-        ...data,
-        description: 'New column',
-      }),
-    );
+  const submit: SubmitHandler<FormValues> = (data) => {
+    onSubmit(data);
     reset();
     onClose();
   };
@@ -63,7 +58,7 @@ const ColumnOverlay: FC<ColumnOverlayProps> = ({
     >
       <View style={styles.overlayContent}>
         <View style={styles.overlayHeader}>
-          <Text style={styles.overlayHeaderTitle}>New column</Text>
+          <Text style={styles.overlayHeaderTitle}>New {title}</Text>
           <IconButton size="small" variant="light" onPress={onBackdropPress}>
             <CloseIcon fill={colors.color800} />
           </IconButton>
@@ -82,12 +77,12 @@ const ColumnOverlay: FC<ColumnOverlayProps> = ({
                 isError={!!error}
                 onBlur={onBlur}
                 onChangeText={onChange}
-                placeholder="Enter title of column"
+                placeholder={`Enter the title of ${title}`}
               />
             )}
           />
         </FormProvider>
-        <Button variant="primary" onPress={handleSubmit(onSubmit, onError)}>
+        <Button variant="primary" onPress={handleSubmit(submit, onError)}>
           Add
         </Button>
       </View>
@@ -95,4 +90,4 @@ const ColumnOverlay: FC<ColumnOverlayProps> = ({
   );
 };
 
-export default ColumnOverlay;
+export default CreationModal;
