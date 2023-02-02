@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, ImageBackground, SafeAreaView, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
@@ -9,17 +9,14 @@ import DeskCard from '@/components/DeskCard';
 import { rootSelectors, rootRoutines } from '@/store/ducks';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
-import backgroundImg from '@/assets/images/background-1.png';
-
 import styles from './Columns.module.scss';
 import { AuthRoutes } from '@/navigation/routes';
+import ListWrapper from '@/components/ListWrapper';
 
 type ColumnsScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Columns>;
 
 const Columns = () => {
   const dispatch = useAppDispatch();
-
-  const scrollViewRef = useRef(null);
 
   const { params } = useRoute<ColumnsScreenProps['route']>();
   const { navigate } = useNavigation<ColumnsScreenProps['navigation']>();
@@ -47,35 +44,25 @@ const Columns = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView ref={scrollViewRef} nestedScrollEnabled>
-        {showColumns && (
-          <ImageBackground
-            source={backgroundImg}
-            resizeMode="cover"
-            style={styles.background}
-            imageStyle={styles.image}
-          >
-            <View style={styles.list}>
-              {columns.map((item) => {
-                return (
-                  <DeskCard
-                    key={item.id}
-                    simultaneousHandlers={scrollViewRef}
-                    onPress={() =>
-                      navigate(AuthRoutes.Column, {
-                        id: item.id,
-                        title: item.title,
-                      })
-                    }
-                  >
-                    {item.title}
-                  </DeskCard>
-                );
-              })}
-            </View>
-          </ImageBackground>
-        )}
-      </ScrollView>
+      {showColumns && (
+        <ListWrapper>
+          {columns.map((item) => {
+            return (
+              <DeskCard
+                key={item.id}
+                onPress={() =>
+                  navigate(AuthRoutes.Column, {
+                    id: item.id,
+                    title: item.title,
+                  })
+                }
+              >
+                {item.title}
+              </DeskCard>
+            );
+          })}
+        </ListWrapper>
+      )}
     </SafeAreaView>
   );
 };
