@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { ImageBackground, SafeAreaView, ScrollView, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -13,13 +13,12 @@ import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './UsersDesk.module.scss';
 import { AuthRoutes } from '@/navigation/routes';
+import ListWrapper from '@/components/ListWrapper';
 
 type UsersDeskScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Root>;
 
 const UsersDesk = () => {
   const dispatch = useAppDispatch();
-
-  const scrollViewRef = useRef(null);
 
   const { navigate } = useNavigation<UsersDeskScreenProps['navigation']>();
   const isFocused = useIsFocused();
@@ -46,36 +45,26 @@ const UsersDesk = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView ref={scrollViewRef} nestedScrollEnabled>
-        {showDesks && (
-          <ImageBackground
-            source={backgroundImg}
-            resizeMode="cover"
-            style={styles.background}
-            imageStyle={styles.image}
-          >
-            <View style={styles.list}>
-              {desks.map((item) => {
-                const title = `${item.name}’s desk`;
-                return (
-                  <DeskCard
-                    key={item.id}
-                    simultaneousHandlers={scrollViewRef}
-                    onPress={() =>
-                      navigate(AuthRoutes.Columns, {
-                        deskId: item.id,
-                        title,
-                      })
-                    }
-                  >
-                    {title}
-                  </DeskCard>
-                );
-              })}
-            </View>
-          </ImageBackground>
-        )}
-      </ScrollView>
+      {showDesks && (
+        <ListWrapper>
+          {desks.map((item) => {
+            const title = `${item.name}’s desk`;
+            return (
+              <DeskCard
+                key={item.id}
+                onPress={() =>
+                  navigate(AuthRoutes.Columns, {
+                    deskId: item.id,
+                    title,
+                  })
+                }
+              >
+                {title}
+              </DeskCard>
+            );
+          })}
+        </ListWrapper>
+      )}
     </SafeAreaView>
   );
 };
