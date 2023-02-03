@@ -14,6 +14,7 @@ import backgroundImg from '@/assets/images/background-1.png';
 import styles from './UsersDesk.module.scss';
 import { AuthRoutes } from '@/navigation/routes';
 import ListWrapper from '@/components/ListWrapper';
+import EmptyList from '@/components/EmptyList';
 
 type UsersDeskScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Root>;
 
@@ -45,7 +46,7 @@ const UsersDesk = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {showDesks && (
+      {showDesks ? (
         <ListWrapper>
           {desks.map((item) => {
             const title = `${item.name}’s desk`;
@@ -64,6 +65,8 @@ const UsersDesk = () => {
             );
           })}
         </ListWrapper>
+      ) : (
+        <EmptyList text="No one`s created a desk yet :(" />
       )}
     </SafeAreaView>
   );

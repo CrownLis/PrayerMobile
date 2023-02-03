@@ -18,6 +18,7 @@ import IconButton from '@/UI/IconButton';
 import CreationModal from '@/components/CreationModal';
 import EmptyList from '@/components/EmptyList';
 import ListWrapper from '@/components/ListWrapper';
+import { getAuthData } from '@/store/ducks/auth/selectors';
 
 type ColumnScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Column>;
 
@@ -31,13 +32,13 @@ const Column = () => {
   const { navigate } = useNavigation<ColumnScreenProps['navigation']>();
   const prayers = useAppSelector(rootSelectors.prayers.getPrayersState);
   const isLoading = useAppSelector(rootSelectors.prayers.getPrayersLoading);
-
+  const user = useAppSelector(rootSelectors.auth.getAuthData);
+  const showPrayers = !!prayers && !!prayers.length;
   const [overlayVisible, setOverlayVisible] = useState(false);
-
+  const isUser = user?.id === params.userId;
   useEffect(() => {
     dispatch(rootRoutines.prayers.getPrayers(params.id));
   }, [params.id]);
-  const showPrayers = !!prayers && !!prayers.length;
 
   const onSubmit = (data: FormValues) => {
     dispatch(
@@ -74,19 +75,24 @@ const Column = () => {
           })}
         </ListWrapper>
       ) : (
-        <EmptyList />
-      )}
-      <View>
-        <CreationModal
-          isVisible={overlayVisible}
-          onClose={() => setOverlayVisible(false)}
-          title={'prayer'}
-          onSubmit={onSubmit}
+        <EmptyList
+          isUser={isUser}
+          text={isUser ? 'You haven`t created any prayer' : 'The user has not created any prayers yet'}
         />
-        <IconButton size="big" variant="dark" style={styles.floatButton} onPress={() => setOverlayVisible(true)}>
-          <PlusIcon fill={colors.color100} />
-        </IconButton>
-      </View>
+      )}
+      {isUser ? (
+        <View>
+          <CreationModal
+            isVisible={overlayVisible}
+            onClose={() => setOverlayVisible(false)}
+            title={'prayer'}
+            onSubmit={onSubmit}
+          />
+          <IconButton size="big" variant="dark" style={styles.floatButton} onPress={() => setOverlayVisible(true)}>
+            <PlusIcon fill={colors.color100} />
+          </IconButton>
+        </View>
+      ) : null}
     </SafeAreaView>
   );
 };

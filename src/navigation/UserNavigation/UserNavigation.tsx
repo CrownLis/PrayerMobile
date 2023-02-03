@@ -34,6 +34,7 @@ export type UserStackParamList = {
     deskId: number;
   }>;
   [AuthRoutes.Column]: ScreenWithTitle<{
+    userId: number;
     id: number;
   }>;
   [AuthRoutes.Prayer]: ScreenWithTitle<{

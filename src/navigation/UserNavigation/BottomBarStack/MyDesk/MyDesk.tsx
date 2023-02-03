@@ -80,6 +80,7 @@ const MyDesk = () => {
                   navigate(AuthRoutes.Column, {
                     id: item.id,
                     title: item.title,
+                    userId: item.userId,
                   })
                 }
                 onDismiss={() => handleDelete(item.id)}
@@ -90,7 +91,7 @@ const MyDesk = () => {
           })}
         </ListWrapper>
       ) : (
-        <EmptyList />
+        <EmptyList isUser text="You haven`t created any column" />
       )}
       <View>
         <CreationModal

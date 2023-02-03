@@ -5,12 +5,17 @@ import { View, Text } from 'react-native';
 
 import styles from './EmptyList.module.scss';
 
-const EmptyList: FC = () => {
+type EmptyListProps = {
+  text: string;
+  isUser?: boolean;
+};
+
+const EmptyList: FC<EmptyListProps> = ({ text, isUser }) => {
   return (
     <View style={styles.emptyColumn}>
       <EmptyColumn />
-      <Text>You haven't created any column.</Text>
-      <Arrow fill={colors.color800} style={styles.arrow} />
+      <Text>{text}</Text>
+      {isUser ? <Arrow fill={colors.color800} style={styles.arrow} /> : null}
     </View>
   );
 };
