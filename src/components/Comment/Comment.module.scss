@@ -1,0 +1,33 @@
+@import './../../assets/styles/variables.scss';
+@import './../../assets/styles/mixins.scss';
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+
+    .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .author {
+            @include typography($main, 16px, 500);
+            color: $color800;
+            line-height: 22px;
+        }
+        .date {
+            @include typography($main,14px,400);
+            color:$color700;
+            line-height: 20px;
+        }
+    }
+    .body {
+        margin-top: 12px;
+        .comment {
+            @include typography($main,16px,400);
+            line-height: 22px;
+        }
+    }
+}

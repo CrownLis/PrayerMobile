@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 
@@ -12,8 +12,6 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { rootRoutines, rootSelectors } from '@/store/ducks';
 import { Plus as PlusIcon } from '@/assets/svgs';
 import { colors } from '@/assets/styles/color';
-
-import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './MyDesk.module.scss';
 import { AuthRoutes } from '@/navigation/routes';
