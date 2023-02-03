@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import styles from './Columns.module.scss';
 import { AuthRoutes } from '@/navigation/routes';
 import ListWrapper from '@/components/ListWrapper';
+import EmptyList from '@/components/EmptyList';
 
 type ColumnsScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Columns>;
 
@@ -44,7 +45,7 @@ const Columns = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {showColumns && (
+      {showColumns ? (
         <ListWrapper>
           {columns.map((item) => {
             return (
@@ -54,6 +55,7 @@ const Columns = () => {
                   navigate(AuthRoutes.Column, {
                     id: item.id,
                     title: item.title,
+                    userId: item.userId,
                   })
                 }
               >
@@ -62,6 +64,8 @@ const Columns = () => {
             );
           })}
         </ListWrapper>
+      ) : (
+        <EmptyList text="User has not created columns yet" />
       )}
     </SafeAreaView>
   );

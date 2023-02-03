@@ -1,10 +1,13 @@
 .emptyColumn {
-    margin: auto auto;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex:1;
 }
 
 .arrow {
     position: relative;
-    transform: rotate(10deg);
-    bottom: -40px;
-    left: 120px;
+    transform: rotate(20deg);
+    bottom: -60px;
+    left: 60px;
 }
