@@ -14,14 +14,14 @@ import { rootRoutines, rootSelectors } from '@/store/ducks';
 import Button from '@/UI/Button';
 import Comment from '@/components/Comment';
 import CommentInput from '@/UI/CommentInput';
+import { AppState } from '@/store/configureStore';
+import convertTime from '@/utils/convertTime';
 
 type PrayerScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Prayer>;
 
 const Prayer: FC<PrayerScreenProps> = () => {
-  const dispatch = useAppDispatch();
   const { params } = useRoute<PrayerScreenProps['route']>();
-  const prayer = useAppSelector(rootSelectors.prayers.getPrayersState);
-  const isLoading = useAppSelector(rootSelectors.prayers.getPrayersLoading);
+  const prayer = useAppSelector((state: AppState) => rootSelectors.prayers.getPrayerById(state, params.id));
   useEffect(() => {}, [params.id]);
   return (
     <SafeAreaView style={styles.container}>
@@ -36,19 +36,19 @@ const Prayer: FC<PrayerScreenProps> = () => {
             >
               <View style={mergeStyles({ style: styles.block, active: true }, { style: styles.first, active: true })}>
                 <Text style={styles.titleStats}>Date</Text>
-                <Text style={styles.stats}>01.01.2021</Text>
+                <Text style={styles.stats}>{convertTime(prayer?.createdAt)}</Text>
               </View>
               <View style={mergeStyles({ style: styles.block, active: true }, { style: styles.second, active: true })}>
                 <Text style={styles.titleStats}>Total prayers</Text>
-                <Text style={styles.stats}>333</Text>
+                <Text style={styles.stats}>{prayer?.completesCount}</Text>
               </View>
               <View style={mergeStyles({ style: styles.block, active: true }, { style: styles.third, active: true })}>
                 <Text style={styles.titleStats}>Other prayers</Text>
-                <Text style={styles.stats}> 456</Text>
+                <Text style={styles.stats}> {prayer?.otherPrayCount}</Text>
               </View>
               <View style={mergeStyles({ style: styles.block, active: true }, { style: styles.fourth, active: true })}>
                 <Text style={styles.titleStats}>My prayers</Text>
-                <Text style={styles.stats}>60</Text>
+                <Text style={styles.stats}>{prayer?.myPrayCount} </Text>
               </View>
             </ImageBackground>
             <Button variant="primary" style={styles.prayedButton}>
