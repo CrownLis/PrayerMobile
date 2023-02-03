@@ -22,8 +22,12 @@ type PrayerScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.P
 const Prayer: FC<PrayerScreenProps> = () => {
   const { params } = useRoute<PrayerScreenProps['route']>();
   const prayer = useAppSelector((state: AppState) => rootSelectors.prayers.getPrayerById(state, params.id));
-  useEffect(() => {}, [params.id]);
-  return (
+  const dispatch = useAppDispatch();
+  const pray = () => {
+    dispatch(rootRoutines.prayers.doPray(params.id));
+  };
+
+   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.wrapper}>
@@ -51,7 +55,7 @@ const Prayer: FC<PrayerScreenProps> = () => {
                 <Text style={styles.stats}>{prayer?.myPrayCount} </Text>
               </View>
             </ImageBackground>
-            <Button variant="primary" style={styles.prayedButton}>
+            <Button variant="primary" style={styles.prayedButton} onPress={pray}>
               Prayed
             </Button>
             <Button variant="secondary" style={styles.followButton}>
