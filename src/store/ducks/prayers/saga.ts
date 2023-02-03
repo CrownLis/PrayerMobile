@@ -1,8 +1,8 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 
-import { createPrayerRequest, getPrayersRequest } from '@/api';
+import { createPrayerRequest, deletePrayerRequest, getPrayersRequest } from '@/api';
 import { CreatePrayerResponse, GetPrayersResponse } from '@/types/response';
-import { cleanPrayers, createPrayer, getPrayers } from './routines';
+import { cleanPrayers, createPrayer, deletePrayer, getPrayers } from './routines';
 
 function* getPrayersWatcherSaga() {
   yield takeEvery(getPrayers.TRIGGER, getPraysFlow);
@@ -10,6 +10,10 @@ function* getPrayersWatcherSaga() {
 
 function* createPrayerWatcherSaga() {
   yield takeEvery(createPrayer.TRIGGER, createPrayerFlow);
+}
+
+function* deletePrayerWatcherSaga() {
+  yield takeEvery(deletePrayer.TRIGGER, deletePrayerFlow);
 }
 
 function* cleanPrayerWatcherSaga() {
@@ -56,6 +60,18 @@ function* getPraysFlow({ payload }: ReturnType<typeof getPrayers>) {
   }
 }
 
+function* deletePrayerFlow({ payload }: ReturnType<typeof deletePrayer>) {
+  try {
+    yield put(deletePrayer.request());
+    yield call(deletePrayerRequest, payload);
+    yield put(deletePrayer.success(payload));
+  } catch (error: any) {
+    yield put(deletePrayer.failure(error.message));
+  } finally {
+    yield put(deletePrayer.fulfill());
+  }
+}
+
 function* cleanPrayersFlow() {
   try {
     yield put(cleanPrayers.request());
@@ -68,5 +84,5 @@ function* cleanPrayersFlow() {
 }
 
 export default function* desksWatcherSaga() {
-  yield all([getPrayersWatcherSaga(), createPrayerWatcherSaga(), cleanPrayerWatcherSaga()]);
+  yield all([getPrayersWatcherSaga(), createPrayerWatcherSaga(), cleanPrayerWatcherSaga(), deletePrayerWatcherSaga()]);
 }

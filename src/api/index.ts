@@ -18,13 +18,14 @@ import {
   GetOwnDeskResponse,
   GetPrayersResponse,
   RemoveColumnResponse,
+  RemovePrayerResponse,
   SignInResponse,
   SignUpResponse,
 } from '@/types/response';
 import Storage from '@/utils/Storage';
 
 const prayerApi = axios.create({
-  baseURL: 'https://ae3c-217-25-217-148.eu.ngrok.io/',
+  baseURL: 'https://3613-217-25-213-26.eu.ngrok.io/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -96,6 +97,10 @@ export const createPrayerRequest = async (values: CreatePrayerPayload) => {
     title: values.title,
     description: values.description,
   });
-  console.log(data);
+  return data;
+};
+
+export const deletePrayerRequest = async (id: DeleteColumnPayload) => {
+  const { data } = await prayerApi.delete<RemovePrayerResponse>(`/prayers/${id}`);
   return data;
 };
