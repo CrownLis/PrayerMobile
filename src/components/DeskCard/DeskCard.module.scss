@@ -1,21 +1,6 @@
 @import './../../assets/styles/variables.scss';
 @import './../../assets/styles/mixins.scss';
 
-.container {
-    width: 100%,
-}
-
-.iconContainer {
-    display: flex;
-    align-items: flex-end;
-    position: absolute;
-    right: 0;
-    height: 76px;
-    width: 100%;
-    background-color: $Error;
-    border-radius: 24px;
-}
-
 .card {
     display: flex;
     justify-content: center;

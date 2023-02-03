@@ -19,6 +19,7 @@ import CreationModal from '@/components/CreationModal';
 import EmptyList from '@/components/EmptyList';
 import ListWrapper from '@/components/ListWrapper';
 import { getAuthData } from '@/store/ducks/auth/selectors';
+import { PrayerType } from '@/types/data';
 
 type ColumnScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Column>;
 
@@ -50,6 +51,10 @@ const Column = () => {
     );
   };
 
+  const handleDelete = (prayerId: PrayerType['id']) => {
+    dispatch(rootRoutines.prayers.deletePrayer(prayerId));
+  };
+
   if (isLoading) {
     return <Loader size="large" />;
   }
@@ -62,6 +67,7 @@ const Column = () => {
             return (
               <PrayerCard
                 key={item.id}
+                onDismiss={() => handleDelete(item.id)}
                 onPress={() =>
                   navigate(AuthRoutes.Prayer, {
                     id: item.id,
