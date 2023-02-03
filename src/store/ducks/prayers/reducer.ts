@@ -2,7 +2,7 @@ import { handleFailure, handleFulfill, handleRequest, handleSuccess, handleTrigg
 import { BaseState, createReducer } from '@/store/createReducer';
 
 import { PrayerType } from '@/types/data';
-import { cleanPrayers, createPrayer, deletePrayer, getPrayers } from './routines';
+import { cleanPrayers, createPrayer, deletePrayer, doPray, getPrayers } from './routines';
 
 type PrayersStateType = BaseState<PrayerType[]>;
 
@@ -56,11 +56,34 @@ const handleCleanPrayers = {
   }),
 };
 
+const handleDoPray = {
+  ...handleTrigger<PrayersStateType>(doPray),
+  ...handleRequest<PrayersStateType>(doPray),
+  [doPray.SUCCESS]: (state: PrayersStateType, action: ReturnType<typeof doPray.success>) => {
+    if (!state.data) {
+      return state;
+    }
+    return {
+      ...state,
+      data: state.data.map((prayer) => {
+        if (prayer.id === action.payload.id) {
+          return action.payload;
+        } else {
+          return prayer;
+        }
+      }),
+    };
+  },
+  ...handleFailure<PrayersStateType, { payload: string }>(doPray),
+  ...handleFulfill<PrayersStateType>(doPray),
+};
+
 const prayersReducer = createReducer(initialState)({
   ...handleGetPrayers,
   ...handleCreatePrayer,
   ...handleCleanPrayers,
   ...handleDeletePrayer,
+  ...handleDoPray,
 });
 
 export default prayersReducer;

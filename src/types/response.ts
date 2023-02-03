@@ -41,3 +41,5 @@ export type RemoveColumnResponse = never;
 export type CreatePrayerResponse = PrayerType;
 
 export type RemovePrayerResponse = never;
+
+export type DoPrayResponse = PrayerType;

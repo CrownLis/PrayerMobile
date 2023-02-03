@@ -1,8 +1,8 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 
-import { createPrayerRequest, deletePrayerRequest, getPrayersRequest } from '@/api';
-import { CreatePrayerResponse, GetPrayersResponse } from '@/types/response';
-import { cleanPrayers, createPrayer, deletePrayer, getPrayers } from './routines';
+import { createPrayerRequest, deletePrayerRequest, doPrayRequest, getPrayersRequest } from '@/api';
+import { CreatePrayerResponse, DoPrayResponse, GetPrayersResponse } from '@/types/response';
+import { cleanPrayers, createPrayer, deletePrayer, doPray, getPrayers } from './routines';
 
 function* getPrayersWatcherSaga() {
   yield takeEvery(getPrayers.TRIGGER, getPraysFlow);
@@ -14,6 +14,10 @@ function* createPrayerWatcherSaga() {
 
 function* deletePrayerWatcherSaga() {
   yield takeEvery(deletePrayer.TRIGGER, deletePrayerFlow);
+}
+
+function* doPrayWatcherSaga() {
+  yield takeEvery(doPray.TRIGGER, doPrayFlow);
 }
 
 function* cleanPrayerWatcherSaga() {
@@ -46,7 +50,6 @@ function* getPraysFlow({ payload }: ReturnType<typeof getPrayers>) {
     if (!payload) {
       throw new Error('Desks: No payload');
     }
-    console.log(payload);
     yield put(getPrayers.request());
     const response: GetPrayersResponse = yield call(getPrayersRequest, payload);
     if (!response) {
@@ -72,6 +75,24 @@ function* deletePrayerFlow({ payload }: ReturnType<typeof deletePrayer>) {
   }
 }
 
+function* doPrayFlow({ payload }: ReturnType<typeof doPray>) {
+  try {
+    if (!payload) {
+      throw new Error('Desks: No payload');
+    }
+    yield put(doPray.request());
+    const response: DoPrayResponse = yield call(doPrayRequest, payload);
+    console.log(response);
+    if (!response) {
+      throw new Error('Desks: Something went wrong');
+    }
+  } catch (error: any) {
+    yield put(doPray.failure(error.message));
+  } finally {
+    yield put(doPray.fulfill());
+  }
+}
+
 function* cleanPrayersFlow() {
   try {
     yield put(cleanPrayers.request());
@@ -83,6 +104,12 @@ function* cleanPrayersFlow() {
   }
 }
 
-export default function* desksWatcherSaga() {
-  yield all([getPrayersWatcherSaga(), createPrayerWatcherSaga(), cleanPrayerWatcherSaga(), deletePrayerWatcherSaga()]);
+export default function* prayersWatcherSaga() {
+  yield all([
+    getPrayersWatcherSaga(),
+    createPrayerWatcherSaga(),
+    cleanPrayerWatcherSaga(),
+    deletePrayerWatcherSaga(),
+    doPrayWatcherSaga(),
+  ]);
 }
