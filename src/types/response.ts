@@ -39,3 +39,5 @@ export type CreateColumnResponse = ColumnType;
 export type RemoveColumnResponse = never;
 
 export type CreatePrayerResponse = PrayerType;
+
+export type RemovePrayerResponse = never;
