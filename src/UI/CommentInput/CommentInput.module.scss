@@ -1,5 +1,18 @@
 @import './../../assets/styles/variables.scss';
 
+.container {
+    position: relative;
+}
+
+.hideIcon {
+    display:none;
+}
+
+.showIcon {
+    position: absolute;
+    right:0;
+}
+
 .commentInput {
     min-height: 56px;
     padding: 17px 22px;

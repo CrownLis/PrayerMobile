@@ -23,6 +23,10 @@
     height: 65px;
 }
 
+.square { 
+    border-radius: 12px;
+}
+
 .button_dark {
     background-color: $color800;
     box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
