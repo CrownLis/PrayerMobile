@@ -23,11 +23,16 @@ const Prayer: FC<PrayerScreenProps> = () => {
   const { params } = useRoute<PrayerScreenProps['route']>();
   const prayer = useAppSelector((state: AppState) => rootSelectors.prayers.getPrayerById(state, params.id));
   const dispatch = useAppDispatch();
+  const comments = useAppSelector(rootSelectors.comments.getCommentsState);
   const pray = () => {
     dispatch(rootRoutines.prayers.doPray(params.id));
   };
 
-   return (
+  useEffect(() => {
+    dispatch(rootRoutines.comments.getComments(params.id));
+  }, []);
+
+  return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.wrapper}>
@@ -65,11 +70,9 @@ const Prayer: FC<PrayerScreenProps> = () => {
         </View>
         <View style={styles.commentBlock}>
           <Text style={styles.title}>Comments</Text>
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
+          {comments?.map((item) => (
+            <Comment author={item.userId} date={item.createdAt} comment={item.body} />
+          ))}
         </View>
       </ScrollView>
       <View style={styles.inputContainer}>

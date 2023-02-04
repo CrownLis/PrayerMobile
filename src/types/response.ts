@@ -1,4 +1,4 @@
-import { ColumnType, DeskType, PrayerType, UserType } from './data';
+import { ColumnType, CommentType, DeskType, PrayerType, UserType } from './data';
 
 export type SignInResponse = {
   id: number;
@@ -43,3 +43,5 @@ export type CreatePrayerResponse = PrayerType;
 export type RemovePrayerResponse = never;
 
 export type DoPrayResponse = PrayerType;
+
+export type getCommentsResponse = CommentType[];

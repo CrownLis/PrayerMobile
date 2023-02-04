@@ -36,6 +36,14 @@ import {
   routines as prayersRoutines,
 } from './prayers';
 
+import {
+  reducer as commentsReducer,
+  saga as commentsSaga,
+  actions as commentsActions,
+  selectors as commentsSelector,
+  routines as commentsRoutines,
+} from './comments';
+
 const authPersistConfig = {
   key: 'auth',
   keyPrefix: '',
@@ -48,10 +56,11 @@ export const rootReducer = combineReducers({
   desks: desksReducer,
   columns: columnsReducer,
   prayers: prayersReducer,
+  comments: commentsReducer,
 });
 
 export function* rootSaga() {
-  yield all([authSaga(), desksSaga(), columnsSaga(), prayersSaga()]);
+  yield all([authSaga(), desksSaga(), columnsSaga(), prayersSaga(), commentsSaga()]);
 }
 
 export const rootActions = {
@@ -59,6 +68,7 @@ export const rootActions = {
   desks: desksActions,
   columns: columnsActions,
   prayers: prayersActions,
+  comments: commentsActions,
 };
 
 export const rootSelectors = {
@@ -66,6 +76,7 @@ export const rootSelectors = {
   desks: desksSelector,
   columns: columnsSelector,
   prayers: prayersSelector,
+  comments: commentsSelector,
 };
 
 export const rootRoutines = {
@@ -73,4 +84,5 @@ export const rootRoutines = {
   desks: desksRoutines,
   columns: columnsRoutines,
   prayers: prayersRoutines,
+  comments: commentsRoutines,
 };

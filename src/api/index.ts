@@ -7,6 +7,7 @@ import {
   DeletePrayerPayload,
   DoPrayPayload,
   GetColumnsPayload,
+  getCommentsPayload,
   GetDesksPayload,
   GetPrayersPayload,
   SignInPayload,
@@ -17,6 +18,7 @@ import {
   CreatePrayerResponse,
   DoPrayResponse,
   GetColumnsResponse,
+  getCommentsResponse,
   GetDesksResponse,
   GetOwnDeskResponse,
   GetPrayersResponse,
@@ -28,7 +30,7 @@ import {
 import Storage from '@/utils/Storage';
 
 const prayerApi = axios.create({
-  baseURL: 'https://db4b-217-25-213-26.eu.ngrok.io/',
+  baseURL: 'https://d6dd-217-25-213-26.eu.ngrok.io/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -110,5 +112,10 @@ export const deletePrayerRequest = async (id: DeletePrayerPayload) => {
 
 export const doPrayRequest = async (id: DoPrayPayload) => {
   const { data } = await prayerApi.post<DoPrayResponse>(`/prayers/${id}/do`);
+  return data;
+};
+
+export const getCommentsRequest = async (id: getCommentsPayload) => {
+  const { data } = await prayerApi.get<getCommentsResponse>(`/prayers/${id}/comments`);
   return data;
 };

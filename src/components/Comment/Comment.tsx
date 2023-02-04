@@ -1,17 +1,25 @@
+import { CommentType } from '@/types/data';
+import convertTime from '@/utils/convertTime';
 import React, { FC } from 'react';
 import { View, Text } from 'react-native';
 
 import styles from './Comment.module.scss';
 
-const Comment: FC = () => {
+type CommentProps = {
+  author: CommentType['userId'];
+  date: CommentType['createdAt'];
+  comment: CommentType['body'];
+};
+
+const Comment: FC<CommentProps> = ({ author, comment, date }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.author}>Author</Text>
-        <Text style={styles.date}>Date</Text>
+        <Text style={styles.author}>Author {author}</Text>
+        <Text style={styles.date}>Date {convertTime(date)}</Text>
       </View>
       <View style={styles.body}>
-        <Text style={styles.comment}>Comment text</Text>
+        <Text style={styles.comment}>{comment}</Text>
       </View>
     </View>
   );

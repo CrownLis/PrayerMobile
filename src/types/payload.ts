@@ -1,4 +1,4 @@
-import { ColumnType, DeskType, PrayerType } from './data';
+import { ColumnType, CommentType, DeskType, PrayerType } from './data';
 
 export type SignUpPayload = {
   email: string;
@@ -47,3 +47,5 @@ export type DeleteColumnPayload = ColumnType['id'];
 export type DeletePrayerPayload = PrayerType['id'];
 
 export type DoPrayPayload = PrayerType['id'];
+
+export type getCommentsPayload = CommentType['prayerId'];
