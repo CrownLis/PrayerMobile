@@ -66,6 +66,9 @@ const Column = () => {
           {prayers.map((item) => {
             return (
               <PrayerCard
+                title={item.title}
+                members={item.subscribersCount}
+                complete={item.completesCount}
                 key={item.id}
                 onDismiss={() => handleDelete(item.id)}
                 onPress={() =>

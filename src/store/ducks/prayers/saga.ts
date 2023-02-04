@@ -82,10 +82,10 @@ function* doPrayFlow({ payload }: ReturnType<typeof doPray>) {
     }
     yield put(doPray.request());
     const response: DoPrayResponse = yield call(doPrayRequest, payload);
-    console.log(response);
     if (!response) {
       throw new Error('Desks: Something went wrong');
     }
+    yield put(doPray.success(response));
   } catch (error: any) {
     yield put(doPray.failure(error.message));
   } finally {
