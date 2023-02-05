@@ -32,6 +32,8 @@ export type GetColumnsResponse = {
 
 export type GetPrayersResponse = PrayerType[];
 
+export type GetPrayerResponse = PrayerType;
+
 export type GetSubscribedPrayersResponse = PrayerType[];
 
 export type GetOwnDeskResponse = DeskType;

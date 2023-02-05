@@ -7,6 +7,7 @@ import {
   DoPrayPayload,
   DoSubscribePayload,
   DoUnsubscribePayload,
+  GetPrayerPayload,
   GetPrayersPayload,
 } from '@/types/payload';
 import { DoSubscribeResponse, DoUnsubscribeResponse } from '@/types/response';
@@ -19,6 +20,12 @@ export const getPrayers = createRoutine(prayersActions.GET_PRAYERS, {
   failure: (payload: string) => payload,
 });
 
+export const getPrayer = createRoutine(prayersActions.GET_PRAYER, {
+  trigger: (payload: GetPrayerPayload['id']) => payload,
+  success: (payload: PrayerType[]) => payload,
+  failure: (payload: string) => payload,
+});
+
 export const getSubscribedPrayers = createRoutine(prayersActions.GET_SUBSCRIBED_PRAYERS, {
   success: (payload: PrayerType[]) => payload,
   failure: (payload: string) => payload,
@@ -27,7 +34,7 @@ export const getSubscribedPrayers = createRoutine(prayersActions.GET_SUBSCRIBED_
 export const createPrayer = createRoutine(prayersActions.CREATE_PRAYER, {
   trigger: (payload: CreatePrayerPayload) => payload,
   success: (payload: PrayerType) => payload,
-  failure: (payload: string) => console.log(payload),
+  failure: (payload: string) => payload,
 });
 
 export const deletePrayer = createRoutine(prayersActions.DELETE_PRAYER, {
@@ -39,7 +46,7 @@ export const deletePrayer = createRoutine(prayersActions.DELETE_PRAYER, {
 export const doPray = createRoutine(prayersActions.DO_PRAY, {
   trigger: (payload: DoPrayPayload) => payload,
   success: (payload: PrayerType) => payload,
-  failure: (payload: string) => console.log(payload),
+  failure: (payload: string) => payload,
 });
 
 export const doSubscribe = createRoutine(prayersActions.DO_SUBSCRIBE, {

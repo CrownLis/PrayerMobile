@@ -11,6 +11,7 @@ import {
   GetColumnsPayload,
   GetCommentsPayload,
   GetDesksPayload,
+  GetPrayerPayload,
   GetPrayersPayload,
   SignInPayload,
   SignUpPayload,
@@ -102,6 +103,16 @@ export const getPrayersRequest = async (columnId: GetPrayersPayload['columnId'])
   return data;
 };
 
+export const getPrayerRequest = async (id: GetPrayerPayload['id']) => {
+  const { data } = await prayerApi.get<GetPrayersResponse>(`/prayers/${id}`);
+  return data;
+};
+
+export const getSubscribedPrayersRequest = async () => {
+  const { data } = await prayerApi.get<GetSubscribedPrayersResponse>('/subscribed-prayers');
+  return data;
+};
+
 export const createPrayerRequest = async (values: CreatePrayerPayload) => {
   const { data } = await prayerApi.post<CreatePrayerResponse>(`/columns/${values.columnId}/prayers`, {
     title: values.title,
@@ -134,11 +145,6 @@ export const createCommentsRequest = async (values: CreateCommentPayload) => {
 
 export const doSubscribeRequest = async (id: DoSubscribePayload) => {
   const { data } = await prayerApi.post<DoSubscribeResponse>(`/prayers/${id}/subscribe`);
-  return data;
-};
-
-export const getSubscribedPrayersRequest = async () => {
-  const { data } = await prayerApi.get<GetSubscribedPrayersResponse>('/subscribed-prayers');
   return data;
 };
 

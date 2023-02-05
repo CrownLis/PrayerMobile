@@ -26,6 +26,10 @@ export type GetPrayersPayload = {
   columnId: ColumnType['id'];
 };
 
+export type GetPrayerPayload = {
+  id: PrayerType['id'];
+};
+
 export type CreateColumnPayload = {
   title: string;
   description: string;

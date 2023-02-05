@@ -19,9 +19,9 @@ type ColumnsScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.
 const Columns = () => {
   const dispatch = useAppDispatch();
 
+  const isFocused = useIsFocused();
   const { params } = useRoute<ColumnsScreenProps['route']>();
   const { navigate } = useNavigation<ColumnsScreenProps['navigation']>();
-  const isFocused = useIsFocused();
 
   const columns = useAppSelector(rootSelectors.columns.getColumnsData);
   const isLoading = useAppSelector(rootSelectors.columns.getColumnsLoading);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { colors } from '@/assets/styles/color';
@@ -26,17 +26,29 @@ type FormValues = {
 
 const Column = () => {
   const dispatch = useAppDispatch();
+
+  const isFocused = useIsFocused();
   const { params } = useRoute<ColumnScreenProps['route']>();
   const { navigate } = useNavigation<ColumnScreenProps['navigation']>();
+
   const prayers = useAppSelector(rootSelectors.prayers.getPrayersState);
   const isLoading = useAppSelector(rootSelectors.prayers.getPrayersLoading);
   const user = useAppSelector(rootSelectors.auth.getAuthData);
+
   const showPrayers = !!prayers && !!prayers.length;
-  const [overlayVisible, setOverlayVisible] = useState(false);
+  const isFetching = isLoading && !prayers;
   const isUser = user?.id === params.userId;
+
+  const [overlayVisible, setOverlayVisible] = useState(false);
+
   useEffect(() => {
-    dispatch(rootRoutines.prayers.getPrayers(params.id));
-  }, [params.id]);
+    if (isFocused) {
+      dispatch(rootRoutines.prayers.getPrayers(params.id));
+      return () => {
+        dispatch(rootRoutines.prayers.cleanPrayers());
+      };
+    }
+  }, [isFocused, params.id]);
 
   const onSubmit = (data: FormValues) => {
     dispatch(
@@ -52,7 +64,7 @@ const Column = () => {
     dispatch(rootRoutines.prayers.deletePrayer(prayerId));
   };
 
-  if (isLoading) {
+  if (isFetching) {
     return <Loader size="large" />;
   }
 

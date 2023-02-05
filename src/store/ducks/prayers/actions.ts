@@ -1,5 +1,7 @@
 export const GET_PRAYERS = 'GET_PRAYERS';
 
+export const GET_PRAYER = 'GET_PRAYER';
+
 export const GET_SUBSCRIBED_PRAYERS = 'GET_SUBSCRIBED_PRAYERS';
 
 export const CREATE_PRAYER = 'CREATE_PRAYER';

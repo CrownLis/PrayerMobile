@@ -16,3 +16,5 @@ export const createComment = createRoutine(commentsActions.CREATE_COMMENT, {
   success: (payload: createCommentResponse) => payload,
   failure: (payload: string) => payload,
 });
+
+export const cleanComments = createRoutine(commentsActions.CLEAN_COMMENTS);

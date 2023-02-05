@@ -24,7 +24,7 @@ type PrayerCardProps = {
 
 const LIST_ITEM_HEIGHT = 95;
 
-const formatCount = (count: number, maxCount: number) => {
+const formatCount = (count = 0, maxCount = 99) => {
   if (count <= maxCount) {
     return count;
   }

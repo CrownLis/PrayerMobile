@@ -2,7 +2,7 @@ import { BaseState, createReducer } from '@/store/createReducer';
 import { handleFailure, handleFulfill, handleRequest, handleSuccess, handleTrigger } from '@/store/handle';
 import { CommentType } from '@/types/data';
 
-import { createComment, getComments } from './routines';
+import { cleanComments, createComment, getComments } from './routines';
 
 type CommentsStateType = BaseState<CommentType[]>;
 
@@ -31,9 +31,19 @@ const handleCreateComment = {
   ...handleFulfill<CommentsStateType>(createComment),
 };
 
+const handleCleanComments = {
+  [cleanComments.SUCCESS]: (state: CommentsStateType) => ({
+    ...state,
+    data: null,
+    loading: false,
+    error: null,
+  }),
+};
+
 const commentsReducer = createReducer(initialState)({
   ...handleGetComments,
   ...handleCreateComment,
+  ...handleCleanComments,
 });
 
 export default commentsReducer;

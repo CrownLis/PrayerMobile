@@ -9,6 +9,7 @@ import {
   doPray,
   doSubscribe,
   doUnsubscribe,
+  getPrayer,
   getPrayers,
   getSubscribedPrayers,
 } from './routines';
@@ -27,6 +28,14 @@ const handleGetPrayers = {
   ...handleSuccess<PrayersStateType, { payload: PrayerType[] }>(getPrayers),
   ...handleFailure<PrayersStateType, { payload: string }>(getPrayers),
   ...handleFulfill<PrayersStateType>(getPrayers),
+};
+
+const handleGetPrayer = {
+  ...handleTrigger<PrayersStateType>(getPrayer),
+  ...handleRequest<PrayersStateType>(getPrayer),
+  ...handleSuccess<PrayersStateType, { payload: PrayerType[] }>(getPrayer),
+  ...handleFailure<PrayersStateType, { payload: string }>(getPrayer),
+  ...handleFulfill<PrayersStateType>(getPrayer),
 };
 
 const handleGetSubscribedPrayers = {
@@ -124,6 +133,7 @@ const handleDoPray = {
 
 const prayersReducer = createReducer(initialState)({
   ...handleGetPrayers,
+  ...handleGetPrayer,
   ...handleGetSubscribedPrayers,
   ...handleCreatePrayer,
   ...handleCleanPrayers,
