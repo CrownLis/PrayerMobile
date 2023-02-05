@@ -2,7 +2,7 @@ import { handleFailure, handleFulfill, handleRequest, handleSuccess, handleTrigg
 import { BaseState, createReducer } from '@/store/createReducer';
 
 import { CommentType } from '@/types/data';
-import { getComments } from './routines';
+import { createComment, getComments } from './routines';
 
 type CommentsStateType = BaseState<CommentType[]>;
 
@@ -20,8 +20,20 @@ const handleGetComments = {
   ...handleFulfill<CommentsStateType>(getComments),
 };
 
+const handleCreateComment = {
+  ...handleTrigger<CommentsStateType>(createComment),
+  ...handleRequest<CommentsStateType>(createComment),
+  [createComment.SUCCESS]: (state: CommentsStateType, action: ReturnType<typeof createComment.success>) => ({
+    ...state,
+    data: [action.payload, ...(state.data || [])],
+  }),
+  ...handleFailure<CommentsStateType, { payload: string }>(createComment),
+  ...handleFulfill<CommentsStateType>(createComment),
+};
+
 const commentsReducer = createReducer(initialState)({
   ...handleGetComments,
+  ...handleCreateComment,
 });
 
 export default commentsReducer;

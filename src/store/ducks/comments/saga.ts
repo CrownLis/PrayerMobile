@@ -1,10 +1,14 @@
-import { getCommentsRequest } from '@/api';
-import { getCommentsResponse } from '@/types/response';
+import { createCommentsRequest, getCommentsRequest } from '@/api';
+import { createCommentResponse, getCommentsResponse } from '@/types/response';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
-import { getComments } from './routines';
+import { createComment, getComments } from './routines';
 
 function* getCommentsWatcherSaga() {
   yield takeEvery(getComments.TRIGGER, getCommentsFlow);
+}
+
+function* createCommentWatcherSaga() {
+  yield takeEvery(createComment.TRIGGER, createCommentFlow);
 }
 
 function* getCommentsFlow({ payload }: ReturnType<typeof getComments>) {
@@ -25,6 +29,24 @@ function* getCommentsFlow({ payload }: ReturnType<typeof getComments>) {
   }
 }
 
+function* createCommentFlow({ payload }: ReturnType<typeof createComment>) {
+  try {
+    if (!payload) {
+      throw new Error('Columns: No payload');
+    }
+    yield put(createComment.request());
+    const response: createCommentResponse = yield call(createCommentsRequest, payload);
+    if (!response) {
+      throw new Error('Columns: Something went wrong');
+    }
+    yield put(createComment.success(response));
+  } catch (error: any) {
+    yield put(createComment.failure(error.message));
+  } finally {
+    yield put(createComment.fulfill());
+  }
+}
+
 export default function* commentsWatcherSaga() {
-  yield all([getCommentsWatcherSaga()]);
+  yield all([getCommentsWatcherSaga(), createCommentWatcherSaga()]);
 }
