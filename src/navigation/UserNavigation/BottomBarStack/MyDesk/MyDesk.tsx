@@ -89,7 +89,7 @@ const MyDesk = () => {
           })}
         </ListWrapper>
       ) : (
-        <EmptyList isUser text="You haven`t created any column" />
+        <EmptyList showArrow text="You haven`t created any column" />
       )}
       <View>
         <CreationModal

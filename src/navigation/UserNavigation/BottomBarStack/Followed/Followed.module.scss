@@ -1,0 +1,9 @@
+@import './../../../../assets/styles/variables.scss';
+@import './../../../../assets/styles/mixins.scss';
+
+.container {
+    position: relative;
+    flex: 1;
+    background-color: $color200;
+    padding: 16px;
+}
