@@ -31,7 +31,12 @@ const Prayer: FC<PrayerScreenProps> = () => {
 
   const onSend = () => {
     if (commentText !== '') {
-      console.log(commentText);
+      dispatch(
+        rootRoutines.comments.createComment({
+          body: commentText,
+          prayerId: params.id,
+        }),
+      );
       setCommentText('');
     }
   };
@@ -83,7 +88,7 @@ const Prayer: FC<PrayerScreenProps> = () => {
         <View style={styles.commentBlock}>
           <Text style={styles.title}>Comments</Text>
           {comments?.map((item) => (
-            <Comment author={item.userId} date={item.createdAt} comment={item.body} />
+            <Comment author={item.userId} date={item.createdAt} comment={item.body} key={item.id} />
           ))}
         </View>
       </ScrollView>

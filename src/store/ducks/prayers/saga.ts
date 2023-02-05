@@ -26,14 +26,11 @@ function* cleanPrayerWatcherSaga() {
 
 function* createPrayerFlow({ payload }: ReturnType<typeof createPrayer>) {
   try {
-    console.log(1);
     if (!payload) {
       throw new Error('Columns: No payload');
     }
     yield put(createPrayer.request());
-    console.log(3);
     const response: CreatePrayerResponse = yield call(createPrayerRequest, payload);
-    console.log(4);
     if (!response) {
       throw new Error('Columns: Something went wrong');
     }
