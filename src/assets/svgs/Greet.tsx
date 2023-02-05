@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Svg, { SvgProps, G, Path, Defs, LinearGradient, Stop, ClipPath } from 'react-native-svg';
 import { memo } from 'react';
+import Svg, { ClipPath, Defs, G, LinearGradient, Path, Stop, SvgProps } from 'react-native-svg';
 const SvgGreet = (props: SvgProps) => (
   <Svg width={186} height={185} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <G clipPath="url(#Greet_svg__a)">

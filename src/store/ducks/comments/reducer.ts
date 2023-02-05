@@ -1,7 +1,7 @@
-import { handleFailure, handleFulfill, handleRequest, handleSuccess, handleTrigger } from '@/store/handle';
 import { BaseState, createReducer } from '@/store/createReducer';
-
+import { handleFailure, handleFulfill, handleRequest, handleSuccess, handleTrigger } from '@/store/handle';
 import { CommentType } from '@/types/data';
+
 import { createComment, getComments } from './routines';
 
 type CommentsStateType = BaseState<CommentType[]>;

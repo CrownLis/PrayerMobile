@@ -1,7 +1,7 @@
 import React, { FC, PropsWithChildren } from 'react';
+import { ImageBackground, ScrollView, View } from 'react-native';
 
 import backgroundImg from '@/assets/images/background-1.png';
-import { ScrollView, ImageBackground, View } from 'react-native';
 
 import styles from './ListWrapper.module.scss';
 

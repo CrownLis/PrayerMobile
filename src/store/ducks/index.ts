@@ -1,48 +1,44 @@
 import { combineReducers } from 'redux';
-import { all } from 'redux-saga/effects';
 import { persistReducer } from 'redux-persist';
+import { all } from 'redux-saga/effects';
 
 import Storage from '@/utils/Storage';
 
 import {
-  reducer as authReducer,
-  saga as authSaga,
   actions as authActions,
-  selectors as authSelector,
+  reducer as authReducer,
   routines as authRoutines,
+  saga as authSaga,
+  selectors as authSelector,
 } from './auth';
-
 import {
-  reducer as desksReducer,
-  saga as desksSaga,
-  actions as desksActions,
-  selectors as desksSelector,
-  routines as desksRoutines,
-} from './desks';
-
-import {
-  reducer as columnsReducer,
-  saga as columnsSaga,
   actions as columnsActions,
-  selectors as columnsSelector,
+  reducer as columnsReducer,
   routines as columnsRoutines,
+  saga as columnsSaga,
+  selectors as columnsSelector,
 } from './columns';
-
 import {
-  reducer as prayersReducer,
-  saga as prayersSaga,
-  actions as prayersActions,
-  selectors as prayersSelector,
-  routines as prayersRoutines,
-} from './prayers';
-
-import {
-  reducer as commentsReducer,
-  saga as commentsSaga,
   actions as commentsActions,
-  selectors as commentsSelector,
+  reducer as commentsReducer,
   routines as commentsRoutines,
+  saga as commentsSaga,
+  selectors as commentsSelector,
 } from './comments';
+import {
+  actions as desksActions,
+  reducer as desksReducer,
+  routines as desksRoutines,
+  saga as desksSaga,
+  selectors as desksSelector,
+} from './desks';
+import {
+  actions as prayersActions,
+  reducer as prayersReducer,
+  routines as prayersRoutines,
+  saga as prayersSaga,
+  selectors as prayersSelector,
+} from './prayers';
 
 const authPersistConfig = {
   key: 'auth',

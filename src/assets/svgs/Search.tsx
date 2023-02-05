@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Svg, { SvgProps, G, Path, Defs, ClipPath } from 'react-native-svg';
 /* SVGR has dropped some elements not supported by react-native-svg: filter */
 import { memo } from 'react';
+import Svg, { ClipPath, Defs, G, Path, SvgProps } from 'react-native-svg';
 const SvgSearch = (props: SvgProps) => (
   <Svg width={177} height={177} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <G clipPath="url(#search_svg__a)">

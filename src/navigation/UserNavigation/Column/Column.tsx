@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { UserStackParamList } from '@/navigation/UserNavigation/UserNavigation';
-
-import styles from './Column.module.scss';
-import { AuthRoutes } from '@/navigation/routes';
-import PrayerCard from '@/components/PrayerCard';
-import { rootSelectors, rootRoutines } from '@/store/ducks';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import Loader from '@/UI/Loader';
-
-import { Plus as PlusIcon } from '@/assets/svgs';
 import { colors } from '@/assets/styles/color';
-import IconButton from '@/UI/IconButton';
+import { Plus as PlusIcon } from '@/assets/svgs';
 import CreationModal from '@/components/CreationModal';
 import EmptyList from '@/components/EmptyList';
+import PrayerCard from '@/components/PrayerCard';
+import { AuthRoutes } from '@/navigation/routes';
+import { UserStackParamList } from '@/navigation/UserNavigation/UserNavigation';
+import { rootRoutines, rootSelectors } from '@/store/ducks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { PrayerType } from '@/types/data';
+import IconButton from '@/UI/IconButton';
+import Loader from '@/UI/Loader';
+
+import styles from './Column.module.scss';
 
 type ColumnScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Column>;
 

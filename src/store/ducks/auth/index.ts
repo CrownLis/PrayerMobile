@@ -1,7 +1,7 @@
-import reducer from './reducer';
-import saga from './saga';
 import * as actions from './actions';
-import * as selectors from './selectors';
+import reducer from './reducer';
 import * as routines from './routines';
+import saga from './saga';
+import * as selectors from './selectors';
 
-export { reducer, saga, actions, routines, selectors };
+export { actions, reducer, routines, saga, selectors };

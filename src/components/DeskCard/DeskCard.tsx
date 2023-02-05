@@ -1,13 +1,14 @@
 import React, { FC } from 'react';
 import { Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
-import Animated from 'react-native-reanimated';
 import { PanGestureHandlerProps } from 'react-native-gesture-handler';
+import Animated from 'react-native-reanimated';
 
 import { useButtonHandlers } from '@/hooks/useButtonHandlers';
 import { mergeStyles } from '@/utils/mergeStyles';
 
-import styles from './DeskCard.module.scss';
 import SwiperWrapper from '../SwiperWrapper';
+
+import styles from './DeskCard.module.scss';
 
 type DeskCardProps = {
   onDismiss?: () => void;

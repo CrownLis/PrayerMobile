@@ -1,6 +1,5 @@
-import { handleFailure, handleFulfill, handleRequest, handleSuccess, handleTrigger } from '@/store/handle';
 import { BaseState, createReducer } from '@/store/createReducer';
-
+import { handleFailure, handleFulfill, handleRequest, handleSuccess, handleTrigger } from '@/store/handle';
 import { UserType } from '@/types/data';
 
 import { logOut, setGreeting, signIn, signUp } from './routines';

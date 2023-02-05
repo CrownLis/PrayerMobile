@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, View } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+import { colors } from '@/assets/styles/color';
+import { Plus as PlusIcon } from '@/assets/svgs';
+import CreationModal from '@/components/CreationModal';
+import DeskCard from '@/components/DeskCard';
+import EmptyList from '@/components/EmptyList';
+import GreetingModal from '@/components/GreetingModal';
+import ListWrapper from '@/components/ListWrapper';
+import { AuthRoutes } from '@/navigation/routes';
 import { UserStackParamList } from '@/navigation/UserNavigation/UserNavigation';
+import { rootRoutines, rootSelectors } from '@/store/ducks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { ColumnType } from '@/types/data';
 import IconButton from '@/UI/IconButton';
 import Loader from '@/UI/Loader';
-import DeskCard from '@/components/DeskCard';
-import { ColumnType } from '@/types/data';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { rootRoutines, rootSelectors } from '@/store/ducks';
-import { Plus as PlusIcon } from '@/assets/svgs';
-import { colors } from '@/assets/styles/color';
 
 import styles from './MyDesk.module.scss';
-import { AuthRoutes } from '@/navigation/routes';
-import CreationModal from '@/components/CreationModal';
-import EmptyList from '@/components/EmptyList';
-import ListWrapper from '@/components/ListWrapper';
-import GreetingModal from '@/components/GreetingModal';
 
 type FormValues = {
   title: string;

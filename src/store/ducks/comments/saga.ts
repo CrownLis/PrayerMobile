@@ -1,6 +1,8 @@
+import { all, call, put, takeEvery } from 'redux-saga/effects';
+
 import { createCommentsRequest, getCommentsRequest } from '@/api';
 import { createCommentResponse, getCommentsResponse } from '@/types/response';
-import { all, call, put, takeEvery } from 'redux-saga/effects';
+
 import { createComment, getComments } from './routines';
 
 function* getCommentsWatcherSaga() {

@@ -1,9 +1,10 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
-import { mergeStyles } from '@/utils/mergeStyles';
-import { useButtonHandlers } from '@/hooks/useButtonHandlers';
 import { colors } from '@/assets/styles/color';
+import { useButtonHandlers } from '@/hooks/useButtonHandlers';
+import { mergeStyles } from '@/utils/mergeStyles';
+
 import Loader from '../Loader';
 
 import styles from './IconButton.module.scss';

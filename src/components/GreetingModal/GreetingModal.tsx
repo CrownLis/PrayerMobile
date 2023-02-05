@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { Overlay } from '@rneui/base';
 
-import Button from '@/UI/Button';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { rootRoutines, rootSelectors } from '@/store/ducks';
 import { Greet } from '@/assets/svgs';
+import { rootRoutines, rootSelectors } from '@/store/ducks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import Button from '@/UI/Button';
 
 import styles from './GreetingModal.module.scss';
 

@@ -1,5 +1,5 @@
-import { UnifiedRoutine } from 'redux-saga-routines';
 import { Action } from 'redux';
+import { UnifiedRoutine } from 'redux-saga-routines';
 
 import { BaseState } from './createReducer';
 

@@ -1,13 +1,14 @@
 import React, { FC } from 'react';
+import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import { Dimensions, Text, View } from 'react-native';
 import { Overlay, OverlayProps } from '@rneui/base';
-import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 
-import IconButton from '@/UI/IconButton';
-import Button from '@/UI/Button';
-import Input from '@/UI/Input';
-import { Close as CloseIcon } from '@/assets/svgs';
 import { colors } from '@/assets/styles/color';
+import { Close as CloseIcon } from '@/assets/svgs';
+import Button from '@/UI/Button';
+import IconButton from '@/UI/IconButton';
+import Input from '@/UI/Input';
+
 import FormField from '../FormField';
 
 import styles from './CreationModal.module.scss';

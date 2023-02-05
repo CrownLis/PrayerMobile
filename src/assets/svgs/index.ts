@@ -1,7 +1,7 @@
 export { default as Arrow } from './Arrow';
 export { default as Back } from './Back';
-export { default as CheckSubscribe } from './CheckSubscribe';
 export { default as Check } from './Check';
+export { default as CheckSubscribe } from './CheckSubscribe';
 export { default as Close } from './Close';
 export { default as EmptyColumn } from './EmptyColumn';
 export { default as Exit } from './Exit';

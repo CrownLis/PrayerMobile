@@ -1,15 +1,18 @@
 import React, { FC } from 'react';
 import { Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
-import { PrayArms } from '@/assets/svgs';
-import IconButton from '@/UI/IconButton';
-import styles from './PrayerCard.module.scss';
-import { useButtonHandlers } from '@/hooks/useButtonHandlers';
-import { mergeStyles } from '@/utils/mergeStyles';
-import SwiperWrapper from '../SwiperWrapper';
-import { PrayerType } from '@/types/data';
+
 import { colors } from '@/assets/styles/color';
-import { useAppDispatch } from '@/store/hooks';
+import { PrayArms } from '@/assets/svgs';
+import { useButtonHandlers } from '@/hooks/useButtonHandlers';
 import { rootRoutines } from '@/store/ducks';
+import { useAppDispatch } from '@/store/hooks';
+import { PrayerType } from '@/types/data';
+import IconButton from '@/UI/IconButton';
+import { mergeStyles } from '@/utils/mergeStyles';
+
+import SwiperWrapper from '../SwiperWrapper';
+
+import styles from './PrayerCard.module.scss';
 
 type PrayerCardProps = {
   id: PrayerType['id'];

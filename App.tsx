@@ -1,12 +1,12 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import Navigator from '@/navigation/Navigator';
 import { colors } from '@/assets/styles/color';
+import Navigator from '@/navigation/Navigator';
 import configureStore from '@/store/configureStore';
 
 const App = () => {

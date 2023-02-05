@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Svg, { SvgProps, Path, G, Defs } from 'react-native-svg';
 /* SVGR has dropped some elements not supported by react-native-svg: filter */
 import { memo } from 'react';
+import Svg, { Defs, G, Path, SvgProps } from 'react-native-svg';
 const SvgEmptyColumn = (props: SvgProps) => (
   <Svg width={178} height={177} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <Path
@@ -26,7 +26,7 @@ const SvgEmptyColumn = (props: SvgProps) => (
       d="M138.834 64.63a4.425 4.425 0 0 1 .183 6.256l-37.948 40.23a4.425 4.425 0 0 1-6.438-6.073l37.948-40.23a4.425 4.425 0 0 1 6.255-.182Z"
       fill="#696969"
     />
-    <Defs></Defs>
+    <Defs />
   </Svg>
 );
 const Memo = memo(SvgEmptyColumn);

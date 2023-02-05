@@ -1,21 +1,22 @@
 import React, { FC, useEffect, useState } from 'react';
 import { ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import backgroundImg from '@/assets/images/background-1.png';
+import Comment from '@/components/Comment';
+import { AuthRoutes } from '@/navigation/routes';
+import { AppState } from '@/store/configureStore';
+import { rootRoutines, rootSelectors } from '@/store/ducks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import Button from '@/UI/Button';
+import CommentInput from '@/UI/CommentInput';
+import convertTime from '@/utils/convertTime';
+import { mergeStyles } from '@/utils/mergeStyles';
+
+import { UserStackParamList } from '../UserNavigation';
 
 import styles from './Prayer.module.scss';
-import { mergeStyles } from '@/utils/mergeStyles';
-import { AuthRoutes } from '@/navigation/routes';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { UserStackParamList } from '../UserNavigation';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { useRoute } from '@react-navigation/native';
-import { rootRoutines, rootSelectors } from '@/store/ducks';
-import Button from '@/UI/Button';
-import Comment from '@/components/Comment';
-import CommentInput from '@/UI/CommentInput';
-import { AppState } from '@/store/configureStore';
-import convertTime from '@/utils/convertTime';
 
 type PrayerScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Prayer>;
 

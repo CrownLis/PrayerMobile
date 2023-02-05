@@ -1,7 +1,8 @@
 import { createRoutine } from 'redux-saga-routines';
 
-import { CreatePrayerPayload, DeletePrayerPayload, DoPrayPayload, GetPrayersPayload } from '@/types/payload';
 import { PrayerType } from '@/types/data';
+import { CreatePrayerPayload, DeletePrayerPayload, DoPrayPayload, GetPrayersPayload } from '@/types/payload';
+
 import * as prayersActions from './actions';
 
 export const getPrayers = createRoutine(prayersActions.GET_PRAYERS, {

@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import { Text, SafeAreaView, View } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 
-import IconButton from '@/UI/IconButton';
-import { Exit as ExitIcon } from '@/assets/svgs';
 import { colors } from '@/assets/styles/color';
-import { useAppDispatch } from '@/store/hooks';
+import { Exit as ExitIcon } from '@/assets/svgs';
 import { rootRoutines } from '@/store/ducks';
+import { useAppDispatch } from '@/store/hooks';
+import IconButton from '@/UI/IconButton';
 
 import styles from './Header.module.scss';
 

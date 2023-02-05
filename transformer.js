@@ -20,7 +20,7 @@ module.exports.transform = function ({ src, filename, options }) {
     var opts = Object.assign(options, {
       sassOptions: {
         functions: {
-          'rem($px)': px => {
+          'rem($px)': (px) => {
             px.setValue(px.getValue() / 16);
             px.setUnit('rem');
             return px;
