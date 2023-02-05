@@ -8,23 +8,15 @@ import { View } from 'react-native';
 import IconButton from '../IconButton';
 import { PaperAirplane } from '@/assets/svgs';
 import { colors } from '@/assets/styles/color';
+import { useInputHandlers } from '@/hooks/useInputHandlers';
 
 export type CommentInputProps = {
+  onSend: () => void;
   isDisabled?: boolean;
 } & Omit<InputProps, 'secureTextEntry' | 'isDirty' | 'isError'>;
 
-const CommentInput: FC<CommentInputProps> = ({ isDisabled, onFocus, onBlur, style, ...props }) => {
-  const [isFocus, setIsFocus] = useState(false);
-
-  const focus = () => {
-    setIsFocus(true);
-    return onFocus;
-  };
-
-  const blur = () => {
-    setIsFocus(false);
-    return onBlur;
-  };
+const CommentInput: FC<CommentInputProps> = ({ isDisabled, onFocus, onBlur, style, onSend, ...props }) => {
+  const { blurHandler, focusHandler, isFocus } = useInputHandlers(onFocus, onBlur);
 
   return (
     <View style={styles.container}>
@@ -33,8 +25,8 @@ const CommentInput: FC<CommentInputProps> = ({ isDisabled, onFocus, onBlur, styl
         isDirty={false}
         isError={false}
         secureTextEntry={false}
-        onFocus={focus}
-        onBlur={blur}
+        onFocus={focusHandler}
+        onBlur={blurHandler}
         style={[
           mergeStyles(
             { style: styles.commentInput, active: true },
@@ -48,7 +40,13 @@ const CommentInput: FC<CommentInputProps> = ({ isDisabled, onFocus, onBlur, styl
         icon={null}
         {...props}
       />
-      <IconButton size={'big'} variant={'dark'} isSquare style={isFocus ? styles.showIcon : styles.hideIcon}>
+      <IconButton
+        size={'big'}
+        variant={'dark'}
+        isSquare
+        style={isFocus ? styles.showIcon : styles.hideIcon}
+        onPress={onSend}
+      >
         <PaperAirplane fill={colors.color100} />
       </IconButton>
     </View>

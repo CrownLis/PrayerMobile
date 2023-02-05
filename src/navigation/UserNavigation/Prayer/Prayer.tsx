@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native';
 
 import backgroundImg from '@/assets/images/background-1.png';
@@ -27,10 +27,22 @@ const Prayer: FC<PrayerScreenProps> = () => {
   const pray = () => {
     dispatch(rootRoutines.prayers.doPray(params.id));
   };
+  const [commentText, setCommentText] = useState('');
+
+  const onSend = () => {
+    if (commentText !== '') {
+      console.log(commentText);
+      setCommentText('');
+    }
+  };
 
   useEffect(() => {
     dispatch(rootRoutines.comments.getComments(params.id));
   }, []);
+
+  if (!prayer) {
+    return null;
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -76,7 +88,12 @@ const Prayer: FC<PrayerScreenProps> = () => {
         </View>
       </ScrollView>
       <View style={styles.inputContainer}>
-        <CommentInput style={styles.input} />
+        <CommentInput
+          style={styles.input}
+          value={commentText}
+          onChangeText={(e) => setCommentText(e)}
+          onSend={onSend}
+        />
       </View>
     </SafeAreaView>
   );
