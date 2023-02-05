@@ -1,4 +1,3 @@
-import DeleteButton from '@/UI/DeleteButton';
 import React, { FC, PropsWithChildren } from 'react';
 import { Dimensions } from 'react-native';
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
@@ -9,6 +8,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+
+import DeleteButton from '@/UI/DeleteButton';
 
 import styles from './SwiperWrapper.module.scss';
 

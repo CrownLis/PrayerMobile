@@ -1,8 +1,9 @@
 import React, { FC, PropsWithChildren } from 'react';
-import { SafeAreaView, ImageBackground, View, ScrollView } from 'react-native';
+import { ImageBackground, SafeAreaView, ScrollView, View } from 'react-native';
+
+import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './AuthLayout.module.scss';
-import backgroundImg from '@/assets/images/background-1.png';
 
 type LayoutProps = PropsWithChildren;
 

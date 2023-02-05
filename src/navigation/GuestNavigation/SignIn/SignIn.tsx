@@ -1,23 +1,22 @@
 import React from 'react';
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import { ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+import backgroundImg from '@/assets/images/background-1.png';
 import FormField from '@/components/FormField';
+import AuthLayout from '@/layouts/AuthLayout';
+import { GuestStackParamList } from '@/navigation/GuestNavigation/GuestNavigation';
+import { UnAuthRoutes } from '@/navigation/routes';
+import { rootRoutines, rootSelectors } from '@/store/ducks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import Button from '@/UI/Button';
 import Input from '@/UI/Input';
 import PasswordInput from '@/UI/PasswordInput';
 import { validateEmail } from '@/utils/validation';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { rootRoutines, rootSelectors } from '@/store/ducks';
-import { GuestStackParamList } from '@/navigation/GuestNavigation/GuestNavigation';
-
-import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './SignIn.module.scss';
-import { UnAuthRoutes } from '@/navigation/routes';
-import AuthLayout from '@/layouts/AuthLayout';
 
 type FormValues = {
   email: string;

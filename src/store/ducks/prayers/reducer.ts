@@ -1,8 +1,8 @@
-import { handleFailure, handleFulfill, handleRequest, handleSuccess, handleTrigger } from '@/store/handle';
 import { BaseState, createReducer } from '@/store/createReducer';
-
+import { handleFailure, handleFulfill, handleRequest, handleSuccess, handleTrigger } from '@/store/handle';
 import { PrayerType } from '@/types/data';
-import { cleanPrayers, createPrayer, deletePrayer, doPray, getSubscribedPrayers, getPrayers } from './routines';
+
+import { cleanPrayers, createPrayer, deletePrayer, doPray, getPrayers, getSubscribedPrayers } from './routines';
 
 type PrayersStateType = BaseState<PrayerType[]>;
 

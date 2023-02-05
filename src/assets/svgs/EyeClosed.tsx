@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Svg, { SvgProps, G, Path, Defs, ClipPath } from 'react-native-svg';
 import { memo } from 'react';
+import Svg, { ClipPath, Defs, G, Path, SvgProps } from 'react-native-svg';
 const SvgEyeClosed = (props: SvgProps) => (
   <Svg width={20} height={20} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <G clipPath="url(#eye-closed_svg__a)">

@@ -1,10 +1,10 @@
 import React, { FC, useMemo } from 'react';
 import { TextInput, TextInputProps, View } from 'react-native';
 
-import { mergeStyles } from '@/utils/mergeStyles';
-import { useInputHandlers } from '@/hooks/useInputHandlers';
-import CheckIcon from '@/assets/svgs/Check';
 import { colors } from '@/assets/styles/color';
+import CheckIcon from '@/assets/svgs/Check';
+import { useInputHandlers } from '@/hooks/useInputHandlers';
+import { mergeStyles } from '@/utils/mergeStyles';
 
 import styles from './Input.module.scss';
 

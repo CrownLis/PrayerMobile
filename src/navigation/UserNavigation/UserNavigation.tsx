@@ -3,16 +3,6 @@ import { Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import MyDesk from '@/navigation/UserNavigation/BottomBarStack/MyDesk';
-import UsersDesk from '@/navigation/UserNavigation/BottomBarStack/UsersDesk';
-import Followed from '@/navigation/UserNavigation/BottomBarStack/Followed';
-import Header from '@/components/Header';
-import IconButton from '@/UI/IconButton';
-import { mergeStyles } from '@/utils/mergeStyles';
-import Columns from '../UserNavigation/Columns';
-import Column from './Column';
-import Prayer from '../UserNavigation/Prayer';
-
 import { colors } from '@/assets/styles/color';
 import {
   Back as BackIcon,
@@ -20,9 +10,20 @@ import {
   Subscribers as SubscribersIcon,
   UsersDesks as UsersDesksIcon,
 } from '@/assets/svgs';
+import Header from '@/components/Header';
+import Followed from '@/navigation/UserNavigation/BottomBarStack/Followed';
+import MyDesk from '@/navigation/UserNavigation/BottomBarStack/MyDesk';
+import UsersDesk from '@/navigation/UserNavigation/BottomBarStack/UsersDesk';
+import IconButton from '@/UI/IconButton';
+import { mergeStyles } from '@/utils/mergeStyles';
+
+import { AuthRoutes } from '../routes';
+import Columns from '../UserNavigation/Columns';
+import Prayer from '../UserNavigation/Prayer';
+
+import Column from './Column';
 
 import styles from './UserNavigation.module.scss';
-import { AuthRoutes } from '../routes';
 
 type ScreenWithTitle<T = unknown> = {
   title: string;

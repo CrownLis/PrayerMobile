@@ -1,16 +1,16 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { UserStackParamList } from '@/navigation/UserNavigation/UserNavigation';
-import { AuthRoutes } from '@/navigation/routes';
-import { rootSelectors, rootRoutines } from '@/store/ducks';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import Loader from '@/UI/Loader';
 import EmptyList from '@/components/EmptyList';
 import PrayerCard from '@/components/PrayerCard';
+import { AuthRoutes } from '@/navigation/routes';
+import { UserStackParamList } from '@/navigation/UserNavigation/UserNavigation';
+import { rootRoutines, rootSelectors } from '@/store/ducks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { PrayerType } from '@/types/data';
+import Loader from '@/UI/Loader';
 
 import styles from './Followed.module.scss';
 

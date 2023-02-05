@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Svg, { SvgProps, G, Path, Defs, ClipPath } from 'react-native-svg';
 import { memo } from 'react';
+import Svg, { ClipPath, Defs, G, Path, SvgProps } from 'react-native-svg';
 const SvgClose = (props: SvgProps) => (
   <Svg width={18} height={18} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <G clipPath="url(#close_svg__a)">

@@ -2,7 +2,8 @@ import { all, call, put, takeEvery } from 'redux-saga/effects';
 
 import { createColumnRequest, getColumnsRequest, getOwnDeskRequest, removeColumnRequest } from '@/api';
 import { CreateColumnResponse, GetColumnsResponse, GetOwnDeskResponse } from '@/types/response';
-import { getOwnColumns, getColumns, createColumn, deleteColumn, cleanColumns } from './routines';
+
+import { cleanColumns, createColumn, deleteColumn, getColumns, getOwnColumns } from './routines';
 
 function* getColumnsWatcherSaga() {
   yield takeEvery(getColumns.TRIGGER, getColumnsFlow);

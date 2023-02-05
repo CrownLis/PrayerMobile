@@ -1,5 +1,5 @@
-import { GestureResponderEvent } from 'react-native';
 import { useCallback, useState } from 'react';
+import { GestureResponderEvent } from 'react-native';
 
 export const useButtonHandlers = (
   onPressIn?: ((event: GestureResponderEvent) => void) | null,

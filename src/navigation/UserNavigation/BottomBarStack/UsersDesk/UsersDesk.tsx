@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { UserStackParamList } from '@/navigation/UserNavigation/UserNavigation';
-import Loader from '@/UI/Loader';
 import DeskCard from '@/components/DeskCard';
-import { rootSelectors, rootRoutines } from '@/store/ducks';
+import EmptyList from '@/components/EmptyList';
+import ListWrapper from '@/components/ListWrapper';
+import { AuthRoutes } from '@/navigation/routes';
+import { UserStackParamList } from '@/navigation/UserNavigation/UserNavigation';
+import { rootRoutines, rootSelectors } from '@/store/ducks';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import Loader from '@/UI/Loader';
 
 import styles from './UsersDesk.module.scss';
-import { AuthRoutes } from '@/navigation/routes';
-import ListWrapper from '@/components/ListWrapper';
-import EmptyList from '@/components/EmptyList';
 
 type UsersDeskScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Root>;
 

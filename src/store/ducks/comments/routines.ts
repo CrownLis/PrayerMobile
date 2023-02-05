@@ -1,7 +1,9 @@
 import { createRoutine } from 'redux-saga-routines';
-import * as commentsActions from './actions';
+
 import { CreateCommentPayload, getCommentsPayload } from '@/types/payload';
 import { createCommentResponse, getCommentsResponse } from '@/types/response';
+
+import * as commentsActions from './actions';
 
 export const getComments = createRoutine(commentsActions.GET_COMMENTS, {
   trigger: (payload: getCommentsPayload) => payload,

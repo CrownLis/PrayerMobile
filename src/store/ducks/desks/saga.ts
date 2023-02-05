@@ -2,6 +2,7 @@ import { all, call, put, takeEvery } from 'redux-saga/effects';
 
 import { getDesksRequest } from '@/api';
 import { GetDesksResponse } from '@/types/response';
+
 import { cleanDesks, getDesks } from './routines';
 
 function* getDesksWatcherSaga() {

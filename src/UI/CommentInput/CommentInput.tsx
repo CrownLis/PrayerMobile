@@ -1,14 +1,15 @@
 import React, { FC, useState } from 'react';
+import { View } from 'react-native';
 
+import { colors } from '@/assets/styles/color';
+import { PaperAirplane } from '@/assets/svgs';
+import { useInputHandlers } from '@/hooks/useInputHandlers';
 import Input, { InputProps } from '@/UI/Input/Input';
 import { mergeStyles } from '@/utils/mergeStyles';
 
-import styles from './CommentInput.module.scss';
-import { View } from 'react-native';
 import IconButton from '../IconButton';
-import { PaperAirplane } from '@/assets/svgs';
-import { colors } from '@/assets/styles/color';
-import { useInputHandlers } from '@/hooks/useInputHandlers';
+
+import styles from './CommentInput.module.scss';
 
 export type CommentInputProps = {
   onSend: () => void;

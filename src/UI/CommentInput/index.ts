@@ -1,2 +1,2 @@
-import CommentInput from "./CommentInput";
+import CommentInput from './CommentInput';
 export default CommentInput;

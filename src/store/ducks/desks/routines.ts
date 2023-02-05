@@ -1,7 +1,8 @@
 import { createRoutine } from 'redux-saga-routines';
 
-import { GetDesksPayload } from '@/types/payload';
 import { DeskType } from '@/types/data';
+import { GetDesksPayload } from '@/types/payload';
+
 import * as desksActions from './actions';
 
 export const getDesks = createRoutine(desksActions.GET_DESKS, {

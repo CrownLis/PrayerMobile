@@ -1,6 +1,5 @@
-import { handleFailure, handleFulfill, handleRequest, handleSuccess, handleTrigger } from '@/store/handle';
 import { BaseState, createReducer } from '@/store/createReducer';
-
+import { handleFailure, handleFulfill, handleRequest, handleSuccess, handleTrigger } from '@/store/handle';
 import { ColumnType } from '@/types/data';
 
 import { cleanColumns, createColumn, deleteColumn, getColumns, getOwnColumns } from './routines';
