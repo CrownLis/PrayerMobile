@@ -1,11 +1,26 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 
-import { createPrayerRequest, deletePrayerRequest, doPrayRequest, getPrayersRequest } from '@/api';
-import { CreatePrayerResponse, DoPrayResponse, GetPrayersResponse } from '@/types/response';
-import { cleanPrayers, createPrayer, deletePrayer, doPray, getPrayers } from './routines';
+import {
+  createPrayerRequest,
+  deletePrayerRequest,
+  doPrayRequest,
+  getPrayersRequest,
+  getSubscribedPrayersRequest,
+} from '@/api';
+import {
+  CreatePrayerResponse,
+  DoPrayResponse,
+  GetPrayersResponse,
+  GetSubscribedPrayersResponse,
+} from '@/types/response';
+import { cleanPrayers, createPrayer, deletePrayer, doPray, getPrayers, getSubscribedPrayers } from './routines';
 
 function* getPrayersWatcherSaga() {
   yield takeEvery(getPrayers.TRIGGER, getPraysFlow);
+}
+
+function* getSubscribedPrayersWatcherSaga() {
+  yield takeEvery(getSubscribedPrayers.TRIGGER, getSubscribedPrayersFlow);
 }
 
 function* createPrayerWatcherSaga() {
@@ -27,12 +42,12 @@ function* cleanPrayerWatcherSaga() {
 function* createPrayerFlow({ payload }: ReturnType<typeof createPrayer>) {
   try {
     if (!payload) {
-      throw new Error('Columns: No payload');
+      throw new Error('Prayers: No payload');
     }
     yield put(createPrayer.request());
     const response: CreatePrayerResponse = yield call(createPrayerRequest, payload);
     if (!response) {
-      throw new Error('Columns: Something went wrong');
+      throw new Error('Prayers: Something went wrong');
     }
     yield put(createPrayer.success(response));
   } catch (error: any) {
@@ -45,18 +60,33 @@ function* createPrayerFlow({ payload }: ReturnType<typeof createPrayer>) {
 function* getPraysFlow({ payload }: ReturnType<typeof getPrayers>) {
   try {
     if (!payload) {
-      throw new Error('Desks: No payload');
+      throw new Error('Prayers: No payload');
     }
     yield put(getPrayers.request());
     const response: GetPrayersResponse = yield call(getPrayersRequest, payload);
     if (!response) {
-      throw new Error('Desks: Something went wrong');
+      throw new Error('Prayers: Something went wrong');
     }
     yield put(getPrayers.success(response));
   } catch (error: any) {
     yield put(getPrayers.failure(error.message));
   } finally {
     yield put(getPrayers.fulfill());
+  }
+}
+
+function* getSubscribedPrayersFlow() {
+  try {
+    yield put(getSubscribedPrayers.request());
+    const response: GetSubscribedPrayersResponse = yield call(getSubscribedPrayersRequest);
+    if (!response) {
+      throw new Error('Prayers: Something went wrong');
+    }
+    yield put(getSubscribedPrayers.success(response));
+  } catch (error: any) {
+    yield put(getSubscribedPrayers.failure(error.message));
+  } finally {
+    yield put(getSubscribedPrayers.fulfill());
   }
 }
 
@@ -75,12 +105,12 @@ function* deletePrayerFlow({ payload }: ReturnType<typeof deletePrayer>) {
 function* doPrayFlow({ payload }: ReturnType<typeof doPray>) {
   try {
     if (!payload) {
-      throw new Error('Desks: No payload');
+      throw new Error('Prayers: No payload');
     }
     yield put(doPray.request());
     const response: DoPrayResponse = yield call(doPrayRequest, payload);
     if (!response) {
-      throw new Error('Desks: Something went wrong');
+      throw new Error('Prayers: Something went wrong');
     }
     yield put(doPray.success(response));
   } catch (error: any) {
@@ -104,6 +134,7 @@ function* cleanPrayersFlow() {
 export default function* prayersWatcherSaga() {
   yield all([
     getPrayersWatcherSaga(),
+    getSubscribedPrayersWatcherSaga(),
     createPrayerWatcherSaga(),
     cleanPrayerWatcherSaga(),
     deletePrayerWatcherSaga(),

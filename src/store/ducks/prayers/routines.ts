@@ -10,6 +10,11 @@ export const getPrayers = createRoutine(prayersActions.GET_PRAYERS, {
   failure: (payload: string) => payload,
 });
 
+export const getSubscribedPrayers = createRoutine(prayersActions.GET_SUBSCRIBED_PRAYERS, {
+  success: (payload: PrayerType[]) => payload,
+  failure: (payload: string) => payload,
+});
+
 export const createPrayer = createRoutine(prayersActions.CREATE_PRAYER, {
   trigger: (payload: CreatePrayerPayload) => payload,
   success: (payload: PrayerType) => payload,

@@ -1,7 +1,8 @@
-import { colors } from '@/assets/styles/color';
-import { EmptyColumn, Arrow } from '@/assets/svgs';
 import React, { FC } from 'react';
 import { View, Text } from 'react-native';
+
+import { colors } from '@/assets/styles/color';
+import { EmptyColumn, Arrow } from '@/assets/svgs';
 
 import styles from './EmptyList.module.scss';
 
