@@ -7,15 +7,15 @@ import styles from './EmptyList.module.scss';
 
 type EmptyListProps = {
   text: string;
-  isUser?: boolean;
+  showArrow?: boolean;
 };
 
-const EmptyList: FC<EmptyListProps> = ({ text, isUser }) => {
+const EmptyList: FC<EmptyListProps> = ({ text, showArrow }) => {
   return (
     <View style={styles.emptyColumn}>
       <EmptyColumn />
-      <Text>{text}</Text>
-      {isUser ? <Arrow fill={colors.color800} style={styles.arrow} /> : null}
+      <Text style={styles.text}>{text}</Text>
+      {showArrow ? <Arrow fill={colors.color800} style={styles.arrow} /> : null}
     </View>
   );
 };

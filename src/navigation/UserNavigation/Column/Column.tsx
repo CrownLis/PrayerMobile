@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, SafeAreaView, ScrollView, View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -17,8 +17,6 @@ import { colors } from '@/assets/styles/color';
 import IconButton from '@/UI/IconButton';
 import CreationModal from '@/components/CreationModal';
 import EmptyList from '@/components/EmptyList';
-import ListWrapper from '@/components/ListWrapper';
-import { getAuthData } from '@/store/ducks/auth/selectors';
 import { PrayerType } from '@/types/data';
 
 type ColumnScreenProps = NativeStackScreenProps<UserStackParamList, AuthRoutes.Column>;
@@ -62,7 +60,7 @@ const Column = () => {
   return (
     <SafeAreaView style={styles.container}>
       {showPrayers ? (
-        <ListWrapper>
+        <ScrollView>
           {prayers.map((item) => {
             return (
               <PrayerCard
@@ -70,6 +68,7 @@ const Column = () => {
                 members={item.subscribersCount}
                 complete={item.completesCount}
                 key={item.id}
+                id={item.id}
                 onDismiss={() => handleDelete(item.id)}
                 onPress={() =>
                   navigate(AuthRoutes.Prayer, {
@@ -82,7 +81,7 @@ const Column = () => {
               </PrayerCard>
             );
           })}
-        </ListWrapper>
+        </ScrollView>
       ) : (
         <EmptyList
           showArrow={isUser}
