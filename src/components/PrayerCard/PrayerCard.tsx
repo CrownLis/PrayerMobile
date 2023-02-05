@@ -7,19 +7,33 @@ import { useButtonHandlers } from '@/hooks/useButtonHandlers';
 import { mergeStyles } from '@/utils/mergeStyles';
 import SwiperWrapper from '../SwiperWrapper';
 import { PrayerType } from '@/types/data';
+import { colors } from '@/assets/styles/color';
+import { useAppDispatch } from '@/store/hooks';
+import { rootRoutines } from '@/store/ducks';
 
 type PrayerCardProps = {
+  id: PrayerType['id'];
   title: string;
   members: PrayerType['subscribersCount'];
   complete: PrayerType['completesCount'];
   onDismiss: () => void;
 } & TouchableOpacityProps;
 
+const LIST_ITEM_HEIGHT = 95;
+
+const formatCount = (count: number, maxCount: number) => {
+  if (count <= maxCount) {
+    return count;
+  }
+  return `${maxCount}+`;
+};
+
 const PrayerCard: FC<PrayerCardProps> = ({
   onPress,
   onDismiss,
   onPressIn,
   onPressOut,
+  id,
   title,
   complete,
   members,
@@ -31,8 +45,14 @@ const PrayerCard: FC<PrayerCardProps> = ({
     onPress,
   );
 
+  const dispatch = useAppDispatch();
+
+  const pray = () => {
+    dispatch(rootRoutines.prayers.doPray(id));
+  };
+
   return (
-    <SwiperWrapper listItemHeight={95} onDismiss={onDismiss}>
+    <SwiperWrapper listItemHeight={LIST_ITEM_HEIGHT} onDismiss={onDismiss}>
       <TouchableOpacity
         style={mergeStyles(
           { style: styles.wrapper, active: true },
@@ -48,12 +68,16 @@ const PrayerCard: FC<PrayerCardProps> = ({
           <View style={styles.container_info}>
             <Text style={styles.info_title}>{title}</Text>
             <View style={styles.info_description}>
-              <Text style={styles.description}>Members {members}</Text>
-              <Text style={styles.description}>Complete {complete}</Text>
+              <Text style={styles.description}>
+                Members <Text style={styles.count}>{formatCount(members, 99)}</Text>
+              </Text>
+              <Text style={styles.description}>
+                Complete <Text style={styles.count}>{formatCount(complete, 999)}</Text>
+              </Text>
             </View>
           </View>
-          <IconButton size="small" variant="light">
-            <PrayArms fill="black" />
+          <IconButton size="middle" variant="light" onPress={pray}>
+            <PrayArms fill={colors.color800} />
           </IconButton>
         </View>
       </TouchableOpacity>
