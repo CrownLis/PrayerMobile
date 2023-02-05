@@ -62,6 +62,7 @@ const Followed = () => {
                     title: item.title,
                   })
                 }
+                id={item.id}
               >
                 {item.title}
               </PrayerCard>
