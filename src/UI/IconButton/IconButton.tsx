@@ -11,6 +11,7 @@ import styles from './IconButton.module.scss';
 type IconButtonProps = PropsWithChildren<{
   size: 'big' | 'middle' | 'small';
   variant: 'dark' | 'light' | 'lightest';
+  isSquare?: boolean;
   isLoading?: boolean;
 }> &
   TouchableOpacityProps;
@@ -24,6 +25,7 @@ const loaderColorsMap: Record<IconButtonProps['variant'], string> = {
 const IconButton: FC<IconButtonProps> = ({
   variant,
   size,
+  isSquare,
   isLoading,
   disabled,
   children,
@@ -59,6 +61,7 @@ const IconButton: FC<IconButtonProps> = ({
             style: styles[`button_${variant}`],
             active: true,
           },
+          { style: styles.square, active: !!isSquare },
           { style: styles[`button_${variant}_disabled`], active: !!disabled },
           { style: styles[`button_${variant}_pressed`], active: isPressed },
         ),
