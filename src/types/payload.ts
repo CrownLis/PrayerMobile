@@ -53,3 +53,9 @@ export type DeletePrayerPayload = PrayerType['id'];
 export type DoPrayPayload = PrayerType['id'];
 
 export type GetCommentsPayload = CommentType['prayerId'];
+
+export type DoSubscribePayload = PrayerType['id'];
+
+export type DoUnsubscribePayload = PrayerType['id'];
+
+export type GetSubscribedPrayersPayload = void;

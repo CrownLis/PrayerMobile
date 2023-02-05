@@ -7,6 +7,7 @@ import {
   DeleteColumnPayload,
   DeletePrayerPayload,
   DoPrayPayload,
+  DoSubscribePayload,
   GetColumnsPayload,
   GetCommentsPayload,
   GetDesksPayload,
@@ -20,6 +21,7 @@ import {
   createCommentResponse,
   CreatePrayerResponse,
   DoPrayResponse,
+  DoSubscribeResponse,
   GetColumnsResponse,
   GetCommentsResponse,
   GetDesksResponse,
@@ -34,7 +36,7 @@ import {
 import Storage from '@/utils/Storage';
 
 const prayerApi = axios.create({
-  baseURL: 'https://1258-2-60-225-244.eu.ngrok.io/',
+  baseURL: 'https://4e30-217-25-217-100.eu.ngrok.io/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -138,5 +140,15 @@ export const createCommentsRequest = async (values: CreateCommentPayload) => {
   const { data } = await prayerApi.post<createCommentResponse>(`/prayers/${values.prayerId}/comments`, {
     body: values.body,
   });
+  return data;
+};
+
+export const doSubscribeRequest = async (id: DoSubscribePayload) => {
+  const { data } = await prayerApi.post<DoSubscribeResponse>(`/prayers/${id}/subscribe`);
+  return data;
+};
+
+export const doUnsubscribeRequest = async (id: DoSubscribePayload) => {
+  const { data } = await prayerApi.delete<DoSubscribeResponse>(`/prayers/${id}/subscribe`);
   return data;
 };

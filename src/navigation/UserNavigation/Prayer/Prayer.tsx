@@ -54,6 +54,14 @@ const Prayer: FC<PrayerScreenProps> = () => {
     }
   };
 
+  const subscribe = () => {
+    dispatch(rootRoutines.prayers.doSubscribe(params.id));
+  };
+
+  const doUnsub = () => {
+    dispatch(rootRoutines.prayers.doUnsubscribe(params.id));
+  };
+
   useEffect(() => {
     if (isFocused) {
       dispatch(rootRoutines.prayers.getPrayer(params.id));
@@ -105,8 +113,11 @@ const Prayer: FC<PrayerScreenProps> = () => {
             <Button variant="primary" style={styles.prayedButton} onPress={pray}>
               Prayed
             </Button>
-            <Button variant="secondary" style={styles.followButton}>
+            <Button variant="secondary" style={styles.followButton} onPress={subscribe}>
               Followed
+            </Button>
+            <Button variant="secondary" style={styles.followButton} onPress={doUnsub}>
+              unsub
             </Button>
           </View>
         </View>
