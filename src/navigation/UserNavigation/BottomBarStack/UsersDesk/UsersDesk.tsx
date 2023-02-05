@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ImageBackground, SafeAreaView, ScrollView, View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 
@@ -8,8 +8,6 @@ import Loader from '@/UI/Loader';
 import DeskCard from '@/components/DeskCard';
 import { rootSelectors, rootRoutines } from '@/store/ducks';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-
-import backgroundImg from '@/assets/images/background-1.png';
 
 import styles from './UsersDesk.module.scss';
 import { AuthRoutes } from '@/navigation/routes';

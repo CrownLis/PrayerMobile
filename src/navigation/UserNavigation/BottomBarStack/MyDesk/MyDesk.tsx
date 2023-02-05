@@ -18,6 +18,7 @@ import { AuthRoutes } from '@/navigation/routes';
 import CreationModal from '@/components/CreationModal';
 import EmptyList from '@/components/EmptyList';
 import ListWrapper from '@/components/ListWrapper';
+import GreetingModal from '@/components/GreetingModal';
 
 type FormValues = {
   title: string;
@@ -68,6 +69,7 @@ const MyDesk = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <GreetingModal />
       {showColumns ? (
         <ListWrapper>
           {columns.map((item) => {
@@ -89,7 +91,7 @@ const MyDesk = () => {
           })}
         </ListWrapper>
       ) : (
-        <EmptyList isUser text="You haven`t created any column" />
+        <EmptyList showArrow text="You haven`t created any column" />
       )}
       <View>
         <CreationModal
