@@ -9,3 +9,7 @@ export const CLEAN_PRAYERS = 'CLEAN_PRAYERS';
 export const DELETE_PRAYER = 'DELETE_PRAYER';
 
 export const DO_PRAY = 'DO_PRAY';
+
+export const DO_SUBSCRIBE = 'DO_SUBSCRIBE';
+
+export const DO_UNSUBSCRIBE = 'DO_UNSUBSCRIBE';

@@ -2,7 +2,16 @@ import { BaseState, createReducer } from '@/store/createReducer';
 import { handleFailure, handleFulfill, handleRequest, handleSuccess, handleTrigger } from '@/store/handle';
 import { PrayerType } from '@/types/data';
 
-import { cleanPrayers, createPrayer, deletePrayer, doPray, getPrayers, getSubscribedPrayers } from './routines';
+import {
+  cleanPrayers,
+  createPrayer,
+  deletePrayer,
+  doPray,
+  doSubscribe,
+  doUnsubscribe,
+  getPrayers,
+  getSubscribedPrayers,
+} from './routines';
 
 type PrayersStateType = BaseState<PrayerType[]>;
 
@@ -55,6 +64,33 @@ const handleDeletePrayer = {
   ...handleFulfill<PrayersStateType>(deletePrayer),
 };
 
+const handleDoSubscribe = {
+  ...handleTrigger<PrayersStateType>(doSubscribe),
+  ...handleRequest<PrayersStateType>(doSubscribe),
+  [doSubscribe.SUCCESS]: (state: PrayersStateType, action: ReturnType<typeof doSubscribe.success>) => ({
+    ...state,
+    data: [action.payload, ...(state.data || [])],
+  }),
+  ...handleFailure<PrayersStateType, { payload: string }>(doSubscribe),
+  ...handleFulfill<PrayersStateType>(doSubscribe),
+};
+
+const handleDoUnsubscribe = {
+  ...handleTrigger<PrayersStateType>(doUnsubscribe),
+  ...handleRequest<PrayersStateType>(doUnsubscribe),
+  [doUnsubscribe.SUCCESS]: (state: PrayersStateType, action: ReturnType<typeof doUnsubscribe.success>) => {
+    if (!state.data) {
+      return state;
+    }
+    return {
+      ...state,
+      data: state.data.filter((prayer) => prayer.id !== action.payload.id),
+    };
+  },
+  ...handleFailure<PrayersStateType, { payload: string }>(doUnsubscribe),
+  ...handleFulfill<PrayersStateType>(doUnsubscribe),
+};
+
 const handleCleanPrayers = {
   [cleanPrayers.SUCCESS]: (state: PrayersStateType) => ({
     ...state,
@@ -93,6 +129,8 @@ const prayersReducer = createReducer(initialState)({
   ...handleCleanPrayers,
   ...handleDeletePrayer,
   ...handleDoPray,
+  ...handleDoSubscribe,
+  ...handleDoUnsubscribe,
 });
 
 export default prayersReducer;
