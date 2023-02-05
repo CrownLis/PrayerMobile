@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import {
   CreateColumnPayload,
+  CreateCommentPayload,
   CreatePrayerPayload,
   DeleteColumnPayload,
   DeletePrayerPayload,
@@ -15,6 +16,7 @@ import {
 } from '@/types/payload';
 import {
   CreateColumnResponse,
+  createCommentResponse,
   CreatePrayerResponse,
   DoPrayResponse,
   GetColumnsResponse,
@@ -30,7 +32,7 @@ import {
 import Storage from '@/utils/Storage';
 
 const prayerApi = axios.create({
-  baseURL: 'https://d6dd-217-25-213-26.eu.ngrok.io/',
+  baseURL: 'https://1e02-217-25-217-100.eu.ngrok.io/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -117,5 +119,12 @@ export const doPrayRequest = async (id: DoPrayPayload) => {
 
 export const getCommentsRequest = async (id: getCommentsPayload) => {
   const { data } = await prayerApi.get<getCommentsResponse>(`/prayers/${id}/comments`);
+  return data;
+};
+
+export const createCommentsRequest = async (values: CreateCommentPayload) => {
+  const { data } = await prayerApi.post<createCommentResponse>(`/prayers/${values.prayerId}/comments`, {
+    body: values.body,
+  });
   return data;
 };

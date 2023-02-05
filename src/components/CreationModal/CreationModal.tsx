@@ -16,13 +16,13 @@ type FormValues = {
   title: string;
 };
 
-type ModalOverlayProps = Omit<OverlayProps, 'children'> & {
+type CreationModalProps = Omit<OverlayProps, 'children'> & {
   title: string;
   onClose: () => void;
   onSubmit: (values: FormValues) => void;
 };
 
-const CreationModal: FC<ModalOverlayProps> = ({
+const CreationModal: FC<CreationModalProps> = ({
   title,
   onSubmit,
   onClose,
@@ -63,7 +63,7 @@ const CreationModal: FC<ModalOverlayProps> = ({
             <CloseIcon fill={colors.color800} />
           </IconButton>
         </View>
-        <FormProvider control={control} handleSubmit={handleSubmit} {...formProps}>
+        <FormProvider control={control} reset={reset} handleSubmit={handleSubmit} {...formProps}>
           <FormField
             name="title"
             rules={{

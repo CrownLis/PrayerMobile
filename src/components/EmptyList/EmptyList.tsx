@@ -11,11 +11,11 @@ type EmptyListProps = {
   showArrow?: boolean;
 };
 
-const EmptyList: FC<EmptyListProps> = ({ text, showArrow = false }) => {
+const EmptyList: FC<EmptyListProps> = ({ text, showArrow }) => {
   return (
     <View style={styles.emptyColumn}>
       <EmptyColumn />
-      <Text style={styles.emptyText}>{text}</Text>
+      <Text style={styles.text}>{text}</Text>
       {showArrow ? <Arrow fill={colors.color800} style={styles.arrow} /> : null}
     </View>
   );
