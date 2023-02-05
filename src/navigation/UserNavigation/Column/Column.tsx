@@ -85,7 +85,7 @@ const Column = () => {
         </ListWrapper>
       ) : (
         <EmptyList
-          isUser={isUser}
+          showArrow={isUser}
           text={isUser ? 'You haven`t created any prayer' : 'The user has not created any prayers yet'}
         />
       )}

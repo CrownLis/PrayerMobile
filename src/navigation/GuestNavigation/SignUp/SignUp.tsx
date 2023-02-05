@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
-import { ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 
@@ -10,12 +10,12 @@ import Button from '@/UI/Button';
 import Input from '@/UI/Input';
 import PasswordInput from '@/UI/PasswordInput';
 import { validateEmail } from '@/utils/validation';
-
-import backgroundImg from '@/assets/images/background-1.png';
-
-import styles from './SignUp.module.scss';
 import { UnAuthRoutes } from '@/navigation/routes';
 import AuthLayout from '@/layouts/AuthLayout';
+import { rootRoutines, rootSelectors } from '@/store/ducks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+
+import styles from './SignUp.module.scss';
 
 type FormValues = {
   name: string;
@@ -27,11 +27,15 @@ type FormValues = {
 type SignUpScreenProps = NativeStackScreenProps<GuestStackParamList, UnAuthRoutes.SignUp>;
 
 const SignUp = () => {
+  const dispatch = useAppDispatch();
+
   const { control, watch, handleSubmit, ...formProps } = useForm<FormValues>();
   const { navigate } = useNavigation<SignUpScreenProps['navigation']>();
 
+  const isLoading = useAppSelector(rootSelectors.auth.getAuthLoading);
+
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    navigate(UnAuthRoutes.Greetings, { ...data });
+    dispatch(rootRoutines.auth.signUp(data));
   };
 
   const onError: SubmitErrorHandler<FormValues> = (errors) => {
@@ -129,7 +133,7 @@ const SignUp = () => {
           )}
         />
       </FormProvider>
-      <Button variant="primary" onPress={handleSubmit(onSubmit, onError)}>
+      <Button variant="primary" onPress={handleSubmit(onSubmit, onError)} isLoading={isLoading}>
         Register
       </Button>
       <Text style={styles.signIn}>

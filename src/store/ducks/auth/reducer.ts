@@ -3,7 +3,7 @@ import { BaseState, createReducer } from '@/store/createReducer';
 
 import { UserType } from '@/types/data';
 
-import { logOut, signIn, signUp } from './routines';
+import { logOut, setGreeting, signIn, signUp } from './routines';
 
 type AuthStateType = BaseState<UserType>;
 
@@ -38,10 +38,18 @@ const handleLogOut = {
   }),
 };
 
+const handleSetGreeting = {
+  [setGreeting.SUCCESS]: (state: AuthStateType) => ({
+    ...state,
+    data: { ...state.data, isGreetings: true },
+  }),
+};
+
 const authReducer = createReducer(initialState)({
   ...handleSignIn,
   ...handleSignUp,
   ...handleLogOut,
+  ...handleSetGreeting,
 });
 
 export default authReducer;

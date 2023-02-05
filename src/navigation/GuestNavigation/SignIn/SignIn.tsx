@@ -31,12 +31,11 @@ const SignIn = () => {
 
   const { navigate } = useNavigation<SignInScreenProps['navigation']>();
 
-  const { loading } = useAppSelector(rootSelectors.auth.getAuthState);
+  const isLoading = useAppSelector(rootSelectors.auth.getAuthLoading);
 
   const { control, handleSubmit, ...formProps } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log('s');
     dispatch(rootRoutines.auth.signIn(data));
   };
 
@@ -94,7 +93,7 @@ const SignIn = () => {
           )}
         />
       </FormProvider>
-      <Button variant="primary" onPress={handleSubmit(onSubmit, onError)} isLoading={loading}>
+      <Button variant="primary" onPress={handleSubmit(onSubmit, onError)} isLoading={isLoading}>
         Confirm
       </Button>
       <Text style={styles.signUp}>

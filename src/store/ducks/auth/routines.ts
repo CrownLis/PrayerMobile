@@ -16,4 +16,8 @@ export const signUp = createRoutine(authActions.SIGN_UP, {
   failure: (payload: string) => payload,
 });
 
+export const setGreeting = createRoutine(authActions.SET_GREETING, {
+  trigger: (payload: UserType['id']) => payload,
+});
+
 export const logOut = createRoutine(authActions.LOG_OUT);

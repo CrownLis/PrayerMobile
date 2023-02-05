@@ -11,5 +11,4 @@ export enum AuthRoutes {
 export enum UnAuthRoutes {
   SignUp = 'Sign Up',
   SignIn = 'Sign In',
-  Greetings = 'Greetings',
 }
