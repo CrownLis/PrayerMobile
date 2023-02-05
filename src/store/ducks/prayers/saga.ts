@@ -4,20 +4,34 @@ import {
   createPrayerRequest,
   deletePrayerRequest,
   doPrayRequest,
+  getPrayerRequest,
   getPrayersRequest,
   getSubscribedPrayersRequest,
 } from '@/api';
 import {
   CreatePrayerResponse,
   DoPrayResponse,
+  GetPrayerResponse,
   GetPrayersResponse,
   GetSubscribedPrayersResponse,
 } from '@/types/response';
 
-import { cleanPrayers, createPrayer, deletePrayer, doPray, getPrayers, getSubscribedPrayers } from './routines';
+import {
+  cleanPrayers,
+  createPrayer,
+  deletePrayer,
+  doPray,
+  getPrayer,
+  getPrayers,
+  getSubscribedPrayers,
+} from './routines';
 
 function* getPrayersWatcherSaga() {
-  yield takeEvery(getPrayers.TRIGGER, getPraysFlow);
+  yield takeEvery(getPrayers.TRIGGER, getPrayersFlow);
+}
+
+function* getPrayerWatcherSaga() {
+  yield takeEvery(getPrayer.TRIGGER, getPrayerFlow);
 }
 
 function* getSubscribedPrayersWatcherSaga() {
@@ -58,7 +72,7 @@ function* createPrayerFlow({ payload }: ReturnType<typeof createPrayer>) {
   }
 }
 
-function* getPraysFlow({ payload }: ReturnType<typeof getPrayers>) {
+function* getPrayersFlow({ payload }: ReturnType<typeof getPrayers>) {
   try {
     if (!payload) {
       throw new Error('Prayers: No payload');
@@ -73,6 +87,24 @@ function* getPraysFlow({ payload }: ReturnType<typeof getPrayers>) {
     yield put(getPrayers.failure(error.message));
   } finally {
     yield put(getPrayers.fulfill());
+  }
+}
+
+function* getPrayerFlow({ payload }: ReturnType<typeof getPrayer>) {
+  try {
+    if (!payload) {
+      throw new Error('Prayers: No payload');
+    }
+    yield put(getPrayer.request());
+    const response: GetPrayerResponse = yield call(getPrayerRequest, payload);
+    if (!response) {
+      throw new Error('Prayers: Something went wrong');
+    }
+    yield put(getPrayer.success([response]));
+  } catch (error: any) {
+    yield put(getPrayer.failure(error.message));
+  } finally {
+    yield put(getPrayer.fulfill());
   }
 }
 
@@ -115,7 +147,11 @@ function* doPrayFlow({ payload }: ReturnType<typeof doPray>) {
     }
     yield put(doPray.success(response));
   } catch (error: any) {
-    yield put(doPray.failure(error.message));
+    if (error?.response && error.response.data && error.response.data.statusCode) {
+      yield put(doPray.failure(`${error.response.data.statusCode}`));
+    } else {
+      yield put(doPray.failure(error.message));
+    }
   } finally {
     yield put(doPray.fulfill());
   }
@@ -135,6 +171,7 @@ function* cleanPrayersFlow() {
 export default function* prayersWatcherSaga() {
   yield all([
     getPrayersWatcherSaga(),
+    getPrayerWatcherSaga(),
     getSubscribedPrayersWatcherSaga(),
     createPrayerWatcherSaga(),
     cleanPrayerWatcherSaga(),

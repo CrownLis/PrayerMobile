@@ -35,6 +35,9 @@ const Followed = () => {
   useEffect(() => {
     if (isFocused) {
       dispatch(rootRoutines.prayers.getSubscribedPrayers());
+      return () => {
+        dispatch(rootRoutines.prayers.cleanPrayers());
+      };
     }
   }, [isFocused]);
 

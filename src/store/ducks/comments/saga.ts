@@ -1,9 +1,9 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 
 import { createCommentsRequest, getCommentsRequest } from '@/api';
-import { createCommentResponse, getCommentsResponse } from '@/types/response';
+import { createCommentResponse, GetCommentsResponse } from '@/types/response';
 
-import { createComment, getComments } from './routines';
+import { cleanComments, createComment, getComments } from './routines';
 
 function* getCommentsWatcherSaga() {
   yield takeEvery(getComments.TRIGGER, getCommentsFlow);
@@ -13,13 +13,17 @@ function* createCommentWatcherSaga() {
   yield takeEvery(createComment.TRIGGER, createCommentFlow);
 }
 
+function* cleanCommentsWatcherSaga() {
+  yield takeEvery(cleanComments.TRIGGER, cleanCommentsFlow);
+}
+
 function* getCommentsFlow({ payload }: ReturnType<typeof getComments>) {
   try {
     if (!payload) {
       throw new Error('Desks: No payload');
     }
     yield put(getComments.request());
-    const response: getCommentsResponse = yield call(getCommentsRequest, payload);
+    const response: GetCommentsResponse = yield call(getCommentsRequest, payload);
     if (!response) {
       throw new Error('Desks: Something went wrong');
     }
@@ -49,6 +53,17 @@ function* createCommentFlow({ payload }: ReturnType<typeof createComment>) {
   }
 }
 
+function* cleanCommentsFlow() {
+  try {
+    yield put(cleanComments.request());
+    yield put(cleanComments.success());
+  } catch (error: any) {
+    yield put(cleanComments.failure(error.message));
+  } finally {
+    yield put(cleanComments.fulfill());
+  }
+}
+
 export default function* commentsWatcherSaga() {
-  yield all([getCommentsWatcherSaga(), createCommentWatcherSaga()]);
+  yield all([getCommentsWatcherSaga(), createCommentWatcherSaga(), cleanCommentsWatcherSaga()]);
 }

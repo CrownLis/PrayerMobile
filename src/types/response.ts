@@ -32,6 +32,8 @@ export type GetColumnsResponse = {
 
 export type GetPrayersResponse = PrayerType[];
 
+export type GetPrayerResponse = PrayerType;
+
 export type GetSubscribedPrayersResponse = PrayerType[];
 
 export type GetOwnDeskResponse = DeskType;
@@ -46,6 +48,6 @@ export type RemovePrayerResponse = never;
 
 export type DoPrayResponse = PrayerType;
 
-export type getCommentsResponse = CommentType[];
+export type GetCommentsResponse = CommentType[];
 
 export type createCommentResponse = CommentType;

@@ -8,8 +8,9 @@ import {
   DeletePrayerPayload,
   DoPrayPayload,
   GetColumnsPayload,
-  getCommentsPayload,
+  GetCommentsPayload,
   GetDesksPayload,
+  GetPrayerPayload,
   GetPrayersPayload,
   SignInPayload,
   SignUpPayload,
@@ -20,10 +21,11 @@ import {
   CreatePrayerResponse,
   DoPrayResponse,
   GetColumnsResponse,
-  getCommentsResponse,
+  GetCommentsResponse,
   GetDesksResponse,
   GetOwnDeskResponse,
   GetPrayersResponse,
+  GetSubscribedPrayersResponse,
   RemoveColumnResponse,
   RemovePrayerResponse,
   SignInResponse,
@@ -32,7 +34,7 @@ import {
 import Storage from '@/utils/Storage';
 
 const prayerApi = axios.create({
-  baseURL: 'https://1e02-217-25-217-100.eu.ngrok.io/',
+  baseURL: 'https://1258-2-60-225-244.eu.ngrok.io/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -99,6 +101,16 @@ export const getPrayersRequest = async (columnId: GetPrayersPayload['columnId'])
   return data;
 };
 
+export const getPrayerRequest = async (id: GetPrayerPayload['id']) => {
+  const { data } = await prayerApi.get<GetPrayersResponse>(`/prayers/${id}`);
+  return data;
+};
+
+export const getSubscribedPrayersRequest = async () => {
+  const { data } = await prayerApi.get<GetSubscribedPrayersResponse>('/subscribed-prayers');
+  return data;
+};
+
 export const createPrayerRequest = async (values: CreatePrayerPayload) => {
   const { data } = await prayerApi.post<CreatePrayerResponse>(`/columns/${values.columnId}/prayers`, {
     title: values.title,
@@ -117,8 +129,8 @@ export const doPrayRequest = async (id: DoPrayPayload) => {
   return data;
 };
 
-export const getCommentsRequest = async (id: getCommentsPayload) => {
-  const { data } = await prayerApi.get<getCommentsResponse>(`/prayers/${id}/comments`);
+export const getCommentsRequest = async (id: GetCommentsPayload) => {
+  const { data } = await prayerApi.get<GetCommentsResponse>(`/prayers/${id}/comments`);
   return data;
 };
 

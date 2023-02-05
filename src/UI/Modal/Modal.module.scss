@@ -20,10 +20,14 @@
     margin-bottom: 28px;
 }
 
-.overlayHeaderTitle {
+.overlayTitle {
     @include typography($main, 28px, 600);
-    line-height: 39px;
     color: $color800;
+}
+
+.overlayTitleCenter {
+    width: 100%;
+    text-align: center;
 }
 
 .overlayContent {

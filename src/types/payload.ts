@@ -26,6 +26,10 @@ export type GetPrayersPayload = {
   columnId: ColumnType['id'];
 };
 
+export type GetPrayerPayload = {
+  id: PrayerType['id'];
+};
+
 export type CreateColumnPayload = {
   title: string;
   description: string;
@@ -48,4 +52,4 @@ export type DeletePrayerPayload = PrayerType['id'];
 
 export type DoPrayPayload = PrayerType['id'];
 
-export type getCommentsPayload = CommentType['prayerId'];
+export type GetCommentsPayload = CommentType['prayerId'];

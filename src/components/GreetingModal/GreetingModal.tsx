@@ -23,8 +23,6 @@ const GreetingModal = () => {
     setShow(false);
   };
 
-  console.log(isGreetings);
-
   return (
     <Overlay fullScreen focusable isVisible={show} overlayStyle={styles.overlay}>
       <View style={styles.container}>
