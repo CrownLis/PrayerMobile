@@ -4,17 +4,29 @@ import {
   createPrayerRequest,
   deletePrayerRequest,
   doPrayRequest,
+  doSubscribeRequest,
+  doUnsubscribeRequest,
   getPrayersRequest,
   getSubscribedPrayersRequest,
 } from '@/api';
 import {
   CreatePrayerResponse,
   DoPrayResponse,
+  DoSubscribeResponse,
   GetPrayersResponse,
   GetSubscribedPrayersResponse,
 } from '@/types/response';
 
-import { cleanPrayers, createPrayer, deletePrayer, doPray, getPrayers, getSubscribedPrayers } from './routines';
+import {
+  cleanPrayers,
+  createPrayer,
+  deletePrayer,
+  doPray,
+  doSubscribe,
+  doUnsubscribe,
+  getPrayers,
+  getSubscribedPrayers,
+} from './routines';
 
 function* getPrayersWatcherSaga() {
   yield takeEvery(getPrayers.TRIGGER, getPraysFlow);
@@ -38,6 +50,14 @@ function* doPrayWatcherSaga() {
 
 function* cleanPrayerWatcherSaga() {
   yield takeEvery(cleanPrayers.TRIGGER, cleanPrayersFlow);
+}
+
+function* doSubscribeWatcherSaga() {
+  yield takeEvery(doSubscribe.TRIGGER, doSubscribePrayerFlow);
+}
+
+function* doUnsubscribeWatcherSaga() {
+  yield takeEvery(doUnsubscribe.TRIGGER, doUnsubscribePrayerFlow);
 }
 
 function* createPrayerFlow({ payload }: ReturnType<typeof createPrayer>) {
@@ -91,6 +111,42 @@ function* getSubscribedPrayersFlow() {
   }
 }
 
+function* doSubscribePrayerFlow({ payload }: ReturnType<typeof doSubscribe>) {
+  try {
+    if (!payload) {
+      throw new Error('Prayers: No payload');
+    }
+    yield put(doSubscribe.request());
+    const response: DoSubscribeResponse = yield call(doSubscribeRequest, payload);
+    if (!response) {
+      throw new Error('Prayers: Something went wrong');
+    }
+    yield put(doSubscribe.success(response));
+  } catch (error: any) {
+    yield put(doSubscribe.failure(error.message));
+  } finally {
+    yield put(doSubscribe.fulfill());
+  }
+}
+
+function* doUnsubscribePrayerFlow({ payload }: ReturnType<typeof doUnsubscribe>) {
+  try {
+    if (!payload) {
+      throw new Error('Prayers: No payload');
+    }
+    yield put(doUnsubscribe.request());
+    const response: DoSubscribeResponse = yield call(doUnsubscribeRequest, payload);
+    if (!response) {
+      throw new Error('Prayers: Something went wrong');
+    }
+    yield put(doUnsubscribe.success(response));
+  } catch (error: any) {
+    yield put(doUnsubscribe.failure(error.message));
+  } finally {
+    yield put(doUnsubscribe.fulfill());
+  }
+}
+
 function* deletePrayerFlow({ payload }: ReturnType<typeof deletePrayer>) {
   try {
     yield put(deletePrayer.request());
@@ -140,5 +196,7 @@ export default function* prayersWatcherSaga() {
     cleanPrayerWatcherSaga(),
     deletePrayerWatcherSaga(),
     doPrayWatcherSaga(),
+    doSubscribeWatcherSaga(),
+    doUnsubscribeWatcherSaga(),
   ]);
 }

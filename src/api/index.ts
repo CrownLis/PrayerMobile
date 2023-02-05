@@ -7,8 +7,9 @@ import {
   DeleteColumnPayload,
   DeletePrayerPayload,
   DoPrayPayload,
+  DoSubscribePayload,
   GetColumnsPayload,
-  getCommentsPayload,
+  GetCommentsPayload,
   GetDesksPayload,
   GetPrayersPayload,
   SignInPayload,
@@ -19,11 +20,13 @@ import {
   createCommentResponse,
   CreatePrayerResponse,
   DoPrayResponse,
+  DoSubscribeResponse,
   GetColumnsResponse,
-  getCommentsResponse,
+  GetCommentsResponse,
   GetDesksResponse,
   GetOwnDeskResponse,
   GetPrayersResponse,
+  GetSubscribedPrayersResponse,
   RemoveColumnResponse,
   RemovePrayerResponse,
   SignInResponse,
@@ -32,7 +35,7 @@ import {
 import Storage from '@/utils/Storage';
 
 const prayerApi = axios.create({
-  baseURL: 'https://1e02-217-25-217-100.eu.ngrok.io/',
+  baseURL: 'https://4e30-217-25-217-100.eu.ngrok.io/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -117,8 +120,8 @@ export const doPrayRequest = async (id: DoPrayPayload) => {
   return data;
 };
 
-export const getCommentsRequest = async (id: getCommentsPayload) => {
-  const { data } = await prayerApi.get<getCommentsResponse>(`/prayers/${id}/comments`);
+export const getCommentsRequest = async (id: GetCommentsPayload) => {
+  const { data } = await prayerApi.get<GetCommentsResponse>(`/prayers/${id}/comments`);
   return data;
 };
 
@@ -126,5 +129,20 @@ export const createCommentsRequest = async (values: CreateCommentPayload) => {
   const { data } = await prayerApi.post<createCommentResponse>(`/prayers/${values.prayerId}/comments`, {
     body: values.body,
   });
+  return data;
+};
+
+export const doSubscribeRequest = async (id: DoSubscribePayload) => {
+  const { data } = await prayerApi.post<DoSubscribeResponse>(`/prayers/${id}/subscribe`);
+  return data;
+};
+
+export const getSubscribedPrayersRequest = async () => {
+  const { data } = await prayerApi.get<GetSubscribedPrayersResponse>('/subscribed-prayers');
+  return data;
+};
+
+export const doUnsubscribeRequest = async (id: DoSubscribePayload) => {
+  const { data } = await prayerApi.delete<DoSubscribeResponse>(`/prayers/${id}/subscribe`);
   return data;
 };

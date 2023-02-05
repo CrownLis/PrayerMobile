@@ -1,7 +1,7 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 
 import { createCommentsRequest, getCommentsRequest } from '@/api';
-import { createCommentResponse, getCommentsResponse } from '@/types/response';
+import { createCommentResponse, GetCommentsResponse } from '@/types/response';
 
 import { createComment, getComments } from './routines';
 
@@ -19,7 +19,7 @@ function* getCommentsFlow({ payload }: ReturnType<typeof getComments>) {
       throw new Error('Desks: No payload');
     }
     yield put(getComments.request());
-    const response: getCommentsResponse = yield call(getCommentsRequest, payload);
+    const response: GetCommentsResponse = yield call(getCommentsRequest, payload);
     if (!response) {
       throw new Error('Desks: Something went wrong');
     }
