@@ -38,6 +38,7 @@ export type PrayerType = {
   createdAt: string;
   updatedAt: string;
   deletedAt: string;
+  subscribers?: UserType[];
 };
 
 export type CommentType = {

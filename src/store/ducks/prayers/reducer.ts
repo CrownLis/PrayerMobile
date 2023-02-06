@@ -76,10 +76,24 @@ const handleDeletePrayer = {
 const handleDoSubscribe = {
   ...handleTrigger<PrayersStateType>(doSubscribe),
   ...handleRequest<PrayersStateType>(doSubscribe),
-  [doSubscribe.SUCCESS]: (state: PrayersStateType, action: ReturnType<typeof doSubscribe.success>) => ({
-    ...state,
-    data: [action.payload, ...(state.data || [])],
-  }),
+  [doSubscribe.SUCCESS]: (state: PrayersStateType, action: ReturnType<typeof doSubscribe.success>) => {
+    if (!state.data) {
+      return state;
+    }
+    return {
+      ...state,
+      data: state.data.map((prayer) => {
+        if (prayer.id === action.payload.id) {
+          return {
+            ...prayer,
+            ...action.payload,
+          };
+        } else {
+          return prayer;
+        }
+      }),
+    };
+  },
   ...handleFailure<PrayersStateType, { payload: string }>(doSubscribe),
   ...handleFulfill<PrayersStateType>(doSubscribe),
 };
@@ -93,7 +107,16 @@ const handleDoUnsubscribe = {
     }
     return {
       ...state,
-      data: state.data.filter((prayer) => prayer.id !== action.payload.id),
+      data: state.data.map((prayer) => {
+        if (prayer.id === action.payload.id) {
+          return {
+            ...prayer,
+            ...action.payload,
+          };
+        } else {
+          return prayer;
+        }
+      }),
     };
   },
   ...handleFailure<PrayersStateType, { payload: string }>(doUnsubscribe),

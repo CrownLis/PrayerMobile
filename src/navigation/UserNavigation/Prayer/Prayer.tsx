@@ -99,15 +99,15 @@ const Prayer: FC<PrayerScreenProps> = () => {
               </View>
               <View style={mergeStyles({ style: styles.block, active: true }, { style: styles.second, active: true })}>
                 <Text style={styles.titleStats}>Total prayers</Text>
-                <Text style={styles.stats}>{prayer.completesCount}</Text>
+                <Text style={styles.stats}>{prayer.completesCount ?? 0}</Text>
               </View>
               <View style={mergeStyles({ style: styles.block, active: true }, { style: styles.third, active: true })}>
                 <Text style={styles.titleStats}>Other prayers</Text>
-                <Text style={styles.stats}> {prayer.otherPrayCount}</Text>
+                <Text style={styles.stats}> {prayer.otherPrayCount ?? 0}</Text>
               </View>
               <View style={mergeStyles({ style: styles.block, active: true }, { style: styles.fourth, active: true })}>
                 <Text style={styles.titleStats}>My prayers</Text>
-                <Text style={styles.stats}>{prayer.myPrayCount} </Text>
+                <Text style={styles.stats}>{prayer.myPrayCount ?? 0} </Text>
               </View>
             </ImageBackground>
             <Button variant="primary" style={styles.prayedButton} onPress={pray}>
