@@ -1,0 +1,14 @@
+@import './../../assets/styles/variables.scss';
+@import './../../assets/styles/mixins.scss';
+
+.commentBlock {
+    margin:0 16px;
+    margin-top:12px;
+
+    .title {
+        @include typography($main,18px,500);
+        line-height:25px;
+        color:$color800;
+        text-align: center;
+    }
+}
