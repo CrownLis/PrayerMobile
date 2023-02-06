@@ -48,7 +48,13 @@ export type RemovePrayerResponse = never;
 
 export type DoPrayResponse = PrayerType;
 
-export type GetCommentsResponse = CommentType[];
+export type GetCommentsResponse = {
+  data: CommentType[];
+  cursor: {
+    afterCursor: string;
+    beforeCursor: string;
+  };
+};
 
 export type createCommentResponse = CommentType;
 

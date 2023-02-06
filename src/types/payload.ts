@@ -52,7 +52,11 @@ export type DeletePrayerPayload = PrayerType['id'];
 
 export type DoPrayPayload = PrayerType['id'];
 
-export type GetCommentsPayload = CommentType['prayerId'];
+export type GetCommentsPayload = {
+  id: CommentType['prayerId'];
+  limit: number;
+  afterCursor?: number;
+};
 
 export type DoSubscribePayload = PrayerType['id'];
 
