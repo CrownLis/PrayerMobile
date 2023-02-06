@@ -36,7 +36,7 @@ import {
 import Storage from '@/utils/Storage';
 
 const prayerApi = axios.create({
-  baseURL: 'https://4e30-217-25-217-100.eu.ngrok.io/',
+  baseURL: 'https://13ef-217-25-222-25.eu.ngrok.io/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -131,8 +131,13 @@ export const doPrayRequest = async (id: DoPrayPayload) => {
   return data;
 };
 
-export const getCommentsRequest = async (id: GetCommentsPayload) => {
-  const { data } = await prayerApi.get<GetCommentsResponse>(`/prayers/${id}/comments`);
+export const getCommentsRequest = async ({ id, limit, afterCursor }: GetCommentsPayload) => {
+  const { data } = await prayerApi.get<GetCommentsResponse>(`/prayers/${id}/comments`, {
+    params: {
+      limit,
+      afterCursor,
+    },
+  });
   return data;
 };
 

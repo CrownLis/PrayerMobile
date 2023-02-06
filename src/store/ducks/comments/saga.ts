@@ -27,7 +27,7 @@ function* getCommentsFlow({ payload }: ReturnType<typeof getComments>) {
     if (!response) {
       throw new Error('Desks: Something went wrong');
     }
-    yield put(getComments.success(response));
+    yield put(getComments.success(response.data));
   } catch (error: any) {
     yield put(getComments.failure(error.message));
   } finally {
