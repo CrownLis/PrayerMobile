@@ -21,10 +21,28 @@
     padding: 24px;
 }
 
-.container_color {
+.container_red {
     border: 0;
     border-radius: 10px;
     background-color: $OrangeIndicator;
+    max-width: 24px;
+    width: 100%;
+    height: 100%;
+}
+
+.container_blue {
+    border: 0;
+    border-radius: 10px;
+    background-color: $BlueIndicator;
+    max-width: 24px;
+    width: 100%;
+    height: 100%;
+}
+
+.container_yellow {
+    border: 0;
+    border-radius: 10px;
+    background-color: $YellowIndicator;
     max-width: 24px;
     width: 100%;
     height: 100%;
