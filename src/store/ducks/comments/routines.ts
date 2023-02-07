@@ -9,7 +9,7 @@ import * as commentsActions from './actions';
 export const getComments = createRoutine(commentsActions.GET_COMMENTS, {
   trigger: (payload: GetCommentsPayload) => payload,
   success: (payload: CommentType[]) => payload,
-  failure: (payload: string) => console.log(payload),
+  failure: (payload: string) => payload,
 });
 
 export const createComment = createRoutine(commentsActions.CREATE_COMMENT, {
