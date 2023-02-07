@@ -47,22 +47,20 @@ const Columns = () => {
     <SafeAreaView style={styles.container}>
       {showColumns ? (
         <ListWrapper>
-          {columns.map((item) => {
-            return (
-              <DeskCard
-                key={item.id}
-                onPress={() =>
-                  navigate(AuthRoutes.Column, {
-                    id: item.id,
-                    title: item.title,
-                    userId: item.userId,
-                  })
-                }
-              >
-                {item.title}
-              </DeskCard>
-            );
-          })}
+          {columns.map((item) => (
+            <DeskCard
+              key={item.id}
+              onPress={() =>
+                navigate(AuthRoutes.Column, {
+                  id: item.id,
+                  title: item.title,
+                  userId: item.userId,
+                })
+              }
+            >
+              {item.title}
+            </DeskCard>
+          ))}
         </ListWrapper>
       ) : (
         <EmptyList text="User has not created columns yet" />

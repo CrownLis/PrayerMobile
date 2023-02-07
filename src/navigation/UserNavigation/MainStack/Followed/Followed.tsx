@@ -51,26 +51,24 @@ const Followed = () => {
     <SafeAreaView style={styles.container}>
       {showPrayers ? (
         <ScrollView>
-          {prayers.map((item) => {
-            return (
-              <PrayerCard
-                key={item.id}
-                title={item.title}
-                members={item.subscribersCount}
-                complete={item.completesCount}
-                onDismiss={() => handleDelete(item.id)}
-                onPress={() =>
-                  navigate(AuthRoutes.Prayer, {
-                    id: item.id,
-                    title: item.title,
-                  })
-                }
-                id={item.id}
-              >
-                {item.title}
-              </PrayerCard>
-            );
-          })}
+          {prayers.map((item) => (
+            <PrayerCard
+              key={item.id}
+              title={item.title}
+              members={item.subscribersCount}
+              complete={item.completesCount}
+              onDismiss={() => handleDelete(item.id)}
+              onPress={() =>
+                navigate(AuthRoutes.Prayer, {
+                  id: item.id,
+                  title: item.title,
+                })
+              }
+              id={item.id}
+            >
+              {item.title}
+            </PrayerCard>
+          ))}
         </ScrollView>
       ) : (
         <EmptyList showArrow={false} text="You haven no subscriptions yet." />

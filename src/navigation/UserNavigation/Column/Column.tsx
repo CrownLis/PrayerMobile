@@ -72,26 +72,25 @@ const Column = () => {
     <SafeAreaView style={styles.container}>
       {showPrayers ? (
         <ScrollView>
-          {prayers.map((item) => {
-            return (
-              <PrayerCard
-                title={item.title}
-                members={item.subscribersCount}
-                complete={item.completesCount}
-                key={item.id}
-                id={item.id}
-                onDismiss={() => handleDelete(item.id)}
-                onPress={() =>
-                  navigate(AuthRoutes.Prayer, {
-                    id: item.id,
-                    title: item.title,
-                  })
-                }
-              >
-                {item.title}
-              </PrayerCard>
-            );
-          })}
+          {prayers.map((item) => (
+            <PrayerCard
+              title={item.title}
+              members={item.subscribersCount}
+              complete={item.completesCount}
+              lastPrayerEvent={item.lastPrayerEvent}
+              key={item.id}
+              id={item.id}
+              onDismiss={() => handleDelete(item.id)}
+              onPress={() =>
+                navigate(AuthRoutes.Prayer, {
+                  id: item.id,
+                  title: item.title,
+                })
+              }
+            >
+              {item.title}
+            </PrayerCard>
+          ))}
         </ScrollView>
       ) : (
         <EmptyList

@@ -16,7 +16,7 @@ const PasswordInput: FC<PasswordInputProps> = ({ style, isDirty, isDisabled, isE
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const getIconColor = isDisabled
+  const iconColor = isDisabled
     ? colors.color500
     : isError
     ? colors.Error
@@ -38,9 +38,9 @@ const PasswordInput: FC<PasswordInputProps> = ({ style, isDirty, isDisabled, isE
       icon={
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
           {showPassword ? (
-            <EyeOpenIcon width={20} height={20} fill={getIconColor} />
+            <EyeOpenIcon width={20} height={20} fill={iconColor} />
           ) : (
-            <EyeClosedIcon width={20} height={20} fill={getIconColor} />
+            <EyeClosedIcon width={20} height={20} fill={iconColor} />
           )}
         </TouchableOpacity>
       }

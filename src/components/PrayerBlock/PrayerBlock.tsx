@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { PrayerType } from '@/types/data';
 import Button from '@/UI/Button';
 import Loader from '@/UI/Loader';
-import convertTime from '@/utils/convertTime';
+import { convertTime } from '@/utils/convertTime';
 import { mergeStyles } from '@/utils/mergeStyles';
 
 import styles from './PrayerBlock.module.scss';
@@ -35,7 +35,6 @@ const PrayerBlock: FC<PrayerBlockProps> = ({ id }) => {
   };
 
   const prayer = useAppSelector((state: AppState) => rootSelectors.prayers.getPrayerById(state, id));
-
   const isFetchingPrayer = isLoading && !prayer;
 
   useEffect(() => {
