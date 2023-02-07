@@ -8,6 +8,7 @@ import { rootRoutines } from '@/store/ducks';
 import { useAppDispatch } from '@/store/hooks';
 import { PrayerType } from '@/types/data';
 import IconButton from '@/UI/IconButton';
+import { getColorMark } from '@/utils/getColorMark';
 import { mergeStyles } from '@/utils/mergeStyles';
 
 import SwiperWrapper from '../SwiperWrapper';
@@ -19,6 +20,7 @@ type PrayerCardProps = {
   title: string;
   members: PrayerType['subscribersCount'];
   complete: PrayerType['completesCount'];
+  lastPrayerEvent?: PrayerType['lastPrayerEvent'];
   onDismiss: () => void;
 } & TouchableOpacityProps;
 
@@ -37,6 +39,7 @@ const PrayerCard: FC<PrayerCardProps> = ({
   onPressIn,
   onPressOut,
   id,
+  lastPrayerEvent,
   title,
   complete,
   members,
@@ -48,8 +51,8 @@ const PrayerCard: FC<PrayerCardProps> = ({
     onPress,
   );
 
+  const color = getColorMark(lastPrayerEvent?.updatedAt);
   const dispatch = useAppDispatch();
-
   const pray = () => {
     dispatch(rootRoutines.prayers.doPray(id));
   };
@@ -67,7 +70,7 @@ const PrayerCard: FC<PrayerCardProps> = ({
         {...props}
       >
         <View style={styles.container}>
-          <View style={styles.container_color} />
+          <View style={styles[`container_${color}`]} />
           <View style={styles.container_info}>
             <Text style={styles.info_title}>{title}</Text>
             <View style={styles.info_description}>
