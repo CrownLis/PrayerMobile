@@ -11,9 +11,9 @@ import {
   UsersDesks as UsersDesksIcon,
 } from '@/assets/svgs';
 import Header from '@/components/Header';
-import Followed from '@/navigation/UserNavigation/BottomBarStack/Followed';
-import MyDesk from '@/navigation/UserNavigation/BottomBarStack/MyDesk';
-import UsersDesk from '@/navigation/UserNavigation/BottomBarStack/UsersDesk';
+import Followed from '@/navigation/UserNavigation/MainStack/Followed';
+import MyDesk from '@/navigation/UserNavigation/MainStack/MyDesk';
+import UsersDesk from '@/navigation/UserNavigation/MainStack/UsersDesk';
 import IconButton from '@/UI/IconButton';
 import { mergeStyles } from '@/utils/mergeStyles';
 

@@ -72,23 +72,21 @@ const MyDesk = () => {
       <GreetingModal />
       {showColumns ? (
         <ListWrapper>
-          {columns.map((item) => {
-            return (
-              <DeskCard
-                key={item.id}
-                onPress={() =>
-                  navigate(AuthRoutes.Column, {
-                    id: item.id,
-                    title: item.title,
-                    userId: item.userId,
-                  })
-                }
-                onDismiss={() => handleDelete(item.id)}
-              >
-                {item.title}
-              </DeskCard>
-            );
-          })}
+          {columns.map((item) => (
+            <DeskCard
+              key={item.id}
+              onPress={() =>
+                navigate(AuthRoutes.Column, {
+                  id: item.id,
+                  title: item.title,
+                  userId: item.userId,
+                })
+              }
+              onDismiss={() => handleDelete(item.id)}
+            >
+              {item.title}
+            </DeskCard>
+          ))}
         </ListWrapper>
       ) : (
         <EmptyList showArrow text="You haven`t created any column" />
