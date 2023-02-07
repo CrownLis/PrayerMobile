@@ -55,7 +55,7 @@ export const doSubscribe = createRoutine(prayersActions.DO_SUBSCRIBE, {
   failure: (payload: string) => payload,
 });
 
-export const doUnsubscribe = createRoutine(prayersActions.DO_SUBSCRIBE, {
+export const doUnsubscribe = createRoutine(prayersActions.DO_UNSUBSCRIBE, {
   trigger: (payload: DoUnsubscribePayload) => payload,
   success: (payload: DoUnsubscribeResponse) => payload,
   failure: (payload: string) => payload,

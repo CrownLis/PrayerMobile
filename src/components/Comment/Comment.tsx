@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Text, View } from 'react-native';
 
 import { CommentType } from '@/types/data';
-import convertTime from '@/utils/convertTime';
+import { convertTime } from '@/utils/convertTime';
 
 import styles from './Comment.module.scss';
 
